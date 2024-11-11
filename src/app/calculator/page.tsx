@@ -5,6 +5,7 @@ import CalculatorStep from "@/components/CalculatorStep";
 import dynamic from "next/dynamic";
 import StepWizard, { StepWizardProps } from "react-step-wizard";
 import CalculatorNavigator from "@/components/CalculatorNavigator";
+import CompanyFormStep from "@/components/CompanyFormStep";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -35,7 +36,7 @@ const Calculator = () => {
   });
 
   const steps: JSX.Element[] = [
-    <CalculatorStep key={1}>step 1</CalculatorStep>,
+    <CompanyFormStep key={1} />,
     <CalculatorStep key={2}>step 2</CalculatorStep>,
     <CalculatorStep key={3}>step 3</CalculatorStep>
   ]
