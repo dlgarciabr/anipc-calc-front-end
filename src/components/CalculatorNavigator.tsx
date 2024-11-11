@@ -10,6 +10,7 @@ export interface CalculatorNavigatorProps {
 
 const CalculatorNavigator = (props:  CalculatorNavigatorProps) => {
   const theme = useTheme();
+
   return (
     <MobileStepper
     variant="progress"
@@ -27,7 +28,7 @@ const CalculatorNavigator = (props:  CalculatorNavigatorProps) => {
       </Button>
     }
     backButton={
-      <Button size="small" onClick={props.handleBack} disabled={props.activeStep < props.totalSteps - 1}>
+      <Button size="small" onClick={props.handleBack} disabled={props.activeStep === 0}>
         {theme.direction === 'rtl' ? (
           <KeyboardArrowRight />
         ) : (

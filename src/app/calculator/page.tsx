@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import StepWizard, { StepWizardProps } from "react-step-wizard";
 import CalculatorNavigator from "@/components/CalculatorNavigator";
 import CompanyFormStep from "@/components/CompanyFormStep";
+import { useSimulationStore } from "../stores/simulation";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -19,15 +20,20 @@ const Calculator = () => {
     previousStep: () => {},
   });
   const [activeStep, setActiveStep] = React.useState(0);
+  const { validateStepCompany } = useSimulationStore((state) => state);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    wizardState.nextStep();
+    if(validateStepChange(activeStep)){
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      wizardState.nextStep();
+    }
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    wizardState.previousStep();
+    if(validateStepChange(activeStep)){
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+      wizardState.previousStep();
+    }
   };
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
@@ -35,14 +41,27 @@ const Calculator = () => {
     ...wizard,
   });
 
+  const validateStepChange = (currentStep: number): boolean => {
+    console.log(validateStepCompany())
+    switch(currentStep){
+      case 0: 
+        return !validateStepCompany().length;
+      case 1:
+        return true;
+      default:
+        return true;
+    }
+  };
+
   const steps: JSX.Element[] = [
     <CompanyFormStep key={1} />,
     <CalculatorStep key={2}>step 2</CalculatorStep>,
     <CalculatorStep key={3}>step 3</CalculatorStep>
-  ]
+  ];
+
   return (
     <>
-      <StepWizard instance={setInstance}>
+      <StepWizard instance={setInstance} isHashEnabled={true}>
         {steps}
       </StepWizard>
       <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={steps.length} />
