@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, { useEffect } from "react";
 import CalculatorStep from "@/components/CalculatorStep";
 import dynamic from "next/dynamic";
 import StepWizard, { StepWizardProps } from "react-step-wizard";
@@ -8,6 +8,8 @@ import CalculatorNavigator from "@/components/CalculatorNavigator";
 import CompanyFormStep from "@/components/CompanyFormStep";
 import { useSimulationStore } from "../stores/simulation";
 import YearSelectionStep from "@/components/YearSelectionStep";
+import { getCategories } from "./api";
+import DynamicCategoryForm from "@/components/DynamicCategoryForm";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -21,7 +23,7 @@ const Calculator = () => {
     previousStep: () => {},
   });
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const { validateSimulation, setNextStep } = useSimulationStore((state) => state);
+  const { validateSimulation, setNextStep, inputCategories, setInputCategories } = useSimulationStore((state) => state);
 
   const handleNext = () => {
     const nextStep = activeStep + 1;
@@ -46,18 +48,34 @@ const Calculator = () => {
     ...wizard,
   });
 
+  useEffect(()=>{
+    if(!Object.keys(inputCategories).length){
+      const categories = getCategories('');
+      setInputCategories(categories);
+    }
+  },[inputCategories, setInputCategories])
+
+  const dinamicSteps = Object.values(inputCategories).map((category) => (
+    <CalculatorStep key={category.id}>
+      <DynamicCategoryForm category={category} />
+    </CalculatorStep>
+  ));
+
   const steps: JSX.Element[] = [
     <CompanyFormStep key={0} />,
     <YearSelectionStep key={1} />,
-    <CalculatorStep key={2}>step 3</CalculatorStep>,
-    <CalculatorStep key={3}>step 4</CalculatorStep>
+    ...dinamicSteps
   ];
 
   return (
     <>
-      <StepWizard instance={setInstance} isHashEnabled={true}>
-        {steps}
-      </StepWizard>
+      {
+        dinamicSteps.length > 0 ?
+        <StepWizard instance={setInstance} isHashEnabled={true}>
+          {steps}
+        </StepWizard> :
+        'LOADING...'
+      }
       <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={steps.length} />
     </>
   );

@@ -1,9 +1,14 @@
-import { FieldError, Simulation } from "../types";
+import { FieldError, Simulation } from "../../types";
 
 const requiredMessage = 'É obrigatorio';
 
 export const validateSimulation = (simulation: Simulation, nextStep: number): FieldError[] => {
   const errors:FieldError[]  = [];
+  const skipValidation = true;
+
+  if(skipValidation){
+    return [];
+  }
   switch(nextStep){
     case 1:
       if(!simulation.company.name){

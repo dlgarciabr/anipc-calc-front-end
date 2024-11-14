@@ -2,7 +2,7 @@ import { useSimulationStore } from "@/app/stores/simulation";
 import { Box, TextField } from "@mui/material";
 
 const CompanyFormStep = () => {
-  const { company, setCompanyField, validateSimulation, currentStep } = useSimulationStore((state) => state);
+  const { company, setCompanyField, validateSimulation } = useSimulationStore((state) => state);
 
   return (
     <Box
@@ -16,7 +16,7 @@ const CompanyFormStep = () => {
         label="Nome"
         defaultValue={company.name}
         onChange={(e)=>setCompanyField('name', e.target.value)}
-        helperText={currentStep === 0 && validateSimulation().find(error => error.name === 'name')?.message}
+        helperText={validateSimulation().find(error => error.name === 'name')?.message}
         required={true}
       />
       <TextField

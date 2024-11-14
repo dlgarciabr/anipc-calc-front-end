@@ -11,13 +11,22 @@ export interface Company {
 export interface InputCategory {
   id: string;
   name: string;
-} 
+  inputs: { [key: string ]: Input },
+}
+
+export interface Input {
+  id: string;
+  name: string;
+  description: string;
+}
 
 export interface Simulation {
   nextStep: number
   company: Company,
   year: string,
-  setNextStep: (nextStep: number) => void;
+  inputCategories: { [key: string ]: InputCategory },
+  setInputCategories: (categories: InputCategory[]) => void,
+  setNextStep: (nextStep: number) => void; 
   setYear: (year: string) => void;
   setCompanyField: (name: string, valeu: string) => void;
   validateSimulation: () => FieldError[];

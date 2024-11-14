@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Simulation } from '../types';
+import { InputCategory, Simulation } from '../../types';
 import { validateSimulation } from './validations';
 
 const initialState: Simulation = {
@@ -9,9 +9,11 @@ const initialState: Simulation = {
     cae: ''
   },
   year: '',
+  inputCategories: {},
+  setInputCategories: (categories: InputCategory[]) => {},
   setNextStep: (nextStep: number) => { },
-  setYear: () => {},
-  setCompanyField: () => {},
+  setYear: () => { },
+  setCompanyField: () => { },
   validateSimulation: () => [],
 }
 
@@ -25,12 +27,16 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     ...state,
     year
   })),
+  setInputCategories: (categories: InputCategory[]) => set((state) => ({
+    ...state,
+    inputCategories: Object.fromEntries(categories.map(category => [category.id, category]))
+  })),
   setCompanyField: (name: string, valeu: string) => set((state) => ({
     ...state,
     company: {
       ...state.company,
       [name]:valeu
     }
-  })), 
+  })),
   validateSimulation: () => validateSimulation(get(), get().nextStep)
 }));
