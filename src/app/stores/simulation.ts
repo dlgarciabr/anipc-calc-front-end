@@ -1,24 +1,30 @@
 import { create } from 'zustand';
-import { Company, FieldError } from '../types';
-import { validateCompany } from './validations';
-
-interface Simulation {
-  company: Company,
-  setCompanyField: (name: string, valeu: string) => void;
-  validateStepCompany: () => FieldError[];
-}
+import { Simulation } from '../types';
+import { validateSimulation } from './validations';
 
 const initialState: Simulation = {
+  nextStep: 0,
   company: {
     name: '',
     cae: ''
   },
+  year: '',
+  setNextStep: (nextStep: number) => { },
+  setYear: () => {},
   setCompanyField: () => {},
-  validateStepCompany: () => []
+  validateSimulation: () => [],
 }
 
 export const useSimulationStore = create<Simulation>((set, get) => ({
   ...initialState,
+  setNextStep: (nextStep: number) => set((state) => ({
+    ...state,
+    nextStep
+  })),
+  setYear: (year: string) => set((state) => ({
+    ...state,
+    year
+  })),
   setCompanyField: (name: string, valeu: string) => set((state) => ({
     ...state,
     company: {
@@ -26,5 +32,5 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       [name]:valeu
     }
   })), 
-  validateStepCompany: () => validateCompany(get().company)
+  validateSimulation: () => validateSimulation(get(), get().nextStep)
 }));

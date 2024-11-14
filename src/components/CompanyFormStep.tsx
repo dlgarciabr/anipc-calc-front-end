@@ -2,8 +2,7 @@ import { useSimulationStore } from "@/app/stores/simulation";
 import { Box, TextField } from "@mui/material";
 
 const CompanyFormStep = () => {
-
-  const { company, setCompanyField, validateStepCompany } = useSimulationStore((state) => state);
+  const { company, setCompanyField, validateSimulation, currentStep } = useSimulationStore((state) => state);
 
   return (
     <Box
@@ -13,16 +12,20 @@ const CompanyFormStep = () => {
       autoComplete="off"
     >
       <TextField
-        error={validateStepCompany().some(error => error.name === 'name')}
+        error={validateSimulation().some(error => error.name === 'name')}
         label="Nome"
         defaultValue={company.name}
         onChange={(e)=>setCompanyField('name', e.target.value)}
+        helperText={currentStep === 0 && validateSimulation().find(error => error.name === 'name')?.message}
+        required={true}
       />
       <TextField
-        error={validateStepCompany().some(error => error.name === 'cae')}
+        error={validateSimulation().some(error => error.name === 'cae')}
         label="CAE"
         defaultValue={company.cae}
         onChange={(e)=>setCompanyField('cae', e.target.value)}
+        helperText={validateSimulation().find(error => error.name === 'cae')?.message}
+        required={true}
       />
     </Box>
   )

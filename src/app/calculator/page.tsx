@@ -7,6 +7,7 @@ import StepWizard, { StepWizardProps } from "react-step-wizard";
 import CalculatorNavigator from "@/components/CalculatorNavigator";
 import CompanyFormStep from "@/components/CompanyFormStep";
 import { useSimulationStore } from "../stores/simulation";
+import YearSelectionStep from "@/components/YearSelectionStep";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -19,19 +20,23 @@ const Calculator = () => {
     nextStep: () => {},
     previousStep: () => {},
   });
-  const [activeStep, setActiveStep] = React.useState(0);
-  const { validateStepCompany } = useSimulationStore((state) => state);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const { validateSimulation, setNextStep } = useSimulationStore((state) => state);
 
   const handleNext = () => {
-    if(validateStepChange(activeStep)){
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const nextStep = activeStep + 1;
+    setNextStep(nextStep);
+    if(!validateSimulation().length){
+      setActiveStep(nextStep);
       wizardState.nextStep();
     }
   };
 
   const handleBack = () => {
-    if(validateStepChange(activeStep)){
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    const nextStep = activeStep - 1;
+    setNextStep(nextStep);
+    if(!validateSimulation().length){
+      setActiveStep(nextStep);
       wizardState.previousStep();
     }
   };
@@ -41,22 +46,11 @@ const Calculator = () => {
     ...wizard,
   });
 
-  const validateStepChange = (currentStep: number): boolean => {
-    console.log(validateStepCompany())
-    switch(currentStep){
-      case 0: 
-        return !validateStepCompany().length;
-      case 1:
-        return true;
-      default:
-        return true;
-    }
-  };
-
   const steps: JSX.Element[] = [
-    <CompanyFormStep key={1} />,
-    <CalculatorStep key={2}>step 2</CalculatorStep>,
-    <CalculatorStep key={3}>step 3</CalculatorStep>
+    <CompanyFormStep key={0} />,
+    <YearSelectionStep key={1} />,
+    <CalculatorStep key={2}>step 3</CalculatorStep>,
+    <CalculatorStep key={3}>step 4</CalculatorStep>
   ];
 
   return (
