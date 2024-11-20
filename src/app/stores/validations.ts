@@ -1,10 +1,21 @@
 import { FieldError, Simulation } from "../../types";
+import { getCategories } from "../calculator/api";
 
 const requiredMessage = 'É obrigatorio';
 
 export const validateSimulation = (simulation: Simulation, nextStep: number): FieldError[] => {
   const errors:FieldError[]  = [];
-  const skipValidation = true;
+  const skipValidation = false;
+
+  const validateInputValue = (inputId: string) => {
+    const inputValue = simulation.inputValues[inputId];
+    if(!inputValue || !inputValue.value){
+      errors.push({
+        name: inputId,
+        message: requiredMessage
+      })
+    }
+  }
 
   if(skipValidation){
     return [];
@@ -14,12 +25,6 @@ export const validateSimulation = (simulation: Simulation, nextStep: number): Fi
       if(!simulation.company.name){
         errors.push({
           name: 'name',
-          message: requiredMessage
-        })
-      }
-      if(!simulation.company. cae){
-        errors.push({
-          name: 'cae',
           message: requiredMessage
         })
       }
@@ -33,6 +38,13 @@ export const validateSimulation = (simulation: Simulation, nextStep: number): Fi
       }
       break;
     case 3:
+      const category = getCategories('')[0];
+      const inputKeys = Object.keys(category.inputs);
+      validateInputValue(category.inputs[inputKeys[0]].id);
+      validateInputValue(category.inputs[inputKeys[1]].id);
+      validateInputValue(category.inputs[inputKeys[2]].id);
+      validateInputValue(category.inputs[inputKeys[3]].id);
+      break;
     case 4:
     default:
   }

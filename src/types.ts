@@ -6,6 +6,9 @@ export interface FieldError {
 export interface Company {
   name: string;
   cae: string;
+  line: string;
+  submitterName: string;
+  submitterEmail: string;
 }
 
 export interface InputCategory {
@@ -17,7 +20,16 @@ export interface InputCategory {
 export interface Input {
   id: string;
   name: string;
+  unit: string[];
+  value?: string;
   description: string;
+  required?: boolean;
+}
+
+export interface InputValue {
+  id: string;
+  value?: string;
+  unit: string;
 }
 
 export interface Simulation {
@@ -26,8 +38,11 @@ export interface Simulation {
   year: string,
   inputCategories: { [key: string ]: InputCategory },
   setInputCategories: (categories: InputCategory[]) => void,
+  setInput: (input: Input) => void;
+  getInput: (categoryId: string, inputId: string) => Input;
   setNextStep: (nextStep: number) => void; 
   setYear: (year: string) => void;
   setCompanyField: (name: string, valeu: string) => void;
   validateSimulation: () => FieldError[];
+  inputValues: { [key: string]: InputValue };
 }

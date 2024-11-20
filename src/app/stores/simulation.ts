@@ -1,20 +1,26 @@
 import { create } from 'zustand';
-import { InputCategory, Simulation } from '../../types';
+import { Input, InputCategory, Simulation } from '../../types';
 import { validateSimulation } from './validations';
 
 const initialState: Simulation = {
   nextStep: 0,
   company: {
     name: '',
-    cae: ''
+    cae: '',
+    line: '',
+    submitterEmail: '',
+    submitterName: '',
   },
   year: '',
   inputCategories: {},
   setInputCategories: (categories: InputCategory[]) => {},
+  setInput: (input: Input) => {},
+  getInput: (categoryId: string, inputId: string) => ({id: '', name: '', description: '', unit: [], value: ''}),
   setNextStep: (nextStep: number) => { },
   setYear: () => { },
   setCompanyField: () => { },
   validateSimulation: () => [],
+  inputValues: { }
 }
 
 export const useSimulationStore = create<Simulation>((set, get) => ({
@@ -38,5 +44,20 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       [name]:valeu
     }
   })),
-  validateSimulation: () => validateSimulation(get(), get().nextStep)
+  validateSimulation: () => validateSimulation(get(), get().nextStep),
+  getInput: (categoryId: string, inputId: string) => get().inputCategories[categoryId].inputs[inputId],
+  setInput: (input: Input) => set((state) => {
+    const newInputValue =  { 
+      id: input.id,
+      value: input.value,
+      unit: input.unit[0],
+    };
+    return {
+      ...state,
+      inputValues: {
+        ...state.inputValues, 
+        [newInputValue.id] : newInputValue
+      }
+    }
+  }),
 }));

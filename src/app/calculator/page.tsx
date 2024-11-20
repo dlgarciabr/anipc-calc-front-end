@@ -5,11 +5,14 @@ import CalculatorStep from "@/components/CalculatorStep";
 import dynamic from "next/dynamic";
 import StepWizard, { StepWizardProps } from "react-step-wizard";
 import CalculatorNavigator from "@/components/CalculatorNavigator";
-import CompanyFormStep from "@/components/CompanyFormStep";
+import CompanyFormStep from "@/components/wizardSteps/CompanyFormStep";
 import { useSimulationStore } from "../stores/simulation";
-import YearSelectionStep from "@/components/YearSelectionStep";
+import YearSelectionStep from "@/components/wizardSteps/YearSelectionStep";
 import { getCategories } from "./api";
-import DynamicCategoryForm from "@/components/DynamicCategoryForm";
+import DynamicCategoryForm from "@/components/wizardSteps/DynamicCategoryForm";
+import { Alert, Container, Grid2 as Grid } from "@mui/material";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import EletricEnergyStep from "@/components/wizardSteps/EletricEnergyStep";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -64,20 +67,32 @@ const Calculator = () => {
   const steps: JSX.Element[] = [
     <CompanyFormStep key={0} />,
     <YearSelectionStep key={1} />,
+    <EletricEnergyStep key={2} />,
     ...dinamicSteps
   ];
 
   return (
-    <>
-      {
-        dinamicSteps.length > 0 ?
-        <StepWizard instance={setInstance} isHashEnabled={true}>
-          {steps}
-        </StepWizard> :
-        'LOADING...'
-      }
-      <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={steps.length} />
-    </>
+    <Container maxWidth="md">
+      <Grid container>
+        <Grid size={{ xs: 8, md: 8 }}>
+          <Alert icon={<InfoOutlinedIcon fontSize="inherit" />} severity="warning">
+            Step information message TODO
+          </Alert>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
+          {
+            dinamicSteps.length > 0 ?
+            <StepWizard instance={setInstance} isHashEnabled={true}>
+              {steps}
+            </StepWizard> :
+            'LOADING...'
+          }
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={steps.length} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 

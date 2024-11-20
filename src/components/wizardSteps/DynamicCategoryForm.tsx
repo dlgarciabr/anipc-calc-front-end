@@ -1,6 +1,6 @@
 import { useSimulationStore } from "@/app/stores/simulation";
-import { InputCategory } from "../types";
-import { Box, TextField } from "@mui/material";
+import { InputCategory } from "../../types";
+import { Grid2 as Grid, TextField } from "@mui/material";
 
 interface DynamicCategoryFormProps {
   category: InputCategory;
@@ -12,23 +12,20 @@ const DynamicCategoryForm = ({ category }: DynamicCategoryFormProps) => {
   return (
     <>
       {category.name}
-      <Box
-        component="form"
-        sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
-        noValidate
-        autoComplete="off"
-        >
+      <Grid container spacing={2}>
           {
             Object.keys(categoryInputs).map(key => (
-              <TextField
-                key={categoryInputs[key].id}
-                label={categoryInputs[key].name}
-                defaultValue=''
-                required={true}
-              />
+              <Grid size={{ xs: 12, md: 12 }} key={categoryInputs[key].id}>
+                <TextField
+                  fullWidth
+                  label={categoryInputs[key].name}
+                  defaultValue=''
+                  required={true}
+                />
+              </Grid>
             ))
           }
-      </Box>
+      </Grid>
     </>
 
 

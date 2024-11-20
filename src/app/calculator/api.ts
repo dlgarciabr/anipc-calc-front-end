@@ -6,15 +6,40 @@ export const getCategories = (year : string): InputCategory[] => {
       id: 'ELETRICA',
       name: 'Consumo de Energia Eletrica',
       inputs: {
-        '1': {
-          id: '1',
+        'ELETRICA_FATURADA': {
+          id: 'ELETRICA_FATURADA',
           name: 'Faturada',
-          description: 'Faturada desc'
+          description: 'Faturada desc',
+          unit: ['kWh'],
+          required: true,
         },
-        '2': {
-          id: '2',
-          name: 'Renovavel (garantia de origem)',
-          description: 'Renovavel (garantia de origem) desc'
+        'ELETRICA_RENOVAVEL': {
+          id: 'ELETRICA_RENOVAVEL',
+          name: 'Renovável (garantia de origem)',
+          description: 'Renovável (garantia de origem) desc',
+          unit: ['kWh'],
+          required: true,
+        },
+        'ELETRICA_RENOVAVEL_AUTOCONSUMO': {
+          id: 'ELETRICA_RENOVAVEL_AUTOCONSUMO',
+          name: 'Renovável (autoconsumo)',
+          description: 'Renovável (autoconsumo) desc',
+          unit: ['kWh'],
+          required: true,
+        },
+        'ELETRICA_MOBILIDADE_ELETRICA': {
+          id: 'ELETRICA_MOBILIDADE_ELETRICA',
+          name: 'Mobilidade Elétrica',
+          description: 'Mobilidade Elétrica desc',
+          unit: ['kWh'],
+          required: true,
+        },
+        'ELETRICA_OUTROS': {
+          id: 'ELETRICA_OUTROS',
+          name: 'Outra',
+          description: 'Outra desc',
+          unit: ['kWh'],
+          required: false,
         }
       }
     },
@@ -52,3 +77,15 @@ export const getCategories = (year : string): InputCategory[] => {
     }
   ]
 }
+
+export const getCaeList = (): string[] => [
+  '11234',
+  '22222',
+  '33333'
+];
+
+export const getOpenedYears = (): string[] => [
+  '2022',
+  '2023',
+  '2024'
+];
