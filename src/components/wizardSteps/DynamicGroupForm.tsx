@@ -44,6 +44,11 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   };
 
   const renderCombo = (field: RequestField): JSX.Element => {
+    const options = field.Values.map(value => <MenuItem key={value} value={value}>{value}</MenuItem>);
+    if(field.CustomValue){
+      const customOption = <MenuItem key='other' value='other'>Outro</MenuItem>;
+      options.push(customOption);
+    }
     return (
       <FormControl sx={{ m: 1, minWidth: 400 }} error={errors.some(error => error.id === field.ID)} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
@@ -54,9 +59,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             onChange={ event => setInput({id: field.ID, groupId: group.Name, value: event.target.value})}
             fullWidth
           >
-            {
-              field.Values.map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)
-            }
+            {options}
           </Select>
         <FormHelperText>{errors.find(error => error.id === field.ID)?.message}</FormHelperText>
       </FormControl>
@@ -68,11 +71,15 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       {group.Name}
       <Grid container spacing={2}>
           {
-            group.Fields.map(field => (
-              <Grid size={{ xs: 12, md: 12 }} key={field.ID}>
-                {field.Values.length > 0 ? renderCombo(field) : renderTextField(field)}
-              </Grid>
-            ))
+            group.Fields.map(field => {
+              const currentValue = getInput(group.Name, field.ID).value;
+              const isOtherOption = !!currentValue && field.CustomValue && (currentValue === 'other' || !field.Values.some(value => value === currentValue));
+              return (
+                <Grid size={{ xs: 12, md: 12 }} key={field.ID}>
+                  {field.Values.length === 0 || isOtherOption ? renderTextField(field) : renderCombo(field)}
+                </Grid>
+              )
+            })
           }
       </Grid>
     </>

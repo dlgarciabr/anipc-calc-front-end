@@ -1,7 +1,5 @@
 import { FieldError, Simulation } from "../../types";
 
-const requiredMessage = 'é obrigatorio';
-
 export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[]) => void): boolean => {
   if(!simulation){
     return false;
@@ -21,18 +19,20 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
     if(field.Required && !inputValue){
       errors.push({
         id: field.ID,
-        message: field.Name + " " + requiredMessage
+        message: field.Name + " é um campo obrigatório"
       })
     }
 
-    if(inputValue && field.Regex && !(new RegExp(field.Regex)).test(inputValue.value)){
+    const isInputField = field.Values.length === 0 || (field.Values.length > 0 && field.CustomValue && !field.Values.some(value => value === inputValue.value));
+
+    if(isInputField && inputValue && field.Regex && !(new RegExp(field.Regex)).test(inputValue.value)){
       errors.push({
         id: field.ID,
         message: `Preencha um ${field.Name} válido`
       })
     }
   });
-
+  console.log('errors', errors);
   setErrors(errors);
 
   return errors.length > 0;
