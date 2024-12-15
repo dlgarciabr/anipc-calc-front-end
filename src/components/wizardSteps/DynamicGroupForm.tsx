@@ -71,21 +71,32 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     );
   }
 
+  const renderMultifields = (field: RequestField): JSX.Element  => {
+    return <>multifield</>;
+  }
+
+  const renderField = (field: RequestField) => {
+    const currentValue = getInput(group.Name, field.ID).value;
+    const isOtherOption = !!currentValue && field.CustomValue && (currentValue === 'other' || !field.Values.some(value => value === currentValue));
+    if(field.MultiField){
+      return renderMultifields(field);
+    }
+    if(field.Values.length === 0 || isOtherOption){
+      return renderTextField(field);
+    }
+
+    return renderCombo(field);
+  }
+
   return (
     <>
       {group.Name}
       <Grid container spacing={2}>
-          {
-            group.Fields.map(field => {
-              const currentValue = getInput(group.Name, field.ID).value;
-              const isOtherOption = !!currentValue && field.CustomValue && (currentValue === 'other' || !field.Values.some(value => value === currentValue));
-              return (
-                <Grid size={{ xs: 12, md: 12 }} key={field.ID}>
-                  {field.Values.length === 0 || isOtherOption ? renderTextField(field) : renderCombo(field)}
-                </Grid>
-              )
-            })
-          }
+        {group.Fields.map(field => (
+          <Grid size={{ xs: 12, md: 12 }} key={field.ID}>
+            {renderField(field)}
+          </Grid>
+        ))}
       </Grid>
     </>
   )

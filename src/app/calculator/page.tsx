@@ -10,6 +10,7 @@ import { getForm } from "./api";
 import DynamicGroupForm from "@/components/wizardSteps/DynamicGroupForm";
 import { Alert, Container, Grid2 as Grid } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import FinalStep from "@/components/wizardSteps/FinalStep";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -29,7 +30,6 @@ const Calculator = () => {
     const nextStep = activeStep + 1;
     setNextStep(nextStep);
     if(!hasErrors()){
-      console.log('nextStep', nextStep);
       setActiveStep(nextStep);
       wizardState.nextStep();
     }
@@ -70,7 +70,8 @@ const Calculator = () => {
 };
 
   const generateSteps = (): JSX.Element[] => [
-    ...renderDynamicSteps()
+    ...renderDynamicSteps(),
+    <FinalStep key="finalStep"/>
   ];
 
   return (

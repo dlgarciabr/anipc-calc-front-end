@@ -1,5 +1,5 @@
 import axios from "axios";
-import { InputCategory, RequestForm } from "../../types";
+import { RequestForm } from "../../types";
 
 const mockData = [
   {
@@ -220,25 +220,38 @@ const newMockdData = {
       ]
     },
     {
-      "Name": "Consumos de Combustão Estacionária",
+      "Name": "Consumo de fluídos refrigerantes (kg)",
       "Desc": "",
       "Fields": [
         {
           "ID": 3001,
-          "Name": "Gas natural",
+          "Name": "HFC-125",
           "Desc": "",
-          "Units": [
-            {
-              "Unit": "KWh",
-              "FC": ""
-            },
-            {
-              "Unit": "M3",
-              "FC": ""
-            }
-          ],
-          "Required": true,
-          "MultiField": false,
+          "Units": [],
+          "Required": false,
+          "MultiField": true,
+          "Values": [],
+          "CustomValue": false,
+          "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
+        },
+        {
+          "ID": 3002,
+          "Name": "HFC-134",
+          "Desc": "",
+          "Units": [],
+          "Required": false,
+          "MultiField": true,
+          "Values": [],
+          "CustomValue": false,
+          "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
+        },
+        {
+          "ID": 3003,
+          "Name": "HFC-143",
+          "Desc": "",
+          "Units": [],
+          "Required": false,
+          "MultiField": true,
           "Values": [],
           "CustomValue": false,
           "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
