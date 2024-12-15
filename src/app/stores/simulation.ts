@@ -1,26 +1,17 @@
 import { create } from 'zustand';
-import { Input, InputCategory, Simulation } from '../../types';
+import { InputValue, InputGroup, Simulation } from '../../types';
 import { validateSimulation } from './validations';
 
 const initialState: Simulation = {
   nextStep: 0,
-  company: {
-    name: '',
-    cae: '',
-    line: '',
-    submitterEmail: '',
-    submitterName: '',
-  },
   year: '',
-  inputCategories: {},
-  setInputCategories: (categories: InputCategory[]) => {},
-  setInput: (input: Input) => {},
-  getInput: (categoryId: string, inputId: string) => ({id: '', name: '', description: '', unit: [], value: ''}),
+  inputGroups: {},
+  setInputGroups: (groups: InputGroup[]) => {},
+  setInput: (input: InputValue) => {},
+  getInput: (groupId: string, inputId: number) => ({id: 0, value: '', groupId: ''}),
   setNextStep: (nextStep: number) => { },
-  setYear: () => { },
-  setCompanyField: () => { },
   validateSimulation: () => [],
-  inputValues: { }
+  // inputValues: { }
 }
 
 export const useSimulationStore = create<Simulation>((set, get) => ({
@@ -29,34 +20,47 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     ...state,
     nextStep
   })),
-  setYear: (year: string) => set((state) => ({
+  setInputGroups: (groups: InputGroup[]) => set((state) => ({
     ...state,
-    year
-  })),
-  setInputCategories: (categories: InputCategory[]) => set((state) => ({
-    ...state,
-    inputCategories: Object.fromEntries(categories.map(category => [category.id, category]))
-  })),
-  setCompanyField: (name: string, valeu: string) => set((state) => ({
-    ...state,
-    company: {
-      ...state.company,
-      [name]:valeu
-    }
+    inputGroups: Object.fromEntries(groups.map(group => [group.id, group]))
   })),
   validateSimulation: () => validateSimulation(get(), get().nextStep),
-  getInput: (categoryId: string, inputId: string) => get().inputCategories[categoryId].inputs[inputId],
-  setInput: (input: Input) => set((state) => {
-    const newInputValue =  { 
-      id: input.id,
-      value: input.value,
-      unit: input.unit[0],
-    };
+  getInput: (groupId: string, inputId: number) => { 
+    const group = get().inputGroups[groupId];
+    if(!group || !group.inputs[inputId]){
+      return {groupId, id: inputId, value: '', unit: ''};
+    }
+    return group.inputs[inputId];
+  },
+  // setInput: ({id, value, unit}: InputValue) => set((state) => {
+  //   const newInputValue =  { id, value, unit };
+  //   return {
+  //     ...state,
+  //     inputValues: {
+  //       ...state.inputValues, 
+  //       [newInputValue.id] : newInputValue
+  //     }
+  //   }
+  // }),
+  setInput: ({id, groupId, value, unit}: InputValue) => set((state) => {
+    const newInputValue =  { id, value, unit, groupId };
+    const group = state.inputGroups[groupId] || { id: groupId, inputs: {}};
+    
+    const newInputs = Object.values(group.inputs).length > 0 ? 
+      {
+        ...group.inputs,
+        [id]: newInputValue
+      } : 
+      { [id]: newInputValue };
+
     return {
       ...state,
-      inputValues: {
-        ...state.inputValues, 
-        [newInputValue.id] : newInputValue
+      inputGroups: {
+        ...state.inputGroups, 
+        [groupId] : {
+          ...group,
+          inputs: newInputs
+        }
       }
     }
   }),

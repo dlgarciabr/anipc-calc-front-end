@@ -3,48 +3,29 @@ export interface FieldError {
   message: string;
 };
 
-export interface Company {
-  name: string;
-  cae: string;
-  line: string;
-  submitterName: string;
-  submitterEmail: string;
-}
-
-export interface InputCategory {
+export interface InputGroup {
   id: string;
   name: string;
-  inputs: { [key: string ]: Input },
-}
-
-export interface Input {
-  id: string;
-  name: string;
-  unit: string[];
-  value?: string;
-  description: string;
-  required?: boolean;
+  inputs: { [key: string ]: InputValue },
 }
 
 export interface InputValue {
-  id: string;
-  value?: string;
-  unit: string;
+  id: number;
+  groupId: string;
+  value: string;
+  unit?: string;
 }
 
 export interface Simulation {
   nextStep: number;
-  company: Company;
   year: string;
-  inputCategories: { [key: string ]: InputCategory };
-  setInputCategories: (categories: InputCategory[]) => void;
-  setInput: (input: Input) => void;
-  getInput: (categoryId: string, inputId: string) => Input;
+  inputGroups: { [key: string ]: InputGroup };
+  setInputGroups: (categories: InputGroup[]) => void;
+  setInput: (input: InputValue) => void;
+  getInput: (groupId: string, inputId: number) => InputValue;
   setNextStep: (nextStep: number) => void; 
-  setYear: (year: string) => void;
-  setCompanyField: (name: string, valeu: string) => void;
   validateSimulation: () => FieldError[];
-  inputValues: { [key: string]: InputValue };
+  // inputValues: { [key: string]: InputValue };
 }
 
 export interface RequestForm {

@@ -205,6 +205,10 @@ const newMockdData = {
             {
               "Unit": "KWh",
               "FC": ""
+            },
+            {
+              "Unit": "Joules",
+              "FC": ""
             }
           ],
           "Required": true,
