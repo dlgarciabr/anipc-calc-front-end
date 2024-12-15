@@ -1,5 +1,5 @@
 export interface FieldError {
-  name: string;
+  id: number;
   message: string;
 };
 
@@ -18,14 +18,15 @@ export interface InputValue {
 
 export interface Simulation {
   nextStep: number;
-  year: string;
+  form: RequestForm;
+  setForm: (form: RequestForm) => void;
   inputGroups: { [key: string ]: InputGroup };
   setInputGroups: (categories: InputGroup[]) => void;
   setInput: (input: InputValue) => void;
   getInput: (groupId: string, inputId: number) => InputValue;
-  setNextStep: (nextStep: number) => void; 
-  validateSimulation: () => FieldError[];
-  // inputValues: { [key: string]: InputValue };
+  setNextStep: (nextStep: number) => void;
+  hasErrors: () => boolean;
+  errors: FieldError[];
 }
 
 export interface RequestForm {

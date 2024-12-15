@@ -10,7 +10,6 @@ import { getForm } from "./api";
 import DynamicGroupForm from "@/components/wizardSteps/DynamicGroupForm";
 import { Alert, Container, Grid2 as Grid } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { RequestForm } from "@/types";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -24,17 +23,15 @@ const Calculator = () => {
     previousStep: () => {},
   });
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const { validateSimulation, setNextStep } = useSimulationStore((state) => state);
-
-  const [form, setForm] = React.useState<RequestForm | undefined>();
+  const { setNextStep, setForm, form, hasErrors } = useSimulationStore((state) => state);
 
   const handleNext = () => {
     const nextStep = activeStep + 1;
     setNextStep(nextStep);
-    // if(!validateSimulation().length){
+    if(!hasErrors()){
       setActiveStep(nextStep);
       wizardState.nextStep();
-    // }
+    }
   };
 
   const handleBack = () => {

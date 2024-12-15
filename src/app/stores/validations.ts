@@ -1,52 +1,39 @@
 import { FieldError, Simulation } from "../../types";
-import { getCategories } from "../calculator/api";
 
-const requiredMessage = 'É obrigatorio';
+const requiredMessage = 'é obrigatorio';
 
-export const validateSimulation = (simulation: Simulation, nextStep: number): FieldError[] => {
+export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[]) => void): boolean => {
+  if(!simulation){
+    return false;
+  }
+
+  const groupToValidade = simulation.form.Groups[simulation.nextStep - 1]
+
   const errors:FieldError[]  = [];
   const skipValidation = false;
 
-  const validateInputValue = (inputId: string) => {
-    const inputValue = simulation.inputValues[inputId];
-    if(!inputValue || !inputValue.value){
-      errors.push({
-        name: inputId,
-        message: requiredMessage
-      })
-    }
+  if(skipValidation){
+    return false;
   }
 
-  if(skipValidation){
-    return [];
-  }
-  switch(nextStep){
-    case 1:
-      if(!simulation.company.name){
-        errors.push({
-          name: 'name',
-          message: requiredMessage
-        })
-      }
-      break;
-    case 2:
-      if(!simulation.year){
-        errors.push({
-          name: 'year',
-          message: requiredMessage
-        })
-      }
-      break;
-    case 3:
-      const category = getCategories('')[0];
-      const inputKeys = Object.keys(category.inputs);
-      validateInputValue(category.inputs[inputKeys[0]].id);
-      validateInputValue(category.inputs[inputKeys[1]].id);
-      validateInputValue(category.inputs[inputKeys[2]].id);
-      validateInputValue(category.inputs[inputKeys[3]].id);
-      break;
-    case 4:
-    default:
-  }
-  return errors;
+  groupToValidade.Fields.forEach(field => {
+    const inputValue = simulation.inputGroups[groupToValidade.Name]?.inputs[field.ID];
+    if(field.Required && !inputValue){
+      errors.push({
+        id: field.ID,
+        message: field.Name + " " + requiredMessage
+      })
+    }
+
+    if(inputValue && field.Regex && !(new RegExp(field.Regex)).test(inputValue.value)){
+      errors.push({
+        id: field.ID,
+        message: `Preencha um ${field.Name} válido`
+      })
+    }
+  });
+
+  setErrors(errors);
+
+  return errors.length > 0;
 }

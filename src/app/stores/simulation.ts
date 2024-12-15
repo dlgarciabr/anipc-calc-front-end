@@ -1,21 +1,26 @@
 import { create } from 'zustand';
-import { InputValue, InputGroup, Simulation } from '../../types';
-import { validateSimulation } from './validations';
+import { InputValue, InputGroup, Simulation, RequestForm, FieldError } from '../../types';
+import { hasErrors } from './validations';
 
 const initialState: Simulation = {
   nextStep: 0,
-  year: '',
+  form: { ID: '', Groups: []},
+  setForm: (form: RequestForm) => {},
   inputGroups: {},
   setInputGroups: (groups: InputGroup[]) => {},
   setInput: (input: InputValue) => {},
   getInput: (groupId: string, inputId: number) => ({id: 0, value: '', groupId: ''}),
   setNextStep: (nextStep: number) => { },
-  validateSimulation: () => [],
-  // inputValues: { }
+  hasErrors: () => boolean,
+  errors: [],
 }
 
 export const useSimulationStore = create<Simulation>((set, get) => ({
   ...initialState,
+  setForm: (form: RequestForm) => set((state) => ({
+    ...state,
+     form
+  })),
   setNextStep: (nextStep: number) => set((state) => ({
     ...state,
     nextStep
@@ -24,7 +29,14 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     ...state,
     inputGroups: Object.fromEntries(groups.map(group => [group.id, group]))
   })),
-  validateSimulation: () => validateSimulation(get(), get().nextStep),
+  errors: [],
+  hasErrors: () => hasErrors(
+    get(), 
+    (errors: FieldError[]) => set((state) => ({
+      ...state,
+      errors
+    }))
+  ),
   getInput: (groupId: string, inputId: number) => { 
     const group = get().inputGroups[groupId];
     if(!group || !group.inputs[inputId]){
@@ -32,16 +44,6 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     }
     return group.inputs[inputId];
   },
-  // setInput: ({id, value, unit}: InputValue) => set((state) => {
-  //   const newInputValue =  { id, value, unit };
-  //   return {
-  //     ...state,
-  //     inputValues: {
-  //       ...state.inputValues, 
-  //       [newInputValue.id] : newInputValue
-  //     }
-  //   }
-  // }),
   setInput: ({id, groupId, value, unit}: InputValue) => set((state) => {
     const newInputValue =  { id, value, unit, groupId };
     const group = state.inputGroups[groupId] || { id: groupId, inputs: {}};
