@@ -38,10 +38,10 @@ const Calculator = () => {
   const handleBack = () => {
     const nextStep = activeStep - 1;
     setNextStep(nextStep);
-    if(!hasErrors()){
+    // if(!hasErrors()){
       setActiveStep(nextStep);
       wizardState.previousStep();
-    }
+    // }
   };
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
@@ -72,13 +72,13 @@ const Calculator = () => {
   const generateSteps = (): JSX.Element[] => [
     ...renderDynamicSteps()
   ];
-  console.log('activeStep', activeStep)
+
   return (
     !form ? 
     <>loading</> :
     <Container maxWidth="md">
       <Grid container>
-        <Grid size={{ xs: 8, md: 8 }}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <Alert icon={<InfoOutlinedIcon fontSize="inherit" />} severity="warning">
             Step information message TODO
           </Alert>

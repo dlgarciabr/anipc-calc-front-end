@@ -11,35 +11,40 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   const renderTextField = (field: RequestField): JSX.Element => {
     const value = getInput(group.Name, field.ID).value;
+    const fieldSize = field.Units.length > 0 ? 8 : 12;
     return (
-      <>
-        <TextField
-          fullWidth
-          label={field.Name}
-          required={field.Required}
-          onChange={ event => setInput({id: field.ID, groupId: group.Name,value: event.target.value})}
-          error={errors.some(error => error.id === field.ID.toString())}
-          helperText={errors.find(error => error.id === field.ID.toString())?.message}
-        />
+      <Grid size={{ xs: 12, md: 12 }} container>
+        <Grid size={{ xs: fieldSize, md: fieldSize }}>
+          <TextField
+            fullWidth
+            label={field.Name}
+            required={field.Required}
+            onChange={ event => setInput({id: field.ID, groupId: group.Name,value: event.target.value})}
+            error={errors.some(error => error.id === field.ID.toString())}
+            helperText={errors.find(error => error.id === field.ID.toString())?.message}
+          />
+        </Grid>
         {
         field.Units.length > 0 ? 
-        <FormControl sx={{ m: 1, minWidth: 120 }} error={errors.some(error => error.id === `${field.ID}_un`)} required={field.Required}>
-          <InputLabel id={`combo-unit-${field.ID}`}>Unidade</InputLabel>
-            <Select
-              labelId={`combo-unit-${field.ID}`}
-              id={`combo-unit-${field.ID}-label`}
-              value={getInput(group.Name, field.ID).unit}
-              onChange={ e => setInput({id: field.ID, groupId: group.Name, value, unit: e.target.value})}
-              fullWidth
-            >
-              {
-                field.Units.map(unit => <MenuItem key={unit.Unit} value={unit.Unit}>{unit.Unit}</MenuItem>)
-              }
-            </Select>
-          <FormHelperText>{errors.find(error => error.id === `${field.ID}_un`)?.message}</FormHelperText>
-        </FormControl>
+        <Grid size={{ xs: 4, md: 4 }}>
+          <FormControl sx={{ minWidth: 200 }} error={errors.some(error => error.id === `${field.ID}_un`)} required={field.Required}>
+            <InputLabel id={`combo-unit-${field.ID}`}>Unidade</InputLabel>
+              <Select
+                labelId={`combo-unit-${field.ID}`}
+                id={`combo-unit-${field.ID}-label`}
+                value={getInput(group.Name, field.ID).unit}
+                onChange={ e => setInput({id: field.ID, groupId: group.Name, value, unit: e.target.value})}
+                fullWidth
+              >
+                {
+                  field.Units.map(unit => <MenuItem key={unit.Unit} value={unit.Unit}>{unit.Unit}</MenuItem>)
+                }
+              </Select>
+            <FormHelperText>{errors.find(error => error.id === `${field.ID}_un`)?.message}</FormHelperText>
+          </FormControl>
+        </Grid>
         : undefined}
-      </>
+      </Grid>
     );
   };
 
@@ -50,7 +55,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       options.push(customOption);
     }
     return (
-      <FormControl sx={{ m: 1, minWidth: 400 }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
+      <FormControl sx={{ minWidth: 150 }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
           <Select
             labelId={`combo-${field.ID}`}
