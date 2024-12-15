@@ -1,18 +1,16 @@
 "use client"
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import CalculatorStep from "@/components/CalculatorStep";
 import dynamic from "next/dynamic";
 import StepWizard, { StepWizardProps } from "react-step-wizard";
 import CalculatorNavigator from "@/components/CalculatorNavigator";
-import CompanyFormStep from "@/components/wizardSteps/CompanyFormStep";
 import { useSimulationStore } from "../stores/simulation";
-import YearSelectionStep from "@/components/wizardSteps/YearSelectionStep";
-import { getCategories } from "./api";
-import DynamicCategoryForm from "@/components/wizardSteps/DynamicCategoryForm";
+import { getForm } from "./api";
+import DynamicGroupForm from "@/components/wizardSteps/DynamicGroupForm";
 import { Alert, Container, Grid2 as Grid } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import EletricEnergyStep from "@/components/wizardSteps/EletricEnergyStep";
+import { RequestForm } from "@/types";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -26,24 +24,26 @@ const Calculator = () => {
     previousStep: () => {},
   });
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const { validateSimulation, setNextStep, inputCategories, setInputCategories } = useSimulationStore((state) => state);
+  const { validateSimulation, setNextStep } = useSimulationStore((state) => state);
+
+  const [form, setForm] = React.useState<RequestForm | undefined>();
 
   const handleNext = () => {
     const nextStep = activeStep + 1;
     setNextStep(nextStep);
-    if(!validateSimulation().length){
+    // if(!validateSimulation().length){
       setActiveStep(nextStep);
       wizardState.nextStep();
-    }
+    // }
   };
 
   const handleBack = () => {
     const nextStep = activeStep - 1;
     setNextStep(nextStep);
-    if(!validateSimulation().length){
+    // if(!validateSimulation().length){
       setActiveStep(nextStep);
       wizardState.previousStep();
-    }
+    // }
   };
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
@@ -51,27 +51,33 @@ const Calculator = () => {
     ...wizard,
   });
 
+  const loadForm = useCallback(async () => {
+    const form = await getForm('');
+    setForm(form);
+  }, [setForm]);
+
   useEffect(()=>{
-    if(!Object.keys(inputCategories).length){
-      const categories = getCategories('');
-      setInputCategories(categories);
+    void loadForm();
+  },[loadForm])
+
+  const renderDynamicSteps = () => { 
+    if(!form){
+      return []
     }
-  },[inputCategories, setInputCategories])
+    return form.Groups.map((group) => (
+      <CalculatorStep key={group.Name}>
+        <DynamicGroupForm group={group} />
+      </CalculatorStep>
+    ));
+};
 
-  const dinamicSteps = Object.values(inputCategories).map((category) => (
-    <CalculatorStep key={category.id}>
-      <DynamicCategoryForm category={category} />
-    </CalculatorStep>
-  ));
-
-  const steps: JSX.Element[] = [
-    <CompanyFormStep key={0} />,
-    <YearSelectionStep key={1} />,
-    <EletricEnergyStep key={2} />,
-    ...dinamicSteps
+  const generateSteps = (): JSX.Element[] => [
+    ...renderDynamicSteps()
   ];
 
   return (
+    !form ? 
+    <>loading</> :
     <Container maxWidth="md">
       <Grid container>
         <Grid size={{ xs: 8, md: 8 }}>
@@ -81,15 +87,13 @@ const Calculator = () => {
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
           {
-            dinamicSteps.length > 0 ?
             <StepWizard instance={setInstance} isHashEnabled={true}>
-              {steps}
-            </StepWizard> :
-            'LOADING...'
+              {generateSteps()}
+            </StepWizard>
           }
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
-          <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={steps.length} />
+          <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
         </Grid>
       </Grid>
     </Container>

@@ -33,11 +33,11 @@ export interface InputValue {
 }
 
 export interface Simulation {
-  nextStep: number
-  company: Company,
-  year: string,
-  inputCategories: { [key: string ]: InputCategory },
-  setInputCategories: (categories: InputCategory[]) => void,
+  nextStep: number;
+  company: Company;
+  year: string;
+  inputCategories: { [key: string ]: InputCategory };
+  setInputCategories: (categories: InputCategory[]) => void;
   setInput: (input: Input) => void;
   getInput: (categoryId: string, inputId: string) => Input;
   setNextStep: (nextStep: number) => void; 
@@ -46,3 +46,31 @@ export interface Simulation {
   validateSimulation: () => FieldError[];
   inputValues: { [key: string]: InputValue };
 }
+
+export interface RequestForm {
+  ID: string;
+  Groups: RequestGroup[];
+}
+
+export interface RequestGroup {
+  Name: string;
+  Desc: string;
+  Fields: RequestField[];
+}
+
+export interface RequestField {
+  ID: number;
+  Name: string;
+  Desc: string;
+  Units: RequestUnit[];
+  Required: boolean;
+  MultiField: boolean;
+  Values: string[];
+  CustomValue: boolean;
+  Regex: string;
+}
+
+export interface RequestUnit {
+  Unit: string;
+  FC: string;
+} 

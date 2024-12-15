@@ -1,0 +1,76 @@
+// import { useSimulationStore } from "@/app/stores/simulation";
+import { RequestField, RequestGroup } from "@/types";
+import { FormControl, FormHelperText, Grid2 as Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+
+interface DynamicCategoryFormProps {
+  group: RequestGroup;
+}
+
+const renderTextField = (field: RequestField): JSX.Element => (
+  <>
+    <TextField
+      fullWidth
+      label={field.Name}
+      defaultValue=''
+      required={field.Required}
+    />
+    {
+    field.Units.length > 0 ? 
+    <FormControl sx={{ m: 1, minWidth: 120 }} error={false} required={field.Required}>
+      <InputLabel id={`combo-unit-${field.ID}`}>Unidade</InputLabel>
+        <Select
+          labelId={`combo-unit-${field.ID}`}
+          id={`combo-unit-${field.ID}-label`}
+          value=''
+          onChange={(e)=>console.log(e.target.value)}
+          fullWidth
+        >
+          {
+            field.Units.map(unit => <MenuItem key={unit.Unit} value={unit.Unit}>{unit.Unit}</MenuItem>)
+          }
+        </Select>
+      <FormHelperText>error</FormHelperText>
+    </FormControl>
+     : undefined}
+  </>
+);
+
+const renderCombo = (field: RequestField): JSX.Element => {
+  return (
+    <FormControl sx={{ m: 1, minWidth: 400 }} error={false} required={field.Required}>
+      <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
+        <Select
+          labelId={`combo-${field.ID}`}
+          id={`combo-${field.ID}-label`}
+          value=''
+          onChange={(e)=>console.log(e.target.value)}
+          fullWidth
+        >
+          {
+            field.Values.map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)
+          }
+        </Select>
+      <FormHelperText>error</FormHelperText>
+    </FormControl>
+  );
+}
+
+const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
+  // const { inputCategories } = useSimulationStore((state) => state);
+  return (
+    <>
+      {group.Name}
+      <Grid container spacing={2}>
+          {
+            group.Fields.map(field => (
+              <Grid size={{ xs: 12, md: 12 }} key={field.ID}>
+                {field.Values.length > 0 ? renderCombo(field) : renderTextField(field)}
+              </Grid>
+            ))
+          }
+      </Grid>
+    </>
+  )
+}
+
+export default DynamicGroupForm;
