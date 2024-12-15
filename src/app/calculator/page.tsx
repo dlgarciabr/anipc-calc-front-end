@@ -29,6 +29,7 @@ const Calculator = () => {
     const nextStep = activeStep + 1;
     setNextStep(nextStep);
     if(!hasErrors()){
+      console.log('nextStep', nextStep);
       setActiveStep(nextStep);
       wizardState.nextStep();
     }
@@ -37,10 +38,10 @@ const Calculator = () => {
   const handleBack = () => {
     const nextStep = activeStep - 1;
     setNextStep(nextStep);
-    // if(!validateSimulation().length){
+    if(!hasErrors()){
       setActiveStep(nextStep);
       wizardState.previousStep();
-    // }
+    }
   };
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
@@ -71,7 +72,7 @@ const Calculator = () => {
   const generateSteps = (): JSX.Element[] => [
     ...renderDynamicSteps()
   ];
-
+  console.log('activeStep', activeStep)
   return (
     !form ? 
     <>loading</> :
@@ -84,7 +85,7 @@ const Calculator = () => {
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
           {
-            <StepWizard instance={setInstance} isHashEnabled={true}>
+            <StepWizard instance={setInstance}>
               {generateSteps()}
             </StepWizard>
           }

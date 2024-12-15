@@ -18,12 +18,12 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
           label={field.Name}
           required={field.Required}
           onChange={ event => setInput({id: field.ID, groupId: group.Name,value: event.target.value})}
-          error={errors.some(error => error.id === field.ID)}
-          helperText={errors.find(error => error.id === field.ID)?.message}
+          error={errors.some(error => error.id === field.ID.toString())}
+          helperText={errors.find(error => error.id === field.ID.toString())?.message}
         />
         {
         field.Units.length > 0 ? 
-        <FormControl sx={{ m: 1, minWidth: 120 }} error={false} required={field.Required}>
+        <FormControl sx={{ m: 1, minWidth: 120 }} error={errors.some(error => error.id === `${field.ID}_un`)} required={field.Required}>
           <InputLabel id={`combo-unit-${field.ID}`}>Unidade</InputLabel>
             <Select
               labelId={`combo-unit-${field.ID}`}
@@ -36,7 +36,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
                 field.Units.map(unit => <MenuItem key={unit.Unit} value={unit.Unit}>{unit.Unit}</MenuItem>)
               }
             </Select>
-          <FormHelperText>error</FormHelperText>
+          <FormHelperText>{errors.find(error => error.id === `${field.ID}_un`)?.message}</FormHelperText>
         </FormControl>
         : undefined}
       </>
@@ -50,7 +50,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       options.push(customOption);
     }
     return (
-      <FormControl sx={{ m: 1, minWidth: 400 }} error={errors.some(error => error.id === field.ID)} required={field.Required}>
+      <FormControl sx={{ m: 1, minWidth: 400 }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
           <Select
             labelId={`combo-${field.ID}`}
@@ -61,7 +61,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
           >
             {options}
           </Select>
-        <FormHelperText>{errors.find(error => error.id === field.ID)?.message}</FormHelperText>
+        <FormHelperText>{errors.find(error => error.id === field.ID.toString())?.message}</FormHelperText>
       </FormControl>
     );
   }

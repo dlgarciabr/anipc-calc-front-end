@@ -1,5 +1,5 @@
 export interface FieldError {
-  id: number;
+  id: string;
   message: string;
 };
 

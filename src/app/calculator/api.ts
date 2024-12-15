@@ -218,6 +218,32 @@ const newMockdData = {
           "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
         }
       ]
+    },
+    {
+      "Name": "Consumos de Combustão Estacionária",
+      "Desc": "",
+      "Fields": [
+        {
+          "ID": 3001,
+          "Name": "Gas natural",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "KWh",
+              "FC": ""
+            },
+            {
+              "Unit": "M3",
+              "FC": ""
+            }
+          ],
+          "Required": true,
+          "MultiField": false,
+          "Values": [],
+          "CustomValue": false,
+          "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
+        }
+      ]
     }
   ]
 };

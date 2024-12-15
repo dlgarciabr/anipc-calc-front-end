@@ -45,7 +45,8 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     return group.inputs[inputId];
   },
   setInput: ({id, groupId, value, unit}: InputValue) => set((state) => {
-    const newInputValue =  { id, value, unit, groupId };
+    const currentValue = get().getInput(groupId, id);
+    const newInputValue =  { id, value, unit: !!unit ? unit: currentValue.unit, groupId };
     const group = state.inputGroups[groupId] || { id: groupId, inputs: {}};
     
     const newInputs = Object.values(group.inputs).length > 0 ? 
