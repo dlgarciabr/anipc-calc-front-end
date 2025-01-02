@@ -83,7 +83,7 @@ const newMockdData = {
   "Groups": [
     {
       "Name": "Dados da Empresa",
-      "Desc": "",
+      "Desc": "Descrição dos dados da empresa",
       "Fields": [
         {
           "ID": 1001,
@@ -195,7 +195,7 @@ const newMockdData = {
     },
     {
       "Name": "Consumos de Energia Elétrica",
-      "Desc": "",
+      "Desc": "Descrição do consumo de energia elétrica",
       "Fields": [
         {
           "ID": 2001,

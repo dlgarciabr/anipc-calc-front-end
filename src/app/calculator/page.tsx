@@ -8,8 +8,7 @@ import CalculatorNavigator from "@/components/CalculatorNavigator";
 import { useSimulationStore } from "../stores/simulation";
 import { getForm } from "./api";
 import DynamicGroupForm from "@/components/wizardSteps/DynamicGroupForm";
-import { Alert, Container, Grid2 as Grid } from "@mui/material";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Container, Grid2 as Grid } from "@mui/material";
 import FinalStep from "@/components/wizardSteps/FinalStep";
 
 export interface ExtendedWizardProps extends StepWizardProps {
@@ -79,12 +78,12 @@ const Calculator = () => {
     <>loading</> :
     <Container maxWidth="md">
       <Grid container>
-        <Grid size={{ xs: 12, md: 12 }}>
+        {/* <Grid size={{ xs: 12, md: 12 }}>
           <Alert icon={<InfoOutlinedIcon fontSize="inherit" />} severity="warning">
             Step information message TODO
           </Alert>
-        </Grid>
-        <Grid size={{ xs: 12, md: 12 }}>
+        </Grid> */}
+        <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '700px'}}>
           {
             <StepWizard instance={setInstance}>
               {generateSteps()}

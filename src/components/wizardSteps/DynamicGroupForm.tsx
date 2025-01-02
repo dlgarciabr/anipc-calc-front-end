@@ -1,6 +1,7 @@
 import { useSimulationStore } from "@/app/stores/simulation";
 import { RequestField, RequestGroup } from "@/types";
-import { FormControl, FormHelperText, Grid2 as Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Alert, FormControl, FormHelperText, Grid2 as Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -11,10 +12,10 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   const renderTextField = (field: RequestField): JSX.Element => {
     const value = getInput(group.Name, field.ID).value;
-    const fieldSize = field.Units.length > 0 ? 8 : 12;
+    const textFieldSize = field.Units.length > 0 ? 9 : 12;
     return (
-      <Grid size={{ xs: 12, md: 12 }} container>
-        <Grid size={{ xs: fieldSize, md: fieldSize }}>
+      <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
+        <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
           <TextField
             fullWidth
             label={field.Name}
@@ -26,8 +27,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
         </Grid>
         {
         field.Units.length > 0 ? 
-        <Grid size={{ xs: 4, md: 4 }}>
-          <FormControl sx={{ minWidth: 200 }} error={errors.some(error => error.id === `${field.ID}_un`)} required={field.Required}>
+        <Grid size={{ xs: 3, md: 3 }}>
+          <FormControl error={errors.some(error => error.id === `${field.ID}_un`)} required={field.Required} fullWidth>
             <InputLabel id={`combo-unit-${field.ID}`}>Unidade</InputLabel>
               <Select
                 labelId={`combo-unit-${field.ID}`}
@@ -90,10 +91,19 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   return (
     <>
-      {group.Name}
-      <Grid container spacing={2}>
+      <Typography variant="h4" component="h4">{group.Name}</Typography>
+      <Grid container>
+        {
+          group.Desc ? (
+            <Grid size={{ xs: 12, md: 12 }} sx={{margin: '10px 0 20px 0'}}>
+              <Alert icon={<InfoOutlinedIcon fontSize="inherit" />} severity="warning">
+                {group.Desc}
+              </Alert>
+            </Grid>
+          ): undefined
+        }
         {group.Fields.map(field => (
-          <Grid size={{ xs: 12, md: 12 }} key={field.ID}>
+          <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '80px'}}>
             {renderField(field)}
           </Grid>
         ))}
