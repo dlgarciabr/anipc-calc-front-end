@@ -36,7 +36,7 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
     if(isInputField && inputValue && field.Regex && !(new RegExp(field.Regex)).test(inputValue.value)){
       errors.push({
         id: field.ID.toString(),
-        message: `Preencha um ${field.Name} válido`
+        message: `Campo ${field.Name} inválido`
       })
     }
   });

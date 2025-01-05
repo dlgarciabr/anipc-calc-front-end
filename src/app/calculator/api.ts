@@ -1,95 +1,20 @@
 import axios from "axios";
-import { RequestForm } from "../../types";
-
-const mockData = [
-  {
-    id: 'ELETRICA',
-    name: 'Consumo de Energia Eletrica',
-    inputs: {
-      'ELETRICA_FATURADA': {
-        id: 'ELETRICA_FATURADA',
-        name: 'Faturada',
-        description: 'Faturada desc',
-        unit: ['kWh'],
-        required: true,
-      },
-      'ELETRICA_RENOVAVEL': {
-        id: 'ELETRICA_RENOVAVEL',
-        name: 'Renovável (garantia de origem)',
-        description: 'Renovável (garantia de origem) desc',
-        unit: ['kWh'],
-        required: true,
-      },
-      'ELETRICA_RENOVAVEL_AUTOCONSUMO': {
-        id: 'ELETRICA_RENOVAVEL_AUTOCONSUMO',
-        name: 'Renovável (autoconsumo)',
-        description: 'Renovável (autoconsumo) desc',
-        unit: ['kWh'],
-        required: true,
-      },
-      'ELETRICA_MOBILIDADE_ELETRICA': {
-        id: 'ELETRICA_MOBILIDADE_ELETRICA',
-        name: 'Mobilidade Elétrica',
-        description: 'Mobilidade Elétrica desc',
-        unit: ['kWh'],
-        required: true,
-      },
-      'ELETRICA_OUTROS': {
-        id: 'ELETRICA_OUTROS',
-        name: 'Outra',
-        description: 'Outra desc',
-        unit: ['kWh'],
-        required: false,
-      }
-    }
-  },
-  {
-    id: 'COMBUSTAO_ESTACIONARIA',
-    name: 'Combustão Estacionária',
-    inputs: {
-      '3': {
-        id: '3',
-        name: 'Gas Propano',
-        description: 'Faturada desc'
-      },
-      '4': {
-        id: '4',
-        name: 'Gas natural',
-        description: 'natural desc'
-      }
-    }
-  },
-  {
-    id: 'COMBUSTAO_MOVEL',
-    name: 'Combustão Móvel',
-    inputs: {
-      '5': {
-        id: '5',
-        name: 'Gasoleo',
-        description: 'Gasoleo desc'
-      },
-      '6': {
-        id: '6',
-        name: 'Gasolina',
-        description: 'Gasolina desc'
-      }
-    }
-  }
-] as InputCategory[];
-
+import { InputGroup, RequestForm } from "../../types";
 
 const newMockdData = {
   "ID": "ANIPC",
   "Groups": [
     {
       "Name": "Dados da Empresa",
-      "Desc": "Descrição dos dados da empresa",
+      "Desc": "",
       "Fields": [
         {
           "ID": 1001,
           "Name": "Ano de Cálculo",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            
+          ],
           "Required": true,
           "MultiField": false,
           "Values": [
@@ -104,18 +29,24 @@ const newMockdData = {
           "ID": 1002,
           "Name": "Nome da Empresa",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            
+          ],
           "Required": true,
           "MultiField": false,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": ""
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^.{1,100}$"
         },
         {
           "ID": 1003,
           "Name": "CAE Principal",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            
+          ],
           "Required": true,
           "MultiField": false,
           "Values": [
@@ -135,7 +66,9 @@ const newMockdData = {
           "ID": 1004,
           "Name": "Fileira",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            
+          ],
           "Required": true,
           "MultiField": false,
           "Values": [
@@ -151,51 +84,67 @@ const newMockdData = {
           "ID": 1005,
           "Name": "Unidade de Produção",
           "Desc": "Indicar a unidade de produção aplicável (e.g., ton., m2)",
-          "Units": [],
-          "Required": false,
+          "Units": [
+            
+          ],
+          "Required": true,
           "MultiField": false,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": ""
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^.{1,10}$"
         },
         {
           "ID": 1006,
           "Name": "Produção Anual",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            
+          ],
           "Required": true,
           "MultiField": false,
-          "Values": [],
+          "Values": [
+            
+          ],
           "CustomValue": true,
-          "Regex": ""
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
         },
         {
           "ID": 1007,
           "Name": "Nome do Responsável",
           "Desc": "",
-          "Units": [],
-          "Required": false,
+          "Units": [
+            
+          ],
+          "Required": true,
           "MultiField": false,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": ""
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^.{1,50}$"
         },
         {
           "ID": 1008,
           "Name": "E-mail do Responsável",
           "Desc": "",
-          "Units": [],
-          "Required": false,
+          "Units": [
+            
+          ],
+          "Required": true,
           "MultiField": false,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^(?=.{1,64}@)[\\w-!#$%&'*+/=?^_`{|}~]+(\\.[\\w-!#$%&'*+/=?^_`{|}~]+)*@(\\w+(-+\\w+)*\\.)*(?=.{2,4}$)[a-zA-Z]+(-+[a-zA-Z]+)*$"
         }
       ]
     },
     {
       "Name": "Consumos de Energia Elétrica",
-      "Desc": "Descrição do consumo de energia elétrica",
+      "Desc": "",
       "Fields": [
         {
           "ID": 2001,
@@ -203,63 +152,757 @@ const newMockdData = {
           "Desc": "",
           "Units": [
             {
-              "Unit": "KWh",
-              "FC": ""
-            },
-            {
-              "Unit": "Joules",
-              "FC": ""
+              "Unit": "KWh"
             }
           ],
           "Required": true,
           "MultiField": false,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 2002,
+          "Name": "Renovável (Garantias de Origem)",
+          "Desc": "Se aplicável, deverá ser indicada a quantidade de \"eletricidade verde\" deverá basear-se em evidências da respetiva contratação junto do(s) comercializador(es) de energia (incluindo mobilidade elétrica) e/ou de Certificados de Garantia de Origem.",
+          "Units": [
+            {
+              "Unit": "KWh"
+            }
+          ],
+          "Required": false,
+          "MultiField": false,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 2003,
+          "Name": "Renovável (autoconsumo)",
+          "Desc": "Se aplicável, deverá ser indicada a quantidade de eletricidade renovável autoconsumida, excluindo a energia excedente.",
+          "Units": [
+            {
+              "Unit": "KWh"
+            }
+          ],
+          "Required": false,
+          "MultiField": false,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 2004,
+          "Name": "Mobilidade Elétrica",
+          "Desc": "Se aplicável, deverá ser indicada a quantidade de eletricidade faturada decorrente dos carregamentos efetuados em postos de carregamento fora da empresa.",
+          "Units": [
+            {
+              "Unit": "KWh"
+            }
+          ],
+          "Required": false,
+          "MultiField": false,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 2005,
+          "Name": "Outra",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "KWh"
+            }
+          ],
+          "Required": false,
+          "MultiField": false,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
         }
       ]
     },
     {
-      "Name": "Consumo de fluídos refrigerantes (kg)",
+      "Name": "Combustão Estacionária",
       "Desc": "",
       "Fields": [
         {
           "ID": 3001,
-          "Name": "HFC-125",
+          "Name": "Biomassa (certificada)",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            {
+              "Unit": "Ton"
+            }
+          ],
           "Required": false,
           "MultiField": true,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
         },
         {
           "ID": 3002,
-          "Name": "HFC-134",
+          "Name": "Biomassa (não certificada)",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            {
+              "Unit": "Ton"
+            }
+          ],
           "Required": false,
           "MultiField": true,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
         },
         {
           "ID": 3003,
-          "Name": "HFC-143",
+          "Name": "Gás natural",
           "Desc": "",
-          "Units": [],
+          "Units": [
+            {
+              "Unit": "KWh"
+            },
+            {
+              "Unit": "m3"
+            }
+          ],
           "Required": false,
           "MultiField": true,
-          "Values": [],
-          "CustomValue": false,
-          "Regex": "^[1-9][0-9]*(,[0-9]+)?$"
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 3004,
+          "Name": "Gás propano",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 3005,
+          "Name": "Fuelóleo",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Ton"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 3006,
+          "Name": "Gasóleo (aquecimento)",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "litros"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 3007,
+          "Name": "Outro (Renovável)",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "KWh"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        }
+      ]
+    },
+    {
+      "Name": "Combustão Móvel (Frota)",
+      "Desc": "",
+      "Fields": [
+        {
+          "ID": 4001,
+          "Name": "Gasóleo",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "litros"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 4002,
+          "Name": "Gasolina",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "litros"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 4003,
+          "Name": "Gás Propano",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 4004,
+          "Name": "Outro (Renovável)",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "KWh"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        }
+      ]
+    },
+    {
+      "Name": "Consumo de Solventes",
+      "Desc": "",
+      "Fields": [
+        {
+          "ID": 5001,
+          "Name": "Solventes",
+          "Desc": "Deverá ser indicado o consumo de solventes calculado de acordo com a metodologia disposta na legislação e regulamentação aplicáveis. Caso não existam consumos de solventes para o ano em análise, deverá ser selecionada a opção N/A.",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": true,
+          "MultiField": false,
+          "Values": [
+            "N/A"
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        }
+      ]
+    },
+    {
+      "Name": "Consumo de Fluídos Refrigerantes - HFC (Hydrofluorocarbons)",
+      "Desc": "",
+      "Fields": [
+        {
+          "ID": 6001,
+          "Name": "HFC-125",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6002,
+          "Name": "HFC-134",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6003,
+          "Name": "HFC-143",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6004,
+          "Name": "HFC-143a",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6005,
+          "Name": "HFC-152a",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6006,
+          "Name": "HFC-227ea",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6007,
+          "Name": "HFC-23",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6008,
+          "Name": "HFC-236fa",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6009,
+          "Name": "HFC-245fa",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6010,
+          "Name": "HFC-41",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6011,
+          "Name": "HFC-43-I0mee",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6012,
+          "Name": "R134a",
+          "Desc": "Designado como HFC-134a",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6013,
+          "Name": "R32",
+          "Desc": "Designado como HFC-32",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6014,
+          "Name": "R404A",
+          "Desc": "Blend 52:44:4 [HFC-143a, HFC-125, HFC-134a]",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6015,
+          "Name": "R407C",
+          "Desc": "Blend 23:25:52 [HFC-32, HFC-125, HFC-134a]",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6016,
+          "Name": "R410A",
+          "Desc": "Blend 50:50 [HFC-32, HFC-125]",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 6017,
+          "Name": "R427A",
+          "Desc": "Blend 15:25:10:50 [HFC-32, HFC-125, HFC-134a, HFC-143]",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        }
+      ]
+    },
+    {
+      "Name": "Consumo de Fluídos Refrigerantes - PFC (Fully Fluorinated Species)",
+      "Desc": "",
+      "Fields": [
+        {
+          "ID": 7001,
+          "Name": "PFC-116 (Perfluoroethane)",
+          "Desc": "C2F6",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 7002,
+          "Name": "PFC-14 (Perfluoromethane)",
+          "Desc": "CF4",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 7003,
+          "Name": "PFC-218 (Perfluoropropane)",
+          "Desc": "C3F8",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 7004,
+          "Name": "PFC-31-10 (Perfluorobutane)",
+          "Desc": "C4F10",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 7005,
+          "Name": "PFC-318 (Perfluorocyclobutane)",
+          "Desc": "c-C4F8",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 7006,
+          "Name": "PFC-41-12 (Perfluoropentane)",
+          "Desc": "C5F12",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        },
+        {
+          "ID": 7007,
+          "Name": "PFC-51-14 (Perfluorohexane)",
+          "Desc": "C6F14",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+        }
+      ]
+    },
+    {
+      "Name": "Consumo de Fluídos Refrigerantes - SF6 (Sulphur Hexafluoride)",
+      "Desc": "",
+      "Fields": [
+        {
+          "ID": 8001,
+          "Name": "SF6 (Sulphur hexafluoride)",
+          "Desc": "",
+          "Units": [
+            {
+              "Unit": "Kg"
+            }
+          ],
+          "Required": false,
+          "MultiField": true,
+          "Values": [
+            
+          ],
+          "CustomValue": true,
+          "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
         }
       ]
     }
   ]
-};
+} as RequestForm;
 
 // export const getCategories = async (year : string): Promise<InputCategory[]> => {
 //   const mock = true;
@@ -282,10 +925,10 @@ const newMockdData = {
 //   return [] as InputCategory[];
 // }
 
-export const getForm = async (year : string): Promise<RequestForm> => {
+export const getForm = async (id : string): Promise<RequestForm> => {
   const mock = true;
 
-  const url = "https://calc.ghg-impact.eu/form.php";
+  const url = `https://calc.ghg-impact.eu/form.php?id=${id}`;
 
   //TODO call api
 
@@ -312,3 +955,7 @@ export const getOpenedYears = (): string[] => [
   '2023',
   '2024'
 ];
+
+export const sendData = (data: InputGroup[]): void => {
+  console.log(data)
+}

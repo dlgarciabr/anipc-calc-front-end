@@ -49,7 +49,7 @@ const Calculator = () => {
   });
 
   const loadForm = useCallback(async () => {
-    const form = await getForm('');
+    const form = await getForm('anipc');
     setForm(form);
   }, [setForm]);
 

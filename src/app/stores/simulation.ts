@@ -8,10 +8,11 @@ const initialState: Simulation = {
   setForm: (form: RequestForm) => {},
   inputGroups: {},
   setInputGroups: (groups: InputGroup[]) => {},
+  getInputGroups: () => [],
   setInput: (input: InputValue) => {},
   getInput: (groupId: string, inputId: number) => ({id: 0, value: '', groupId: ''}),
   setNextStep: (nextStep: number) => { },
-  hasErrors: () => boolean,
+  hasErrors: () => false,
   errors: [],
 }
 
@@ -29,6 +30,7 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     ...state,
     inputGroups: Object.fromEntries(groups.map(group => [group.id, group]))
   })),
+  getInputGroups: () => Object.values(get().inputGroups),
   errors: [],
   hasErrors: () => hasErrors(
     get(), 

@@ -2,6 +2,7 @@ import { useSimulationStore } from "@/app/stores/simulation";
 import { RequestField, RequestGroup } from "@/types";
 import { Alert, FormControl, FormHelperText, Grid2 as Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { useState } from "react";
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -9,6 +10,21 @@ interface DynamicCategoryFormProps {
 
 const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   const { setInput, getInput, errors } = useSimulationStore((state) => state);
+  const [ multifieldOptions, setMultifieldOptions ] = useState<RequestField[]>(group.Fields);
+  const [ multifields, setMultifields ] = useState<RequestField[]>([]);
+
+  const handleAddMultifield = (fieldId: number) => {
+    const fieldToAdd = group.Fields.find(field => field.ID === fieldId);
+    const newMultifieldOptions = multifieldOptions.filter(field => field.ID !== fieldId);
+    setMultifieldOptions(newMultifieldOptions);
+    setMultifields([...multifields, fieldToAdd!]);
+  }
+
+  const handleRemoveMultifield = (fieldToRemove: RequestField) => {
+    const newMultifields = multifields.filter(field => field.ID !== fieldToRemove.ID);
+    setMultifields(newMultifields);
+    setMultifieldOptions([...multifieldOptions, fieldToRemove]);
+  }
 
   const renderTextField = (field: RequestField): JSX.Element => {
     const value = getInput(group.Name, field.ID).value;
@@ -43,6 +59,9 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               </Select>
             <FormHelperText>{errors.find(error => error.id === `${field.ID}_un`)?.message}</FormHelperText>
           </FormControl>
+          {
+            field.MultiField ? <div onClick={()=>handleRemoveMultifield(field)}>X</div> : undefined
+          }
         </Grid>
         : undefined}
       </Grid>
@@ -72,16 +91,28 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     );
   }
 
-  const renderMultifields = (field: RequestField): JSX.Element  => {
-    return <>multifield</>;
+  const renderMultifieldCombo = (): JSX.Element => {
+    const options = multifieldOptions.map(field => <MenuItem key={field.ID} value={field.ID}>{field.Name}</MenuItem>);
+    return (
+      <FormControl fullWidth>
+        <InputLabel id={`combo-multifield-${group.Name}`}>Esolha ...</InputLabel>
+          <Select
+            labelId={`combo-multifield-${group.Name}`}
+            id={`combo-multifield-${group.Name}-label`}
+            value=''
+            onChange={(event)=> handleAddMultifield(event.target.value)}
+            fullWidth
+          >
+            {options}
+          </Select>
+        {/* <FormHelperText>{errors.find(error => error.id === field.ID.toString())?.message}</FormHelperText> */}
+      </FormControl>
+    );
   }
 
   const renderField = (field: RequestField) => {
     const currentValue = getInput(group.Name, field.ID).value;
     const isOtherOption = !!currentValue && field.CustomValue && (currentValue === 'other' || !field.Values.some(value => value === currentValue));
-    if(field.MultiField){
-      return renderMultifields(field);
-    }
     if(field.Values.length === 0 || isOtherOption){
       return renderTextField(field);
     }
@@ -102,11 +133,24 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             </Grid>
           ): undefined
         }
-        {group.Fields.map(field => (
-          <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '80px'}}>
-            {renderField(field)}
-          </Grid>
-        ))}
+        {
+          group.Fields.some(field => field.MultiField) ? 
+            <>
+              {
+                multifields.map(field => (
+                  <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '80px'}}>
+                    {renderField(field)}
+                  </Grid>
+                ))
+              }
+              {renderMultifieldCombo()}
+            </> : 
+            group.Fields.map(field => (
+              <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '80px'}}>
+                {renderField(field)}
+              </Grid>
+            ))
+        }
       </Grid>
     </>
   )

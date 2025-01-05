@@ -21,6 +21,7 @@ export interface Simulation {
   form: RequestForm;
   setForm: (form: RequestForm) => void;
   inputGroups: { [key: string ]: InputGroup };
+  getInputGroups: () => InputGroup[];
   setInputGroups: (categories: InputGroup[]) => void;
   setInput: (input: InputValue) => void;
   getInput: (groupId: string, inputId: number) => InputValue;
