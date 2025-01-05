@@ -22,7 +22,7 @@ const Calculator = () => {
     nextStep: () => {},
     previousStep: () => {},
   });
-  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [ activeStep, setActiveStep ] = React.useState<number>(0);
   const { setNextStep, setForm, form, hasErrors } = useSimulationStore((state) => state);
 
   const handleNext = () => {
@@ -37,10 +37,8 @@ const Calculator = () => {
   const handleBack = () => {
     const nextStep = activeStep - 1;
     setNextStep(nextStep);
-    // if(!hasErrors()){
-      setActiveStep(nextStep);
-      wizardState.previousStep();
-    // }
+    setActiveStep(nextStep);
+    wizardState.previousStep();
   };
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
@@ -78,11 +76,6 @@ const Calculator = () => {
     <>loading</> :
     <Container maxWidth="md">
       <Grid container>
-        {/* <Grid size={{ xs: 12, md: 12 }}>
-          <Alert icon={<InfoOutlinedIcon fontSize="inherit" />} severity="warning">
-            Step information message TODO
-          </Alert>
-        </Grid> */}
         <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '700px'}}>
           {
             <StepWizard instance={setInstance}>

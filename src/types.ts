@@ -21,7 +21,7 @@ export interface Simulation {
   form: RequestForm;
   setForm: (form: RequestForm) => void;
   inputGroups: { [key: string ]: InputGroup };
-  getInputGroups: () => InputGroup[];
+  getData: () => SimulationData;
   setInputGroups: (categories: InputGroup[]) => void;
   setInput: (input: InputValue) => void;
   getInput: (groupId: string, inputId: number) => InputValue;
@@ -56,4 +56,14 @@ export interface RequestField {
 export interface RequestUnit {
   Unit: string;
   FC: string;
-} 
+}
+
+export interface SimulationDataGroup {
+  Name: string;
+  values: InputValue[];
+}
+
+export interface SimulationData {
+  ID: string;
+  groups: SimulationDataGroup[];
+}

@@ -24,10 +24,10 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
       })
     }
 
-    if(field.Units.length > 0 && (!inputValue || (inputValue && !inputValue.unit))){
+    if(field.Units.length > 0 && inputValue && !inputValue.unit){
       errors.push({
         id: `${field.ID}_un`,
-        message: 'A unidade de medida é obrigatória'
+        message: 'Campo obrigatório'
       })
     }
 
@@ -40,7 +40,7 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
       })
     }
   });
-  console.log('errors', errors);
+
   setErrors(errors);
 
   return errors.length > 0;

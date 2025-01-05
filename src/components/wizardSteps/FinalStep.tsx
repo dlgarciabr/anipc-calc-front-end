@@ -3,10 +3,10 @@ import { useSimulationStore } from "@/app/stores/simulation";
 import { Grid2 as Grid } from "@mui/material";
 
 const FinalStep = () => {
-  const { getInputGroups } = useSimulationStore((state) => state);
+  const { getData } = useSimulationStore((state) => state);
 
   const handleSendData = () => {
-    sendData(getInputGroups())
+    sendData(getData())
   }
 
   return (

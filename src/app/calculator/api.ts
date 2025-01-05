@@ -1,5 +1,5 @@
 import axios from "axios";
-import { InputGroup, RequestForm } from "../../types";
+import { RequestForm, SimulationData } from "../../types";
 
 const newMockdData = {
   "ID": "ANIPC",
@@ -904,33 +904,10 @@ const newMockdData = {
   ]
 } as RequestForm;
 
-// export const getCategories = async (year : string): Promise<InputCategory[]> => {
-//   const mock = true;
-
-//   const url = "https://calc.ghg-impact.eu/form.php";
-
-//   //TODO call api
-
-//   if(mock){
-//     return Promise.resolve(mockData);
-//   }
-
-//   const response = await axios<RequestForm>({
-//     method: 'get',
-//     url,
-//   });
-
-//   console.log(response.data);
-
-//   return [] as InputCategory[];
-// }
-
 export const getForm = async (id : string): Promise<RequestForm> => {
   const mock = true;
 
   const url = `https://calc.ghg-impact.eu/form.php?id=${id}`;
-
-  //TODO call api
 
   if(mock){
     return Promise.resolve(newMockdData);
@@ -944,18 +921,20 @@ export const getForm = async (id : string): Promise<RequestForm> => {
   return response.data;
 }
 
+//TODO remove
 export const getCaeList = (): string[] => [
   '11234',
   '22222',
   '33333'
 ];
 
+//TODO remove
 export const getOpenedYears = (): string[] => [
   '2022',
   '2023',
   '2024'
 ];
 
-export const sendData = (data: InputGroup[]): void => {
+export const sendData = (data: SimulationData): void => {
   console.log(data)
 }

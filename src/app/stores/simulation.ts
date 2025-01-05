@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import { InputValue, InputGroup, Simulation, RequestForm, FieldError } from '../../types';
+import { InputValue, InputGroup, Simulation, RequestForm, FieldError, SimulationData } from '../../types';
 import { hasErrors } from './validations';
+import { mapSimulationData } from '../calculator/utils';
 
 const initialState: Simulation = {
   nextStep: 0,
@@ -8,7 +9,7 @@ const initialState: Simulation = {
   setForm: (form: RequestForm) => {},
   inputGroups: {},
   setInputGroups: (groups: InputGroup[]) => {},
-  getInputGroups: () => [],
+  getData: () => ({} as SimulationData),
   setInput: (input: InputValue) => {},
   getInput: (groupId: string, inputId: number) => ({id: 0, value: '', groupId: ''}),
   setNextStep: (nextStep: number) => { },
@@ -30,7 +31,13 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     ...state,
     inputGroups: Object.fromEntries(groups.map(group => [group.id, group]))
   })),
-  getInputGroups: () => Object.values(get().inputGroups),
+  getData: () => ({
+    ID: get().form.ID,
+    groups: Object.values(get().inputGroups).map(group => ({
+      Name: group.id,
+      values: Object.values(group.inputs)
+    }))
+  }),
   errors: [],
   hasErrors: () => hasErrors(
     get(), 
