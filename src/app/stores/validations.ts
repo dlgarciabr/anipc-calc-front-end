@@ -15,7 +15,7 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
   }
 
   groupToValidade.Fields.forEach(field => {
-    const inputValue = simulation.inputGroups[groupToValidade.Name]?.inputs[field.ID];
+    const inputValue = simulation.inputGroups[groupToValidade.ID]?.inputs[field.ID];
 
     if(field.Required && !inputValue){
       errors.push({

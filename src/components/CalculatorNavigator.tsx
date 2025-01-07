@@ -19,7 +19,7 @@ const CalculatorNavigator = (props:  CalculatorNavigatorProps) => {
     activeStep={props.activeStep}
     nextButton={
       <Button size="small" onClick={props.handleNext} disabled={props.activeStep >= props.totalSteps - 1}>
-        Next
+        PRÓXIMO
         {theme.direction === 'rtl' ? (
           <KeyboardArrowLeft />
         ) : (
@@ -34,7 +34,7 @@ const CalculatorNavigator = (props:  CalculatorNavigatorProps) => {
         ) : (
           <KeyboardArrowLeft />
         )}
-        Back
+        VOLTAR
       </Button>
     }
   />

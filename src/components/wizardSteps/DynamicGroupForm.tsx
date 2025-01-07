@@ -27,7 +27,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   }
 
   const renderTextField = (field: RequestField): JSX.Element => {
-    const value = getInput(group.Name, field.ID).value;
+    const value = getInput(group.ID, field.ID).value;
     const textFieldSize = field.Units.length > 0 ? 9 : 12;
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
@@ -36,7 +36,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             fullWidth
             label={field.Name}
             required={field.Required}
-            onChange={ event => setInput({id: field.ID, groupId: group.Name,value: event.target.value})}
+            onChange={ event => setInput({id: field.ID, groupId: group.ID, value: event.target.value})}
             error={errors.some(error => error.id === field.ID.toString())}
             helperText={errors.find(error => error.id === field.ID.toString())?.message}
           />
@@ -49,8 +49,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               <Select
                 labelId={`combo-unit-${field.ID}`}
                 id={`combo-unit-${field.ID}-label`}
-                value={getInput(group.Name, field.ID).unit}
-                onChange={ e => setInput({id: field.ID, groupId: group.Name, value, unit: e.target.value})}
+                value={getInput(group.ID, field.ID).unit}
+                onChange={ e => setInput({id: field.ID, groupId: group.ID, value, unit: e.target.value})}
                 fullWidth
               >
                 {
@@ -80,8 +80,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
           <Select
             labelId={`combo-${field.ID}`}
             id={`combo-${field.ID}-label`}
-            value={getInput(group.Name, field.ID).value}
-            onChange={ event => setInput({id: field.ID, groupId: group.Name, value: event.target.value})}
+            value={getInput(group.ID, field.ID).value}
+            onChange={ event => setInput({id: field.ID, groupId: group.ID, value: event.target.value})}
             fullWidth
           >
             {options}
@@ -100,20 +100,19 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             labelId={`combo-multifield-${group.Name}`}
             id={`combo-multifield-${group.Name}-label`}
             value=''
-            onChange={(event)=> handleAddMultifield(event.target.value)}
+            onChange={(event)=> handleAddMultifield(Number(event.target.value))}
             fullWidth
           >
             {options}
           </Select>
-        {/* <FormHelperText>{errors.find(error => error.id === field.ID.toString())?.message}</FormHelperText> */}
       </FormControl>
     );
   }
 
   const renderField = (field: RequestField) => {
-    const currentValue = getInput(group.Name, field.ID).value;
+    const currentValue = getInput(group.ID, field.ID).value;
     const isOtherOption = !!currentValue && field.CustomValue && (currentValue === 'other' || !field.Values.some(value => value === currentValue));
-    if(field.Values.length === 0 || isOtherOption){
+    if(!field.Values || !field.Values.length || isOtherOption){
       return renderTextField(field);
     }
 

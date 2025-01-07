@@ -5,6 +5,7 @@ const newMockdData = {
   "ID": "ANIPC",
   "Groups": [
     {
+      "ID": 1000,
       "Name": "Dados da Empresa",
       "Desc": "",
       "Fields": [
@@ -143,6 +144,7 @@ const newMockdData = {
       ]
     },
     {
+      "ID": 2000,
       "Name": "Consumos de Energia Elétrica",
       "Desc": "",
       "Fields": [
@@ -234,6 +236,7 @@ const newMockdData = {
       ]
     },
     {
+      "ID": 3000,
       "Name": "Combustão Estacionária",
       "Desc": "",
       "Fields": [
@@ -362,6 +365,7 @@ const newMockdData = {
       ]
     },
     {
+      "ID": 4000,
       "Name": "Combustão Móvel (Frota)",
       "Desc": "",
       "Fields": [
@@ -436,6 +440,7 @@ const newMockdData = {
       ]
     },
     {
+      "ID": 5000,
       "Name": "Consumo de Solventes",
       "Desc": "",
       "Fields": [
@@ -459,6 +464,7 @@ const newMockdData = {
       ]
     },
     {
+      "ID": 6000,
       "Name": "Consumo de Fluídos Refrigerantes - HFC (Hydrofluorocarbons)",
       "Desc": "",
       "Fields": [
@@ -754,6 +760,7 @@ const newMockdData = {
       ]
     },
     {
+      "ID": 7000,
       "Name": "Consumo de Fluídos Refrigerantes - PFC (Fully Fluorinated Species)",
       "Desc": "",
       "Fields": [
@@ -879,6 +886,7 @@ const newMockdData = {
       ]
     },
     {
+      "ID": 8000,
       "Name": "Consumo de Fluídos Refrigerantes - SF6 (Sulphur Hexafluoride)",
       "Desc": "",
       "Fields": [

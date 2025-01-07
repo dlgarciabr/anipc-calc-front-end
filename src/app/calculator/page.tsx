@@ -60,7 +60,7 @@ const Calculator = () => {
       return []
     }
     return form.Groups.map((group) => (
-      <CalculatorStep key={group.Name}>
+      <CalculatorStep key={group.ID}>
         <DynamicGroupForm group={group} />
       </CalculatorStep>
     ));
