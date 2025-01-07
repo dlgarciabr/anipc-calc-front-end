@@ -9,7 +9,7 @@ const initialState: Simulation = {
   inputGroups: {},
   setInputGroups: (groups: InputGroup[]) => {},
   getData: () => ({} as SimulationData),
-  setInput: (input: InputValue) => {},
+  setInput: (groupId: number, input: InputValue) => {},
   getInput: (groupId: number, inputId: number) => ({id: 0, value: '', groupId: 0}),
   setNextStep: (nextStep: number) => { },
   hasErrors: () => false,
@@ -48,13 +48,13 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
   getInput: (groupId: number, inputId: number) => { 
     const group = get().inputGroups[groupId];
     if(!group || !group.inputs[inputId]){
-      return {groupId, id: inputId, value: '', unit: ''};
+      return {id: inputId, value: '', unit: ''};
     }
     return group.inputs[inputId];
   },
-  setInput: ({id, groupId, value, unit}: InputValue) => set((state) => {
+  setInput: (groupId: number, {id, value, unit}: InputValue) => set((state) => {
     const currentValue = get().getInput(groupId, id);
-    const newInputValue =  { id, value, unit: !!unit ? unit: currentValue.unit, groupId };
+    const newInputValue =  { id, value, unit: !!unit ? unit: currentValue.unit };
     const group = state.inputGroups[groupId] || { id: groupId, inputs: {}};
     
     const newInputs = Object.values(group.inputs).length > 0 ? 

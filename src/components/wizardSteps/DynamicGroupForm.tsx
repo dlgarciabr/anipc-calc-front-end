@@ -36,7 +36,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             fullWidth
             label={field.Name}
             required={field.Required}
-            onChange={ event => setInput({id: field.ID, groupId: group.ID, value: event.target.value})}
+            onChange={ event => setInput(group.ID, {id: field.ID, value: event.target.value})}
             error={errors.some(error => error.id === field.ID.toString())}
             helperText={errors.find(error => error.id === field.ID.toString())?.message}
           />
@@ -50,7 +50,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
                 labelId={`combo-unit-${field.ID}`}
                 id={`combo-unit-${field.ID}-label`}
                 value={getInput(group.ID, field.ID).unit}
-                onChange={ e => setInput({id: field.ID, groupId: group.ID, value, unit: e.target.value})}
+                onChange={ e => setInput(group.ID, {id: field.ID, value, unit: e.target.value})}
                 fullWidth
               >
                 {
@@ -81,7 +81,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             labelId={`combo-${field.ID}`}
             id={`combo-${field.ID}-label`}
             value={getInput(group.ID, field.ID).value}
-            onChange={ event => setInput({id: field.ID, groupId: group.ID, value: event.target.value})}
+            onChange={ event => setInput(group.ID, {id: field.ID, value: event.target.value})}
             fullWidth
           >
             {options}
