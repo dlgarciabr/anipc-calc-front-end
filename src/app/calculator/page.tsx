@@ -25,10 +25,11 @@ const Calculator = () => {
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
   const { setNextStep, setForm, form, hasErrors } = useSimulationStore((state) => state);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const nextStep = activeStep + 1;
     setNextStep(nextStep);
-    if(!hasErrors()){
+    const isStepValid = (!await hasErrors());
+    if(isStepValid){
       setActiveStep(nextStep);
       wizardState.nextStep();
     }

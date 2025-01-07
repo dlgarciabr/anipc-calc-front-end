@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { InputValue, InputGroup, Simulation, RequestForm, FieldError, SimulationData } from '../../types';
-import { hasErrors } from './validations';
+import { hasErrors } from '../validation';
 
 const initialState: Simulation = {
   nextStep: 0,
@@ -10,9 +10,9 @@ const initialState: Simulation = {
   setInputGroups: (groups: InputGroup[]) => {},
   getData: () => ({} as SimulationData),
   setInput: (groupId: number, input: InputValue) => {},
-  getInput: (groupId: number, inputId: number) => ({id: 0, value: '', groupId: 0}),
+  getInput: (inputId: number) => undefined,
   setNextStep: (nextStep: number) => { },
-  hasErrors: () => false,
+  hasErrors: () => Promise.resolve(false),
   errors: [],
 }
 
@@ -45,15 +45,20 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       errors
     }))
   ),
-  getInput: (groupId: number, inputId: number) => { 
-    const group = get().inputGroups[groupId];
-    if(!group || !group.inputs[inputId]){
+  getInput: (inputId: number) => {
+    const inputs:InputValue[] = [];
+    Object.values(get().inputGroups).forEach(group => inputs.push(...Object.values(group.inputs)));
+    const input = inputs.find(input => input.id === inputId);
+    if(!input){
       return {id: inputId, value: '', unit: ''};
     }
-    return group.inputs[inputId];
+    return input;
   },
   setInput: (groupId: number, {id, value, unit}: InputValue) => set((state) => {
-    const currentValue = get().getInput(groupId, id);
+    const currentValue = get().getInput(id);
+    if(!currentValue){
+      return state;
+    }
     const newInputValue =  { id, value, unit: !!unit ? unit: currentValue.unit };
     const group = state.inputGroups[groupId] || { id: groupId, inputs: {}};
     

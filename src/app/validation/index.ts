@@ -1,13 +1,37 @@
-import { FieldError, Simulation } from "../../types";
+import { FieldError, InputValue, Simulation } from "../../types";
 
-export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[]) => void): boolean => {
+
+const customFieldValidators = [1002]; 
+const errors:FieldError[]  = [];
+
+export const hasErrors = async (simulation: Simulation, setErrors: (errors:FieldError[]) => void): Promise<boolean> => {
+
+  const runCustomeFieldValidations = async () => {
+    await Promise.all(customFieldValidators.map(async fieldId => {
+      const module = await import(`./fields/${fieldId}`);
+      const inputValue = simulation.getInput(fieldId)
+      const errorMessage = module.default(inputValue, simulation);
+      if(errorMessage){
+        errors.push({
+          id: fieldId.toString(),
+          message: errorMessage
+        });
+      }
+    }));
+  
+    setErrors(errors);
+    console.log('validation: errors', errors)
+  
+    return errors.length > 0;
+  }
+
+  errors.length = 0;
   if(!simulation){
     return false;
   }
 
   const groupToValidade = simulation.form.Groups[simulation.nextStep - 1]
 
-  const errors:FieldError[]  = [];
   const skipValidation = false;
 
   if(skipValidation){
@@ -43,7 +67,5 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
     }
   });
 
-  setErrors(errors);
-  console.log('validation: errors', errors)
-  return errors.length > 0;
+  return await runCustomeFieldValidations();
 }

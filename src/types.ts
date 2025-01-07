@@ -23,9 +23,9 @@ export interface Simulation {
   getData: () => SimulationData;
   setInputGroups: (categories: InputGroup[]) => void;
   setInput: (groupId: number, input: InputValue) => void;
-  getInput: (groupId: number, inputId: number) => InputValue;
+  getInput: (inputId: number) => InputValue | undefined;
   setNextStep: (nextStep: number) => void;
-  hasErrors: () => boolean;
+  hasErrors: () => Promise<boolean>;
   errors: FieldError[];
 }
 

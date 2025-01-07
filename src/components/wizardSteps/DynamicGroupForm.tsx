@@ -28,7 +28,11 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   }
 
   const renderTextField = (field: RequestField): JSX.Element => {
-    const value = getInput(group.ID, field.ID).value;
+    const inputValue = getInput(field.ID);
+    if(!inputValue){
+      return <></>;
+    }
+    const value = inputValue.value;
     const textFieldSize = field.Units.length > 0 ? 8 : 12;
     const comboFieldSize = field.MultiField ? 3 : 4;
     return (
@@ -52,7 +56,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
                 <Select
                   labelId={`combo-unit-${field.ID}`}
                   id={`combo-unit-${field.ID}-label`}
-                  value={getInput(group.ID, field.ID).unit}
+                  value={inputValue.unit}
                   onChange={e => setInput(group.ID, { id: field.ID, value, unit: e.target.value })}
                   fullWidth
                 >
@@ -77,6 +81,10 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   };
 
   const renderCombo = (field: RequestField): JSX.Element => {
+    const inputValue = getInput(field.ID);
+    if(!inputValue){
+      return <></>;
+    }
     const options = field.Values.map(value => <MenuItem key={value} value={value}>{value}</MenuItem>);
     if(field.CustomValue){
       const customOption = <MenuItem key='other' value='other'>Outro</MenuItem>;
@@ -88,7 +96,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
           <Select
             labelId={`combo-${field.ID}`}
             id={`combo-${field.ID}-label`}
-            value={getInput(group.ID, field.ID).value}
+            value={inputValue.value}
             onChange={ event => setInput(group.ID, {id: field.ID, value: event.target.value})}
             fullWidth
           >
@@ -118,7 +126,11 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   }
 
   const renderField = (field: RequestField) => {
-    const currentValue = getInput(group.ID, field.ID).value;
+    const inputValue = getInput(field.ID);
+    if(!inputValue){
+      return <></>;
+    }
+    const currentValue = inputValue.value;
     const isOtherOption = !!currentValue && field.CustomValue && (currentValue === 'other' || !field.Values.some(value => value === currentValue));
     if(!field.Values || !field.Values.length || isOtherOption){
       return renderTextField(field);
