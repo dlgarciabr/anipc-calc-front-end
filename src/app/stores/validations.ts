@@ -21,14 +21,16 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
       errors.push({
         id: field.ID.toString(),
         message: field.Name + " é um campo obrigatório"
-      })
+      });
     }
 
-    if(field.Units.length > 0 && inputValue && !inputValue.unit){
+    const isOtherOption = !!inputValue && field.CustomValue && !field.Values.some(value => value === inputValue.value);
+
+    if((isOtherOption || !field.Values.length) && field.Units.length > 0 && inputValue && !inputValue.unit){
       errors.push({
         id: `${field.ID}_un`,
         message: 'Campo obrigatório'
-      })
+      });
     }
 
     const isInputField = field.Values.length === 0 || (inputValue && field.Values.length > 0 && field.CustomValue && !field.Values.some(value => value === inputValue.value));
@@ -37,11 +39,11 @@ export const hasErrors = (simulation: Simulation, setErrors: (errors:FieldError[
       errors.push({
         id: field.ID.toString(),
         message: `Campo ${field.Name} inválido`
-      })
+      });
     }
   });
 
   setErrors(errors);
-
+  console.log('validation: errors', errors)
   return errors.length > 0;
 }

@@ -4,7 +4,7 @@ export interface FieldError {
 };
 
 export interface InputGroup {
-  id: string;
+  id: number;
   name: string;
   inputs: { [key: string ]: InputValue },
 }
@@ -59,7 +59,7 @@ export interface RequestUnit {
 }
 
 export interface SimulationDataGroup {
-  Name: string;
+  ID: number;
   values: InputValue[];
 }
 
