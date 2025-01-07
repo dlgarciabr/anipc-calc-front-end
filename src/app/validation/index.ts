@@ -1,7 +1,7 @@
 import { FieldError, InputValue, Simulation } from "../../types";
 
 
-const customFieldValidators = [1002]; 
+const customFieldValidators = [2002]; 
 const errors:FieldError[]  = [];
 
 export const hasErrors = async (simulation: Simulation, setErrors: (errors:FieldError[]) => void): Promise<boolean> => {
