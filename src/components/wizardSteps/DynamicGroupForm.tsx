@@ -1,8 +1,9 @@
 import { useSimulationStore } from "@/app/stores/simulation";
 import { RequestField, RequestGroup } from "@/types";
-import { Alert, FormControl, FormHelperText, Grid2 as Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Alert, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -28,7 +29,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   const renderTextField = (field: RequestField): JSX.Element => {
     const value = getInput(group.ID, field.ID).value;
-    const textFieldSize = field.Units.length > 0 ? 9 : 12;
+    const textFieldSize = field.Units.length > 0 ? 8 : 12;
+    const comboFieldSize = field.MultiField ? 3 : 4;
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
@@ -43,26 +45,32 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
         </Grid>
         {
         field.Units.length > 0 ? 
-        <Grid size={{ xs: 3, md: 3 }}>
-          <FormControl error={errors.some(error => error.id === `${field.ID}_un`)} required={field.Required} fullWidth>
-            <InputLabel id={`combo-unit-${field.ID}`}>Unidade</InputLabel>
-              <Select
-                labelId={`combo-unit-${field.ID}`}
-                id={`combo-unit-${field.ID}-label`}
-                value={getInput(group.ID, field.ID).unit}
-                onChange={ e => setInput(group.ID, {id: field.ID, value, unit: e.target.value})}
-                fullWidth
-              >
-                {
-                  field.Units.map(unit => <MenuItem key={unit.Unit} value={unit.Unit}>{unit.Unit}</MenuItem>)
-                }
-              </Select>
-            <FormHelperText>{errors.find(error => error.id === `${field.ID}_un`)?.message}</FormHelperText>
-          </FormControl>
-          {
-            field.MultiField ? <div onClick={()=>handleRemoveMultifield(field)}>X</div> : undefined
-          }
-        </Grid>
+          <>
+            <Grid size={{ xs: comboFieldSize, md: comboFieldSize }}>
+              <FormControl error={errors.some(error => error.id === `${field.ID}_un`)} required={field.Required} fullWidth>
+                <InputLabel id={`combo-unit-${field.ID}`}>Unidade</InputLabel>
+                <Select
+                  labelId={`combo-unit-${field.ID}`}
+                  id={`combo-unit-${field.ID}-label`}
+                  value={getInput(group.ID, field.ID).unit}
+                  onChange={e => setInput(group.ID, { id: field.ID, value, unit: e.target.value })}
+                  fullWidth
+                >
+                  {field.Units.map(unit => <MenuItem key={unit.Unit} value={unit.Unit}>{unit.Unit}</MenuItem>)}
+                </Select>
+                <FormHelperText>{errors.find(error => error.id === `${field.ID}_un`)?.message}</FormHelperText>
+              </FormControl>
+            </Grid>
+            {
+              field.MultiField ?
+                <Grid size={{ xs: 1, md: 1 }} alignContent='center'>
+                  <IconButton aria-label="delete" onClick={() => handleRemoveMultifield(field)} title="Remover">
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid> :
+                undefined
+            }
+          </>
         : undefined}
       </Grid>
     );
