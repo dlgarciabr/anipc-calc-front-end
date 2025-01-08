@@ -5,13 +5,13 @@ import { hasErrors } from '../validation';
 const initialState: Simulation = {
   nextStep: 0,
   form: { ID: '', Groups: []},
-  setForm: (form: RequestForm) => {},
+  setForm: (form: RequestForm) => {console.log(form)},
   inputGroups: {},
-  setInputGroups: (groups: InputGroup[]) => {},
+  setInputGroups: (groups: InputGroup[]) => {console.log(groups)},
   getData: () => ({} as SimulationData),
-  setInput: (groupId: number, input: InputValue) => {},
-  getInput: (inputId: number) => undefined,
-  setNextStep: (nextStep: number) => { },
+  setInput: (groupId: number, input: InputValue) => {console.log(groupId + input.value)},
+  getInput: (inputId: number) => { console.log(inputId); return undefined},
+  setNextStep: (nextStep: number) => { console.log(nextStep) },
   hasErrors: () => Promise.resolve(false),
   errors: [],
 }

@@ -1,4 +1,4 @@
-import { FieldError, InputValue, Simulation } from "../../types";
+import { FieldError, Simulation } from "../../types";
 
 
 const customFieldValidators = [2002]; 
@@ -8,9 +8,9 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
 
   const runCustomeFieldValidations = async () => {
     await Promise.all(customFieldValidators.map(async fieldId => {
-      const module = await import(`./fields/${fieldId}`);
+      const validationModule = await import(`./fields/${fieldId}`);
       const inputValue = simulation.getInput(fieldId)
-      const errorMessage = module.default(inputValue, simulation);
+      const errorMessage = validationModule.default(inputValue, simulation);
       if(errorMessage){
         errors.push({
           id: fieldId.toString(),
