@@ -20,8 +20,6 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
     }));
   
     setErrors(errors);
-    console.log('validation: errors', errors)
-  
     return errors.length > 0;
   }
 

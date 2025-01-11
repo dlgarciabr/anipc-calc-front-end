@@ -913,7 +913,7 @@ const newMockdData = {
 } as RequestForm;
 
 export const getForm = async (id : string): Promise<RequestForm> => {
-  const mock = true;
+  const mock = false;
 
   const url = `https://calc.ghg-impact.eu/form.php?id=${id}`;
 
