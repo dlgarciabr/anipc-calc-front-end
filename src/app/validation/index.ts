@@ -19,7 +19,7 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
       }
     }));
   
-    setErrors(errors);
+    setErrors(errors);  
     return errors.length > 0;
   }
 

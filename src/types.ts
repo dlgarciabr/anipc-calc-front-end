@@ -58,12 +58,18 @@ export interface RequestUnit {
   FC: string;
 }
 
+export interface SimulationInputValue {
+  ID: number;
+  Value: string;
+  Unit?: string;
+}
+
 export interface SimulationDataGroup {
   ID: number;
-  values: InputValue[];
+  Values: SimulationInputValue[];
 }
 
 export interface SimulationData {
   ID: string;
-  groups: SimulationDataGroup[];
+  Groups: SimulationDataGroup[];
 }

@@ -943,6 +943,16 @@ export const getOpenedYears = (): string[] => [
   '2024'
 ];
 
-export const sendData = (data: SimulationData): void => {
+export const sendData = async (data: SimulationData): Promise<void> => {
   console.log(data)
+
+  const url = 'https://calc.ghg-impact.eu/calc.php';
+
+  const response = await axios<RequestForm>({
+    method: 'post',
+    url,
+    data
+  });
+
+  console.log(response.data);
 }

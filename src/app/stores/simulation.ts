@@ -32,9 +32,9 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
   })),
   getData: () => ({
     ID: get().form.ID,
-    groups: Object.values(get().inputGroups).map(group => ({
+    Groups: Object.values(get().inputGroups).map(group => ({
       ID: group.id,
-      values: Object.values(group.inputs)
+      Values: Object.values(group.inputs).map(inputValue => ({ID: inputValue.id, Value: inputValue.value, Unit: inputValue.unit}))
     }))
   }),
   errors: [],
