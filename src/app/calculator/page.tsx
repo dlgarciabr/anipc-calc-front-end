@@ -79,7 +79,7 @@ const Calculator = () => {
     <>loading</> :
     <Container maxWidth="md">
       <Grid container>
-        <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '700px'}}>
+        <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
           {
             <StepWizard instance={setInstance} >
               {generateSteps()}

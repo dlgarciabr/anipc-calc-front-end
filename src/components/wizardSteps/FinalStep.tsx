@@ -11,7 +11,7 @@ const FinalStep = () => {
   }
 
   return (
-    <Grid container spacing={2} style={{height: '700px'}}>
+    <Grid container spacing={2} style={{height: '780px'}}>
       <Grid size={{ xs: 12, md: 12 }} container alignContent='center' justifyContent='center' flexDirection='column' style={{textAlign: 'center'}}>
         <Typography gutterBottom variant="h5" component="div">
           Preenchimento concluído
