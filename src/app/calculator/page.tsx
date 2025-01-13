@@ -10,6 +10,7 @@ import { getForm } from "./api";
 import DynamicGroupForm from "@/components/wizardSteps/DynamicGroupForm";
 import { Container, Grid2 as Grid } from "@mui/material";
 import FinalStep from "@/components/wizardSteps/FinalStep";
+import InitialStep from "@/components/wizardSteps/InitialStep";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -68,6 +69,7 @@ const Calculator = () => {
 };
 
   const generateSteps = (): JSX.Element[] => [
+    <InitialStep key="initialStep" onBegin={handleNext}/>,
     ...renderDynamicSteps(),
     <FinalStep key="finalStep"/>
   ];
@@ -79,7 +81,7 @@ const Calculator = () => {
       <Grid container>
         <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '700px'}}>
           {
-            <StepWizard instance={setInstance}>
+            <StepWizard instance={setInstance} >
               {generateSteps()}
             </StepWizard>
           }

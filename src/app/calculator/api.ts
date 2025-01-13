@@ -944,8 +944,6 @@ export const getOpenedYears = (): string[] => [
 ];
 
 export const sendData = async (data: SimulationData): Promise<void> => {
-  console.log(data)
-
   const url = 'https://calc.ghg-impact.eu/calc.php';
 
   const response = await axios<RequestForm>({
@@ -953,6 +951,8 @@ export const sendData = async (data: SimulationData): Promise<void> => {
     url,
     data
   });
+
+  // const response = await axios.post(url, data);
 
   console.log(response.data);
 }

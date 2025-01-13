@@ -27,8 +27,12 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
   if(!simulation){
     return false;
   }
+  
+  if(simulation.nextStep === 1){//control total steps on simulation
+    return false;
+  }
 
-  const groupToValidade = simulation.form.Groups[simulation.nextStep - 1]
+  const groupToValidade = simulation.form.Groups[simulation.nextStep - 2];//TODO modify to read the step from simulation including static
 
   const skipValidation = false;
 
@@ -46,9 +50,13 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
       });
     }
 
+    if(!field.Required && (!inputValue || !inputValue.value)){
+      return;
+    }
+
     const isOtherOption = !!inputValue && field.CustomValue && !field.Values.some(value => value === inputValue.value);
 
-    if((isOtherOption || !field.Values.length) && field.Units.length > 0 && inputValue && !inputValue.unit){
+    if((isOtherOption || !field.Values.length) && field.Units.length > 0 && inputValue && (!inputValue.unit || inputValue.unit === 'empty')){
       errors.push({
         id: `${field.ID}_un`,
         message: 'Campo obrigatório'
@@ -64,6 +72,6 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
       });
     }
   });
-
+  console.log('errors ', errors)
   return await runCustomeFieldValidations();
 }

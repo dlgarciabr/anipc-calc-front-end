@@ -34,7 +34,7 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     ID: get().form.ID,
     Groups: Object.values(get().inputGroups).map(group => ({
       ID: group.id,
-      Values: Object.values(group.inputs).map(inputValue => ({ID: inputValue.id, Value: inputValue.value, Unit: inputValue.unit}))
+      Values: Object.values(group.inputs).map(inputValue => ({ID: inputValue.id, Value: inputValue.value, Unit: inputValue.unit})).filter(inputValue => !!inputValue.Value)
     }))
   }),
   errors: [],
@@ -59,7 +59,7 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     if(!currentValue){
       return state;
     }
-    const newInputValue =  { id, value, unit: !!unit ? unit: currentValue.unit };
+    const newInputValue =  { id, value, unit: !!unit ? unit : currentValue.unit };
     const group = state.inputGroups[groupId] || { id: groupId, inputs: {}};
     
     const newInputs = Object.values(group.inputs).length > 0 ? 

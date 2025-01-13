@@ -1,6 +1,6 @@
 import { useSimulationStore } from "@/app/stores/simulation";
 import { RequestField, RequestGroup } from "@/types";
-import { Alert, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,6 +8,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 interface DynamicCategoryFormProps {
   group: RequestGroup;
 }
+
+const theme = createTheme({
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'white',
+          padding: '0 10px 0 10px',
+        }
+      }
+    }
+  }
+});
 
 const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   const { setInput, getInput, errors } = useSimulationStore((state) => state);
@@ -60,6 +73,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
                   onChange={e => setInput(group.ID, { id: field.ID, value, unit: e.target.value })}
                   fullWidth
                 >
+                  <MenuItem key='' value='empty'>&nbsp;</MenuItem>
                   {field.Units.map(unit => <MenuItem key={unit.Unit} value={unit.Unit}>{unit.Unit}</MenuItem>)}
                 </Select>
                 <FormHelperText>{errors.find(error => error.id === `${field.ID}_un`)?.message}</FormHelperText>
@@ -91,7 +105,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       options.push(customOption);
     }
     return (
-      <FormControl sx={{ minWidth: 150 }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
+      <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
           <Select
             labelId={`combo-${field.ID}`}
@@ -140,8 +154,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   }
 
   return (
-    <>
-      <Typography variant="h4" component="h4">{group.Name}</Typography>
+    <ThemeProvider theme={theme}>
+      <Typography variant="h5" component="h5"  style={{margin: '20px 0 20px 0'}}>{group.Name}</Typography>
       <Grid container>
         {
           group.Desc ? (
@@ -157,7 +171,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             <>
               {
                 multifields.map(field => (
-                  <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '80px'}}>
+                  <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '85px'}}>
                     {renderField(field)}
                   </Grid>
                 ))
@@ -165,13 +179,13 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               {renderMultifieldCombo()}
             </> : 
             group.Fields.map(field => (
-              <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '80px'}}>
+              <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '85px'}}>
                 {renderField(field)}
               </Grid>
             ))
         }
       </Grid>
-    </>
+    </ThemeProvider>
   )
 }
 
