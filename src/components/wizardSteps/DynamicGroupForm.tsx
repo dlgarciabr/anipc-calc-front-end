@@ -125,7 +125,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     const options = multifieldOptions.map(field => <MenuItem key={field.ID} value={field.ID}>{field.Name}</MenuItem>);
     return (
       <FormControl fullWidth>
-        <InputLabel id={`combo-multifield-${group.Name}`}>Esolha ...</InputLabel>
+        <InputLabel id={`combo-multifield-${group.Name}`}>Escolha ...</InputLabel>
           <Select
             labelId={`combo-multifield-${group.Name}`}
             id={`combo-multifield-${group.Name}-label`}
