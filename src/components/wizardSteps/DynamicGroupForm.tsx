@@ -2,7 +2,7 @@ import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
 import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface DynamicCategoryFormProps {
