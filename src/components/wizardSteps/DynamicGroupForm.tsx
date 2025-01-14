@@ -4,6 +4,7 @@ import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconBut
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Tooltip } from "react-tooltip";
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -46,6 +47,13 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     const newMultifields = multifields.filter(field => field.ID !== fieldToRemove.ID);
     setMultifields(newMultifields);
     setMultifieldOptions([...multifieldOptions, fieldToRemove]);
+  }
+
+  const renderToolip = (text: string) => {
+    if(!text){
+      return undefined;
+    }
+    return `<div style='width: 500px; z-index: 10000'>${text}</div>`;
   }
 
   const renderUnitField = (field: RequestField, inputValue: InputValue) => {
@@ -91,6 +99,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
           <TextField
+            data-tooltip-id="dyanmicGroupTooltip"
+            data-tooltip-html={renderToolip(field.Desc)}
             fullWidth
             label={field.Name}
             required={field.Required}
@@ -132,6 +142,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
           <Select
+            data-tooltip-id="dyanmicGroupTooltip"
+            data-tooltip-html={renderToolip(field.Desc)}
             labelId={`combo-${field.ID}`}
             id={`combo-${field.ID}-label`}
             value={inputValue.value}
@@ -209,6 +221,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             ))
         }
       </Grid>
+      <Tooltip id="dyanmicGroupTooltip" style={{zIndex: 1000}}/>
     </ThemeProvider>
   )
 }
