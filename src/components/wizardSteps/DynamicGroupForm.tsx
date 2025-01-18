@@ -4,7 +4,6 @@ import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconBut
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Tooltip } from "react-tooltip";
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -99,8 +98,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
           <TextField
-            data-tooltip-id="dyanmicGroupTooltip"
-            data-tooltip-html={renderToolip(field.Desc)}
+            // data-tooltip-id="dyanmicGroupTooltip"
+            // data-tooltip-html={renderToolip(field.Desc)}
             fullWidth
             label={field.Name}
             required={field.Required}
@@ -158,7 +157,28 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   }
 
   const renderMultifieldCombo = (): JSX.Element => {
-    const options = multifieldOptions.map(field => <MenuItem key={field.ID} value={field.ID}>{field.Name}</MenuItem>);
+    let options: JSX.Element[] = [];
+    const multifieldGroups = new Set(multifieldOptions.filter(field => !!field.MultiFieldGroup).map(field => field.MultiFieldGroup));
+
+    if(multifieldGroups.size){
+      const itemsPerGroup = Array.from(multifieldGroups).map(group => ({
+        name: group,
+        items: multifieldOptions.filter(field => field.MultiFieldGroup === group)
+      }));
+      itemsPerGroup.forEach(group => {
+        options.push(<MenuItem style={{backgroundColor: "#e1dbda"}} key={group.name} value={group.name}>{group.name}</MenuItem>);
+        options.push(...group.items.map(item => (<MenuItem key={item.ID} value={item.ID}>{item.Name}</MenuItem>)))
+      });
+    }else{
+      options = multifieldOptions.map(field => <MenuItem key={field.ID} value={field.ID}>{field.Name}</MenuItem>);
+    }
+
+    const handleChangeMultifield = (value: string) => {
+      if(!Array.from(multifieldGroups).some(item => item === value)){
+        handleAddMultifield(Number(value));
+      }
+    }
+    
     return (
       <FormControl fullWidth>
         <InputLabel id={`combo-multifield-${group.Name}`}>Escolha ...</InputLabel>
@@ -166,7 +186,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             labelId={`combo-multifield-${group.Name}`}
             id={`combo-multifield-${group.Name}-label`}
             value=''
-            onChange={(event)=> handleAddMultifield(Number(event.target.value))}
+            onChange={(event)=> handleChangeMultifield(event.target.value)}
             fullWidth
           >
             {options}
@@ -221,7 +241,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             ))
         }
       </Grid>
-      <Tooltip id="dyanmicGroupTooltip" style={{zIndex: 1000}}/>
+      {/* <Tooltip id="dyanmicGroupTooltip" style={{zIndex: 1000}}/> */}
     </ThemeProvider>
   )
 }

@@ -48,6 +48,7 @@ export interface RequestField {
   Units: RequestUnit[];
   Required: boolean;
   MultiField: boolean;
+  MultiFieldGroup: string;
   Values: string[];
   CustomValue: boolean;
   Regex: string;
