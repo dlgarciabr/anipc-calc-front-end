@@ -1,10 +1,9 @@
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography, TooltipProps, tooltipClasses } from "@mui/material";
+import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { styled } from '@mui/material/styles';
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -82,18 +81,6 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     );
   }
 
-  const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#f5f5f9',
-      color: 'rgba(0, 0, 0, 0.87)',
-      maxWidth: 220,
-      fontSize: theme.typography.pxToRem(12),
-      border: '1px solid #dadde9',
-    },
-  }));
-
   const renderTextField = (field: RequestField): JSX.Element => {
     const inputValue = getInput(field.ID);
     if(!inputValue){
@@ -103,7 +90,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
-          <HtmlTooltip title={field.Desc} arrow>
+          <Tooltip title={field.Desc} arrow>
             <TextField
               fullWidth
               label={field.Name}
@@ -112,7 +99,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               error={errors.some(error => error.id === field.ID.toString())}
               helperText={errors.find(error => error.id === field.ID.toString())?.message}
             />
-          </HtmlTooltip>
+          </Tooltip>
         </Grid>
         {
         field.Units.length > 0 ? 
@@ -146,15 +133,17 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     return (
       <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
-          <Select
-            labelId={`combo-${field.ID}`}
-            id={`combo-${field.ID}-label`}
-            value={inputValue.value}
-            onChange={ event => setInput(group.ID, {id: field.ID, value: event.target.value})}
-            fullWidth
-          >
-            {options}
-          </Select>
+          <Tooltip title={field.Desc} arrow>
+            <Select
+              labelId={`combo-${field.ID}`}
+              id={`combo-${field.ID}-label`}
+              value={inputValue.value}
+              onChange={ event => setInput(group.ID, {id: field.ID, value: event.target.value})}
+              fullWidth
+            >
+              {options}
+            </Select>
+          </Tooltip>
         <FormHelperText>{errors.find(error => error.id === field.ID.toString())?.message}</FormHelperText>
       </FormControl>
     );
