@@ -1,6 +1,6 @@
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -97,16 +97,16 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
-          <TextField
-            // data-tooltip-id="dyanmicGroupTooltip"
-            // data-tooltip-html={renderToolip(field.Desc)}
-            fullWidth
-            label={field.Name}
-            required={field.Required}
-            onChange={ e => handleChangeInput(field, e.target.value) }
-            error={errors.some(error => error.id === field.ID.toString())}
-            helperText={errors.find(error => error.id === field.ID.toString())?.message}
-          />
+          <Tooltip title="Delete">
+            <TextField
+              fullWidth
+              label={field.Name}
+              required={field.Required}
+              onChange={ e => handleChangeInput(field, e.target.value) }
+              error={errors.some(error => error.id === field.ID.toString())}
+              helperText={errors.find(error => error.id === field.ID.toString())?.message}
+            />
+          </Tooltip>
         </Grid>
         {
         field.Units.length > 0 ? 
