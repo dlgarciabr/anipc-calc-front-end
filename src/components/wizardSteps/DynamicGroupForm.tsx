@@ -1,9 +1,10 @@
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
+import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography, TooltipProps, tooltipClasses } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { styled } from '@mui/material/styles';
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -48,13 +49,6 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     setMultifieldOptions([...multifieldOptions, fieldToRemove]);
   }
 
-  const renderToolip = (text: string) => {
-    if(!text){
-      return undefined;
-    }
-    return `<div style='width: 500px; z-index: 10000'>${text}</div>`;
-  }
-
   const renderUnitField = (field: RequestField, inputValue: InputValue) => {
     if(field.Units.length === 0){
       return undefined;
@@ -88,6 +82,18 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     );
   }
 
+  const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(12),
+      border: '1px solid #dadde9',
+    },
+  }));
+
   const renderTextField = (field: RequestField): JSX.Element => {
     const inputValue = getInput(field.ID);
     if(!inputValue){
@@ -97,7 +103,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
-          <Tooltip title="Delete">
+          <HtmlTooltip title={field.Desc} arrow>
             <TextField
               fullWidth
               label={field.Name}
@@ -106,7 +112,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               error={errors.some(error => error.id === field.ID.toString())}
               helperText={errors.find(error => error.id === field.ID.toString())?.message}
             />
-          </Tooltip>
+          </HtmlTooltip>
         </Grid>
         {
         field.Units.length > 0 ? 
@@ -141,8 +147,6 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
           <Select
-            data-tooltip-id="dyanmicGroupTooltip"
-            data-tooltip-html={renderToolip(field.Desc)}
             labelId={`combo-${field.ID}`}
             id={`combo-${field.ID}-label`}
             value={inputValue.value}
