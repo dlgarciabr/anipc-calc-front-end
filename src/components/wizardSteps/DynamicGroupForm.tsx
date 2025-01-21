@@ -1,9 +1,11 @@
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
+import { Alert, Button, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { exportToJSONFile } from "@/app/calculator/utils";
+import FileDownload from '@mui/icons-material/Download';
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -23,7 +25,7 @@ const theme = createTheme({
 });
 
 const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
-  const { setInput, getInput, errors } = useSimulationStore((state) => state);
+  const { setInput, getInput, errors, inputGroups } = useSimulationStore((state) => state);
   const [ multifieldOptions, setMultifieldOptions ] = useState<RequestField[]>(group.Fields);
   const [ multifields, setMultifields ] = useState<RequestField[]>([]);
 
@@ -98,6 +100,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               onChange={ e => handleChangeInput(field, e.target.value) }
               error={errors.some(error => error.id === field.ID.toString())}
               helperText={errors.find(error => error.id === field.ID.toString())?.message}
+              value={inputValue.value}
             />
           </Tooltip>
         </Grid>
@@ -204,7 +207,16 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Typography variant="h5" component="h5"  style={{margin: '20px 0 20px 0'}}>{group.Name}</Typography>
+      <Grid container>
+        <Grid size={{xs: 10, md: 10}}>
+          <Typography variant="h5" component="h5"  style={{margin: '20px 0 20px 0'}}>{group.Name}</Typography>
+        </Grid>
+        <Grid alignContent='center'>
+          <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
+            <Button variant="outlined" onClick={()=>exportToJSONFile(inputGroups)} endIcon={<FileDownload />} >Exportar</Button>
+          </Tooltip>
+        </Grid>
+      </Grid>
       <Grid container>
         {
           group.Desc ? (
@@ -234,7 +246,6 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             ))
         }
       </Grid>
-      {/* <Tooltip id="dyanmicGroupTooltip" style={{zIndex: 1000}}/> */}
     </ThemeProvider>
   )
 }
