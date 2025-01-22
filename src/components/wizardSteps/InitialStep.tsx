@@ -23,7 +23,8 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 const InitialStep = ({onBegin}: InitialStepProps) => {
-    const { setInputGroups } = useSimulationStore((state) => state);
+  const { form, setInputGroups } = useSimulationStore((state) => state);
+  
   const handleBegin = () => {
     onBegin();
   }
@@ -50,20 +51,15 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
 
   return (
     <Grid container spacing={2} style={{height: '780px'}}>
-      <Grid size={{ xs: 12, md: 12 }} container alignContent='center' justifyContent='center'>
+      <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='center' style={{textAlign: 'center'}}>
         <Typography gutterBottom variant="h5" component="div">
-          Calculadora de pegada de carbono
+          {form.Title}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Este cálculo – confidencial e sem custos para os participantes – é orientado pelo INEGI e pelo SerQ e irá mostrar quais são as principais ameaças e oportunidades de melhoria do setor e onde é mais produtivo atuar, com vista à descarbonização.
+          {form.Desc}
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='flex-start'>
-        <Tooltip title='Iniciar o preenchimento dos dados para a calculadora' arrow>
-          <Button variant="contained" endIcon={<SendIcon />} onClick={handleBegin} size="large">
-            Iniciar
-          </Button>
-        </Tooltip>
         <Tooltip title='Importar dados de uma calculadora previamente preenchida' arrow>
           <Button variant="outlined" endIcon={<FileUploadIcon />} size="large" component="label">
             Importar
@@ -71,6 +67,11 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
               type="file"
               onChange={(event) => handleUploadFile(event)}
             />
+          </Button>
+        </Tooltip>
+        <Tooltip title='Iniciar o preenchimento dos dados para a calculadora' arrow>
+          <Button variant="contained" endIcon={<SendIcon />} onClick={handleBegin} size="large">
+            Iniciar
           </Button>
         </Tooltip>
       </Grid>

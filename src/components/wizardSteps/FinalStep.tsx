@@ -1,10 +1,12 @@
 import { sendData } from "@/app/calculator/api";
 import { useSimulationStore } from "@/app/stores/simulation";
-import { Button, Grid2 as Grid, Typography } from "@mui/material";
+import { Button, Grid2 as Grid, Tooltip, Typography } from "@mui/material";
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
+import { exportToJSONFile } from "@/app/calculator/utils";
+import FileDownload from '@mui/icons-material/Download';
 
 const FinalStep = () => {
-  const { getData } = useSimulationStore((state) => state);
+  const { getData, inputGroups } = useSimulationStore((state) => state);
 
   const handleSendData = () => {
     sendData(getData())
@@ -21,9 +23,14 @@ const FinalStep = () => {
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='flex-start'>
-        <Button variant="contained" endIcon={<EnergySavingsLeafIcon />} onClick={handleSendData} size="large">
-          Calcular
-        </Button>
+        <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
+          <Button variant="outlined" onClick={()=>exportToJSONFile(inputGroups)} endIcon={<FileDownload />} >Exportar</Button>
+        </Tooltip>
+        <Tooltip title='Efectuar os calculos e visualizar os resultados' arrow>
+          <Button variant="contained" endIcon={<EnergySavingsLeafIcon />} onClick={handleSendData} size="large">
+            Calcular
+          </Button>
+        </Tooltip>
       </Grid>
     </Grid>
   )

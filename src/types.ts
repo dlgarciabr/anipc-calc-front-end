@@ -31,6 +31,8 @@ export interface Simulation {
 
 export interface RequestForm {
   ID: string;
+  Title: string;
+  Desc: string;
   Groups: RequestGroup[];
 }
 
