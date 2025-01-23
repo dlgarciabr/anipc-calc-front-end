@@ -9,7 +9,7 @@ const FinalStep = () => {
   const { getData, inputGroups } = useSimulationStore((state) => state);
 
   const handleSendData = () => {
-    sendData(getData())
+    sendData(getData());
   }
 
   return (

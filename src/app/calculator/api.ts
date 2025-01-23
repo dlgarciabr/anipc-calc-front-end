@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { RequestForm, SimulationData } from "../../types";
 
 const newMockdData = {
@@ -866,23 +866,14 @@ export const getCaeList = (): string[] => [
   '33333'
 ];
 
-//TODO remove
-export const getOpenedYears = (): string[] => [
-  '2022',
-  '2023',
-  '2024'
-];
-
-export const sendData = async (data: SimulationData): Promise<void> => {
+export const sendData = async (data: SimulationData): Promise<AxiosResponse> => {
   const url = 'https://calc.ghg-impact.eu/calc.php';
 
-  const response = await axios<RequestForm>({
+  const response = await axios({
     method: 'post',
     url,
     data
   });
 
-  // const response = await axios.post(url, data);
-
-  console.log(response.data);
+  return response;
 }
