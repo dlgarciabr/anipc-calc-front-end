@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import { Box, Container, Grid2 as Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Container, Grid2 as Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import dynamic from "next/dynamic";
 import Decimal from 'decimal.js';
 import { PieChart } from "@mui/x-charts";
