@@ -1,5 +1,10 @@
-import axios, { AxiosResponse } from "axios";
-import { RequestForm, SimulationData } from "../../types";
+import axios from "axios";
+import { CalculatorResult, RequestForm, SimulationData } from "../../types";
+
+const mocks = {
+    getForm: false,
+    calculate: false,
+}
 
 const newMockdData = {
   "ID": "ANIPC",
@@ -843,11 +848,9 @@ const newMockdData = {
 } as RequestForm;
 
 export const getForm = async (id : string): Promise<RequestForm> => {
-  const mock = true;
-
   const url = `https://calc.ghg-impact.eu/form.php?id=${id}`;
 
-  if(mock){
+  if(mocks.getForm){
     return Promise.resolve(newMockdData);
   }
 
@@ -866,14 +869,22 @@ export const getCaeList = (): string[] => [
   '33333'
 ];
 
-export const sendData = async (data: SimulationData): Promise<AxiosResponse> => {
+export const sendData = async (data: SimulationData): Promise<CalculatorResult> => {
   const url = 'https://calc.ghg-impact.eu/calc.php';
 
-  const response = await axios({
+  if(mocks.calculate){
+    return Promise.resolve({ data: 'teste'} as CalculatorResult);
+  }
+
+  const response = await axios<CalculatorResult>({
     method: 'post',
     url,
     data
   });
 
-  return response;
+  if(response.status !== 200){
+    return { error: response.statusText };
+  }
+
+  return response.data;
 }

@@ -4,7 +4,11 @@ import { hasErrors } from '../validation';
 
 const initialState: Simulation = {
   nextStep: 0,
-  form: { ID: '', Groups: []},
+  form: {
+    ID: '', Groups: [],
+    Title: '',
+    Desc: ''
+  },
   setForm: (form: RequestForm) => {console.log(form)},
   inputGroups: {},
   setInputGroups: (groups: InputGroup[]) => {console.log(groups)},

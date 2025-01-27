@@ -76,3 +76,8 @@ export interface SimulationData {
   ID: string;
   Groups: SimulationDataGroup[];
 }
+
+export interface CalculatorResult {
+  error?: string;
+  data?: string;
+}
