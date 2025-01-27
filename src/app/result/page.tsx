@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import { Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Container, Grid2 as Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import Decimal from 'decimal.js';
 
@@ -126,21 +126,30 @@ const Result = () => {
 
   return (
     <Container maxWidth="md">
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Fontes de emissão</TableCell>
-              <TableCell align="center">Fontes de energia</TableCell>
-              <TableCell align="center">Emissão de CO2</TableCell>
-              <TableCell align="center">%</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {renderRows()}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Grid container spacing={2} style={{height: '700px'}}>
+        <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='center' style={{textAlign: 'center'}}>
+          <Typography gutterBottom variant="h5" component="div">
+            Resultado
+          </Typography>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='center' style={{textAlign: 'center'}}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Fontes de emissão</TableCell>
+                  <TableCell align="center">Fontes de energia</TableCell>
+                  <TableCell align="center">Emissão de CO2</TableCell>
+                  <TableCell align="center">%</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {renderRows()}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </Container>
   );
 }
