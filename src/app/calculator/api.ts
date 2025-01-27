@@ -3,7 +3,7 @@ import { CalculatorResult, RequestForm, SimulationData } from "../../types";
 
 const mocks = {
     getForm: false,
-    calculate: false,
+    calculate: true,
 }
 
 const newMockdData = {
