@@ -3,6 +3,7 @@
 import React from "react";
 import { Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import dynamic from "next/dynamic";
+import Decimal from 'decimal.js';
 
 const mockedData = [
   {
@@ -20,14 +21,25 @@ const mockedData = [
         items: [
           {
             title: 'Gasóleo',
-            value: 1289
+            value: 1289.3
           },
           {
             title: 'Gasolina',
-            value: 38
+            value: 38.6
+          },
+          {
+            title: 'GPL Auto',
+            value: 6.6
           }
         ] 
-      }
+      },
+      {
+        title: 'Emissões fugitivas',
+        items: [{
+          title: 'Gases fluorados',
+          value: 3.4
+        }] 
+      },
     ]
   },
   {
@@ -36,50 +48,56 @@ const mockedData = [
       title: 'Energia Elétrica',
       items: [{
         title: 'Energia Elétrica (faturada)',
-        value: 3616
+        value: 3616.90
       }] 
     }]
   }
 ];
 
-interface DatagridRow {
+interface TableRow {
   id: number; 
   span?: number;
   columnA: string | undefined;
   columnB?: string; 
-  columnC?: number;
-  columnD?: string;
+  columnC: string;
+  columnD: string;
 }
 
 const Result = () => {
-  const calcTotal = () => {
-    // return childRows.reduce((prev, { columnC }) => prev + (columnC ? columnC : 0), 0);
-    return 999999;
-  }
+
+  const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
+
+  const calcSubgroupTotal = (items: any[]) => items.reduce((prev, {value}) => prev + value, 0);
+
+  const calcGroupTotal = (subgroups: any[]) => subgroups.reduce((prev, {items}) => prev + calcSubgroupTotal(items), 0);
+
+  const calcTotal = () => mockedData.reduce((prev, {groups}) => prev + calcGroupTotal(groups), 0);
+
+  const calcPercentual = (value: number) => formatNumber(value * 100 / calcTotal(), 1);
 
   const renderRows = () => {
-    const rows: DatagridRow[] = [];
+    const rows: TableRow[] = [];
 
     mockedData.forEach(data => {
-      rows.push({ id: 1, columnA: data.title, columnC: calcTotal()});
+      rows.push({ id: 1, columnA: data.title, columnC: formatNumber(calcGroupTotal(data.groups), 2), columnD: `${calcPercentual(calcGroupTotal(data.groups))}%`});
       data.groups.forEach(group => {
         if(group.items.length === 1){
-          rows.push({ id: 1, columnA: group.title, columnB : group.items[0].title, columnC: group.items[0].value, columnD: 'CALCULAR' });
+          rows.push({ id: 1, columnA: group.title, columnB : group.items[0].title, columnC: formatNumber(group.items[0].value, 2), columnD: calcPercentual(group.items[0].value) });
         } else if(group.items.length > 1 ) {
-          rows.push({ id: 1, columnA: group.title, columnB : group.items[0].title, columnC: group.items[0].value, columnD: '99%', span: group.items.length })
-          group.items.slice(1, group.items.length).forEach( item => { 
-            rows.push({ id: 1, columnA: undefined, columnB : item.title, columnC: item.value, columnD: '99%' })
+          rows.push({ id: 1, columnA: group.title, columnB : 'total movel', columnC: formatNumber(calcSubgroupTotal(group.items), 2), columnD: `${calcPercentual(calcSubgroupTotal(group.items))}%`, span: group.items.length + 1 })
+          group.items.forEach( item => { 
+            rows.push({ id: 1, columnA: undefined, columnB : item.title, columnC: formatNumber(item.value, 2), columnD: calcPercentual(item.value) })
           });
         }
       });
     });
   
-    rows.push({ id: 1, columnA: 'Total', columnC: 4962, columnD: '100%calc', span: 1 });
+    rows.push({ id: 1, columnA: 'Total', columnC: formatNumber(calcTotal(), 2), columnD: '100%' });
 
     return rows.map(renderRow);
   }
 
-  const renderRow = (row: DatagridRow) => {
+  const renderRow = (row: TableRow) => {
     return (
       <TableRow
         key={1}
@@ -96,10 +114,10 @@ const Result = () => {
         <TableCell component="th" scope="row">
           {row.columnB}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="right">
           {row.columnC}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="right">
           {row.columnD}
         </TableCell>
       </TableRow>
