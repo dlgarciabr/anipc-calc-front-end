@@ -67,8 +67,10 @@ const Result = () => {
 
   const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const calcSubgroupTotal = (items: any[]) => items.reduce((prev, {value}) => prev + value, 0);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const calcGroupTotal = (subgroups: any[]) => subgroups.reduce((prev, {items}) => prev + calcSubgroupTotal(items), 0);
 
   const calcTotal = () => mockedData.reduce((prev, {groups}) => prev + calcGroupTotal(groups), 0);
