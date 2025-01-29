@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import { Box, Container, Grid2 as Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Container, Grid2 as Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import Decimal from 'decimal.js';
 import { PieChart } from "@mui/x-charts";
@@ -62,6 +62,7 @@ interface TableRow {
   columnB?: string; 
   columnC: string;
   columnD: string;
+  color?: string;
 }
 
 const Result = () => {
@@ -86,11 +87,23 @@ const Result = () => {
     const rows: TableRow[] = [];
 
     mockedData.forEach(data => {
-      rows.push({ id: index, columnA: data.title, columnC: formatNumber(calcGroupTotal(data.groups), 2), columnD: `${calcFormattedPercentual(calcGroupTotal(data.groups))}`});
+      rows.push({ 
+        id: index, 
+        columnA: data.title, 
+        columnC: formatNumber(calcGroupTotal(data.groups), 2), 
+        columnD: `${calcFormattedPercentual(calcGroupTotal(data.groups))}`,
+        color: '#A9A9A9'
+      });
       index++;
       data.groups.forEach(group => {
         if(group.items.length === 1){
-          rows.push({ id: index, columnA: group.title, columnB : group.items[0].title, columnC: formatNumber(group.items[0].value, 2), columnD: calcFormattedPercentual(group.items[0].value) });
+          rows.push({ 
+            id: index, 
+            columnA: group.title, 
+            columnB : group.items[0].title, 
+            columnC: formatNumber(group.items[0].value, 2), 
+            columnD: calcFormattedPercentual(group.items[0].value)
+          });
         } else if(group.items.length > 1 ) {
           rows.push({ id: index, columnA: group.title, columnB : 'total movel', columnC: formatNumber(calcSubgroupTotal(group.items), 2), columnD: `${calcFormattedPercentual(calcSubgroupTotal(group.items))}`, span: group.items.length + 1 });
           index++;
@@ -103,7 +116,13 @@ const Result = () => {
       });
     });
 
-    rows.push({ id: index, columnA: 'Total', columnC: formatNumber(calcTotal(), 2), columnD: '100%' });
+    rows.push({ 
+      id: index, 
+      columnA: 'Total', 
+      columnC: formatNumber(calcTotal(), 2), 
+      columnD: '100%',
+      color: '#D8D8D8'
+    });
 
     return rows.map(renderRow);
   }
@@ -112,6 +131,9 @@ const Result = () => {
     return (
       <TableRow
         key={row.id}
+        style={{
+          backgroundColor: row.color || '#F0F0F0'
+        }}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         {
@@ -135,24 +157,30 @@ const Result = () => {
     );
   }
 
+  const secondTableRowStyle = {
+    padding: "6px 0px 6px 0px",
+    textAlign: 'center'
+  } as React.CSSProperties
+
   return (
-    <Container maxWidth="md">
-      <Grid container spacing={2} style={{height: '900px'}}>
-        {/* <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='center' style={{textAlign: 'center'}}>
+    <Container maxWidth="lg">
+      <Grid container spacing={2} justifyContent='center'>
+        <Grid>
           <Typography gutterBottom variant="h5" component="div">
-            Resultado
+            Pegada de carbono - XPTO 
           </Typography>
-        </Grid> */}
-        {/* <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='center' style={{textAlign: 'center'}}> */}
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} style={{height: '800px'}}>
         <Stack direction="row" width="100%" textAlign="center" spacing={2}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableContainer component={Paper} >
+            <Table sx={{ minWidth: 600 }} aria-label="simple table" size="small">
               <TableHead>
-                <TableRow>
-                  <TableCell align="center">Fontes de emissão</TableCell>
-                  <TableCell align="center">Fontes de energia</TableCell>
-                  <TableCell align="center">Emissão de CO2</TableCell>
-                  <TableCell align="center">%</TableCell>
+                <TableRow style={{backgroundColor: '#696969'}}>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>Fontes de emissão</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>Fontes de energia</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>Emissão de CO2</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>%</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -160,8 +188,377 @@ const Result = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          <TableContainer component={Paper} sx={{ maxWidth: 450 }} >
+            <Table aria-label="simple table" size="small">
+              <TableHead>
+                <TableRow style={{backgroundColor: '#696969'}}>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>CO2</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>CH4</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>N20</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>HFC</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>PFC</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>SF6</TableCell>
+                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>COVNM</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#F0F0F0'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    34
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    12
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    43
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right">
+                    54
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  key={1}
+                  style={{
+                    backgroundColor: '#D8D8D8'
+                  }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" style={secondTableRowStyle}>
+                    2.8%
+                  </TableCell>
+                  <TableCell component="th" scope="row" style={secondTableRowStyle}>
+                    0.0%
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
+                    0.0%
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
+                    3.3%
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
+                    18.8%
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
+                    75%
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
+                    0.0%
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Stack>
-        {/* </Grid> */}
+        <Stack direction="row" width="100%" justifyContent="center">
+          <Typography>
+            Pegada de carbono
+          </Typography>
+        </Stack>
         <Stack direction="row" width="100%" textAlign="center" spacing={2}>
           <Box flexGrow={1}>
             <PieChart
@@ -176,8 +573,6 @@ const Result = () => {
                   paddingAngle: 5,
                   cornerRadius: 5,
                   startAngle: 0,
-                  // cx: 150,
-                  // cy: 150,
                 }
               ]}
             />
