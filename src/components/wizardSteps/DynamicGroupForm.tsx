@@ -1,12 +1,13 @@
 import React from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, Button, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
+import { Alert, Button, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { exportToJSONFile } from "@/app/calculator/utils";
-import FileDownload from '@mui/icons-material/Download';
+import FileDownloadIcon from '@mui/icons-material/Download';
+import BackspaceIcon from '@mui/icons-material/Backspace';
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -135,6 +136,16 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             }
           </>
         : undefined}
+       {
+        inputValue.customValue ? 
+        <Tooltip title="Cancelar edição" placement="top">
+          <IconButton size="large"
+            onClick={()=>setInput(group.ID, {id: field.ID, value: '', customValue: false})} >
+            <BackspaceIcon />
+          </IconButton>
+        </Tooltip>
+          : null
+       } 
       </Grid>
     );
   };
@@ -149,6 +160,13 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       const customOption = <MenuItem key='other' value='other'>Outro</MenuItem>;
       options.push(customOption);
     }
+
+    const handleChange = (event: SelectChangeEvent<string>) => {
+      const value = event.target.value;
+      const isOtherOption = event.target.value === 'other';
+      setInput(group.ID, {id: field.ID, value: isOtherOption ? '' : value, customValue: isOtherOption});
+    }
+
     return (
       <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
         <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
@@ -157,7 +175,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               labelId={`combo-${field.ID}`}
               id={`combo-${field.ID}-label`}
               value={inputValue.value}
-              onChange={ event => setInput(group.ID, {id: field.ID, value: event.target.value})}
+              onChange={ handleChange }
               fullWidth
             >
               {options}
@@ -212,8 +230,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     if(!inputValue){
       return <></>;
     }
-    const currentValue = inputValue.value;
-    const isOtherOption = !!currentValue && field.CustomValue && (currentValue === 'other' || !field.Values.some(value => value === currentValue));
+    const isOtherOption = field.CustomValue && (inputValue.customValue);
     if(!field.Values || !field.Values.length || isOtherOption){
       return renderTextField(field);
     }
@@ -241,7 +258,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
         </Grid>
         <Grid alignContent='center'>
           <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
-            <Button variant="outlined" onClick={()=>exportToJSONFile(inputGroups)} endIcon={<FileDownload />} >Exportar</Button>
+            <Button variant="outlined" onClick={()=>exportToJSONFile(inputGroups)} endIcon={<FileDownloadIcon />} >Exportar</Button>
           </Tooltip>
         </Grid>
       </Grid>

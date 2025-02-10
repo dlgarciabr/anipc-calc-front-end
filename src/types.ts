@@ -13,6 +13,7 @@ export interface InputValue {
   id: number;
   value: string;
   unit?: string;
+  customValue?: boolean;
 }
 
 export interface Simulation {
