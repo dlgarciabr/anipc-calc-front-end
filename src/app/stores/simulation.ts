@@ -15,6 +15,7 @@ const initialState: Simulation = {
   getData: () => ({} as SimulationData),
   setInput: (groupId: number, input: InputValue) => {console.log(groupId + input.value)},
   getInput: (inputId: number) => { console.log(inputId); return undefined},
+  deleteInput: (inputId: number) => { console.log(inputId) },
   setNextStep: (nextStep: number) => { console.log(nextStep) },
   hasErrors: () => Promise.resolve(false),
   errors: [],
@@ -58,6 +59,30 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     }
     return input;
   },
+  deleteInput: (inputId: number) => set((state) => { 
+    if(!inputId){
+      return state;
+    }
+
+    const group = Object.values(state.inputGroups).find(group => Object.values(group.inputs).some(input => input.id === inputId));
+
+    if(!group){
+      return state;
+    }
+
+    const newInputs = Object.values(group.inputs).filter(input => input.id !== inputId);
+    
+    return {
+      ...state,
+      inputGroups: {
+        ...state.inputGroups, 
+        [group.id] : {
+          ...group,
+          inputs: newInputs
+        }
+      }
+    }
+  }),
   setInput: (groupId: number, {id, value, unit}: InputValue) => set((state) => {
     const currentValue = get().getInput(id);
     if(!currentValue){

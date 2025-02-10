@@ -1,3 +1,4 @@
+import React from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
 import { Alert, Button, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
@@ -25,7 +26,7 @@ const theme = createTheme({
 });
 
 const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
-  const { setInput, getInput, errors, inputGroups } = useSimulationStore((state) => state);
+  const { setInput, getInput, errors, inputGroups, deleteInput } = useSimulationStore((state) => state);
   const [ multifieldOptions, setMultifieldOptions ] = useState<RequestField[]>(group.Fields);
   const [ multifields, setMultifields ] = useState<RequestField[]>([]);
 
@@ -39,13 +40,27 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   const handleAddMultifield = (fieldId: number) => {
     const fieldToAdd = group.Fields.find(field => field.ID === fieldId);
+    if(!fieldToAdd){
+      return;
+    }
     const newMultifieldOptions = multifieldOptions.filter(field => field.ID !== fieldId);
     setMultifieldOptions(newMultifieldOptions);
-    setMultifields([...multifields, fieldToAdd!]);
-  }
+    setMultifields([...multifields, fieldToAdd]);
+  };
+
+  const handleAddMultifields = React.useCallback((fieldsId: number[]) => {
+    const fieldsToAdd = group.Fields.filter(field => fieldsId.some(fieldId => fieldId === field.ID));
+    if(!fieldsToAdd.length){
+      return;
+    }
+    const newMultifieldOptions = multifieldOptions.filter(field => !fieldsId.some(fieldId => fieldId === field.ID));
+    setMultifieldOptions(newMultifieldOptions);
+    setMultifields([...multifields, ...fieldsToAdd]);
+  },[group.Fields, multifieldOptions, multifields]);
 
   const handleRemoveMultifield = (fieldToRemove: RequestField) => {
     const newMultifields = multifields.filter(field => field.ID !== fieldToRemove.ID);
+    deleteInput(Number(fieldToRemove.ID));
     setMultifields(newMultifields);
     setMultifieldOptions([...multifieldOptions, fieldToRemove]);
   }
@@ -85,6 +100,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   const renderTextField = (field: RequestField): JSX.Element => {
     const inputValue = getInput(field.ID);
+
     if(!inputValue){
       return <></>;
     }
@@ -204,6 +220,18 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
     return renderCombo(field);
   }
+
+  React.useEffect(()=>{
+    const fieldsMultifield = group.Fields.filter(field => field.MultiField);
+    const inputGroup = inputGroups[group.ID];
+    if(!multifields.length && fieldsMultifield.length && inputGroup && inputGroup.inputs){
+      const fieldsIdToAdd = Object.keys(inputGroup.inputs)
+        .filter(inputId => fieldsMultifield.some(multifield => multifield.ID === Number(inputId)))
+        .map(inputId => Number(inputId));
+
+      handleAddMultifields(fieldsIdToAdd);
+    }
+  },[group, inputGroups, multifields, handleAddMultifields]);
 
   return (
     <ThemeProvider theme={theme}>
