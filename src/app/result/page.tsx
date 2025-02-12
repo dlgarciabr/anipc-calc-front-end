@@ -1,10 +1,10 @@
 "use client"
 
 import React from "react";
-import { Box, Container, Grid2 as Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import Decimal from 'decimal.js';
-import { PieChart } from "@mui/x-charts";
+import { BarChart, PieChart } from "@mui/x-charts";
 
 const mockedData = [
   {
@@ -55,15 +55,20 @@ const mockedData = [
   }
 ];
 
-interface TableRow {
-  id: number; 
-  span?: number;
-  columnA: string | undefined;
-  columnB?: string; 
-  columnC: string;
-  columnD: string;
-  color?: string;
-}
+const primaryColor = '#53534a';
+const secondayColor = '#c3cf21';
+
+const theme = createTheme({
+  palette: {
+    primary: { main: primaryColor },
+    secondary: { main: secondayColor },
+  },
+  typography: {
+    allVariants: {
+      color: primaryColor
+    }
+  }
+});
 
 const Result = () => {
 
@@ -79,489 +84,144 @@ const Result = () => {
 
   const calcPercentual = (value: number) => value * 100 / calcTotal();
 
-  const calcFormattedPercentual = (value: number) => formatNumber(calcPercentual(value), 1);
+  // const calcFormattedPercentual = (value: number) => formatNumber(calcPercentual(value), 1);
 
-  let index = 0;
-
-  const renderRows = () => {
-    const rows: TableRow[] = [];
-
-    mockedData.forEach(data => {
-      rows.push({ 
-        id: index, 
-        columnA: data.title, 
-        columnC: formatNumber(calcGroupTotal(data.groups), 2), 
-        columnD: `${calcFormattedPercentual(calcGroupTotal(data.groups))}`,
-        color: '#A9A9A9'
-      });
-      index++;
-      data.groups.forEach(group => {
-        if(group.items.length === 1){
-          rows.push({ 
-            id: index, 
-            columnA: group.title, 
-            columnB : group.items[0].title, 
-            columnC: formatNumber(group.items[0].value, 2), 
-            columnD: calcFormattedPercentual(group.items[0].value)
-          });
-        } else if(group.items.length > 1 ) {
-          rows.push({ id: index, columnA: group.title, columnB : 'total movel', columnC: formatNumber(calcSubgroupTotal(group.items), 2), columnD: `${calcFormattedPercentual(calcSubgroupTotal(group.items))}`, span: group.items.length + 1 });
-          index++;
-          group.items.forEach( item => {
-            rows.push({ id: index, columnA: undefined, columnB : item.title, columnC: formatNumber(item.value, 2), columnD: calcFormattedPercentual(item.value) });
-            index++;
-          });
-        }
-        index++;
-      });
-    });
-
-    rows.push({ 
-      id: index, 
-      columnA: 'Total', 
-      columnC: formatNumber(calcTotal(), 2), 
-      columnD: '100%',
-      color: '#D8D8D8'
-    });
-
-    return rows.map(renderRow);
+  interface Data {
+    key: string;
+    value: string;
   }
 
-  const renderRow = (row: TableRow) => {
-    return (
-      <TableRow
-        key={row.id}
-        style={{
-          backgroundColor: row.color || '#F0F0F0'
-        }}
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-      >
+  interface Line {
+    title: string;
+    description?: string;
+    data: (Data | undefined)[];
+    type: 'data' | 'graphic'
+  }
+
+  const records: Line[] = [
+    {
+      title: 'Empresa',
+      type: 'data',
+      data: [
         {
-          row.columnA ?
-          (
-            <TableCell component="th" scope="row" rowSpan={row.span || 1}>
-              {row.columnA}
-            </TableCell>
-          ): undefined
+          key: 'Entidade',
+          value: 'Empresa XPTO'
+        },
+        {
+          key: 'NIPC',
+          value: '3545453'
+        },
+        {
+          key: 'Ano',
+          value: '2025'
+        },
+        undefined,
+        {
+          key: 'Produção',
+          value: '19000'
         }
-        <TableCell component="th" scope="row">
-          {row.columnB}
-        </TableCell>
-        <TableCell component="th" scope="row" align="right">
-          {row.columnC}
-        </TableCell>
-        <TableCell component="th" scope="row" align="right">
-          {row.columnD}
-        </TableCell>
-      </TableRow>
-    );
-  }
+      ]
+    },
+    {
+      title: 'Emissão de gases com efeito de estufa - resumo',
+      type: 'data',
+      description: 'A pegada de carbono reflete a quantidade total de gases com efeito de estufa (GEE) que são emitidos direta ou indiretamente como resultado das atividades da sua indústria. O resultado apresentado apenas considera o âmbito 1 (emissões diretas) e âmbito 2 (emissões com a aquisição de energia)',
+      data: [
+        {
+          key: 'Emissões',
+          value: '6775.65'
+        }
+      ]
+    },
+    {
+      title: 'Graphic',
+      type: 'graphic',
+      data: []
+    },
+    {
+      title: 'Disclaimer',
+      type: 'data',
+      description: `
+Esta ferramenta de cálculo de emissões de Gases com Efeito de Estufa (GEE) enquadra-se no âmbito do projeto Paper4Neutral – Roteiro para a descarbonização do setor do papel e cartão desenvolvido pela ANIPC – Associação Nacional dos Industriais do Papel e Cartão.
 
-  const secondTableRowStyle = {
-    padding: "6px 0px 6px 0px",
-    textAlign: 'center'
-  } as React.CSSProperties
+O cálculo das emissões de GEE considera apenas as emissões diretas de âmbito 1 (e.g., consumo de combustíveis, utilização de colas e tintas com solventes, utilização de fluídos refrigerantes) e as emissões indiretas de âmbito 2 (consumo de eletricidade adquirida) das instalações e processos industriais do setor do papel e cartão.
 
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justifyContent='center'>
-        <Grid>
-          <Typography gutterBottom variant="h5" component="div">
-            Pegada de carbono - XPTO 
+Os dados e informações utilizadas no preenchimento dos campos da ferramenta são da única e inteira responsabilidade dos utilizadores. Omissões ou inexatidões poderão influenciar a fiabilidade dos resultados apresentados. A ANIPC não se responsabiliza pela precisão dos resultados obtidos.
+
+Notas metedológicas são apresentadas no relatório das emissão de gases com efeito de estufa (após  download).
+
+
+powered by impact partners www.impactpartners.pt
+      `,
+      data: []
+    }
+  ];
+
+  const renderLines = (lines: Line[]) => {
+    return (
+      lines.map((line, i) => {
+        if(line.type === 'data'){
+          return renderLine(line, i); 
+        }else {
+          return renderGraphic(line, i);
+        }
+      }
+    ));
+  };
+
+  const renderLine = (line: Line, index: number) => (
+    <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{marginBottom: '20px'}}>
+      <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+          <Typography variant="h5" color="secondary">
+            <strong>{line.title}</strong>
           </Typography>
         </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <Divider style={{marginBottom: '15px'}}/>
+        </Grid>
+        {
+          line.description ? 
+          <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+            <Typography variant='caption'>{line.description}</Typography>
+          </Grid> : 
+          null
+        }
       </Grid>
-      <Grid container spacing={2} style={{height: '800px'}}>
-        <Stack direction="row" width="100%" textAlign="center" spacing={2}>
-          <TableContainer component={Paper} >
-            <Table sx={{ minWidth: 600 }} aria-label="simple table" size="small">
-              <TableHead>
-                <TableRow style={{backgroundColor: '#696969'}}>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>Fontes de emissão</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>Fontes de energia</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>Emissão de CO2</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>%</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {renderRows()}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TableContainer component={Paper} sx={{ maxWidth: 450 }} >
-            <Table aria-label="simple table" size="small">
-              <TableHead>
-                <TableRow style={{backgroundColor: '#696969'}}>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>CO2</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>CH4</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>N20</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>HFC</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>PFC</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>SF6</TableCell>
-                  <TableCell align="center" style={{color: 'white', fontWeight: 700}}>COVNM</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#F0F0F0'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    34
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    12
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    43
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right">
-                    54
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  key={1}
-                  style={{
-                    backgroundColor: '#D8D8D8'
-                  }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row" style={secondTableRowStyle}>
-                    2.8%
-                  </TableCell>
-                  <TableCell component="th" scope="row" style={secondTableRowStyle}>
-                    0.0%
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
-                    0.0%
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
-                    3.3%
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
-                    18.8%
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
-                    75%
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" style={secondTableRowStyle}>
-                    0.0%
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Stack>
-        <Stack direction="row" width="100%" justifyContent="center">
-          <Typography>
-            Pegada de carbono
-          </Typography>
-        </Stack>
-        <Stack direction="row" width="100%" textAlign="center" spacing={2}>
-          <Box flexGrow={1}>
+      {
+        line.data.map((item, j) => (
+          <Grid container size={{ xs: 12, md: 6 }} key={`item${j}`}>
+            {
+              item ? 
+              <>
+                <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+                  <Typography variant="h6">
+                    <strong>{item.key}</strong>
+                  </Typography>
+                </Grid>
+                <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+                  <Typography variant="body1">{item.value}</Typography>
+                </Grid> 
+              </> : null
+            }
+          </Grid>
+        ))
+      }
+    </Grid>
+  );
+
+  const renderGraphic = (line: Line, index: number) => {
+    return (
+      <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{marginBottom: '20px', height: '400px'}}>
+        <Grid container size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12, md: 12 }}>
+            <Typography variant="button" color="secondary">
+              <strong>Pegada de carbono</strong>
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 12 }}>
             <PieChart
+              colors={[primaryColor, secondayColor]}
               series={[
                 {
                   data: [
@@ -576,10 +236,67 @@ const Result = () => {
                 }
               ]}
             />
-          </Box>
-        </Stack>
+          </Grid>
+        </Grid>
+        <Grid container size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12, md: 12 }}>
+            <Typography variant="button" color="secondary">
+              <strong>Impacto das emissões de gases com efeito estufa</strong>
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 12 }}>
+            <BarChart
+              xAxis={[
+                {
+                  id: 'barCategories',
+                  data: [
+                    'Combustão estacionária', 
+                    'Combustao móvel', 
+                    'Emissões de processo e fugitivas', 
+                    'Emissões indiretas: energia elétrica'
+                  ],
+                  scaleType: 'band',
+                  colorMap: {
+                    type: 'ordinal',
+                    colors: [secondayColor, secondayColor, secondayColor, primaryColor]
+                  }
+                },
+              ]}
+              barLabel="value"
+              series={[
+                {
+                  data: [22, 7.7, 1.54, 1.3],
+                },
+              ]}
+              width={500}
+              height={300}
+              grid={{ horizontal: true }}
+            />
+          </Grid>
+        </Grid>
       </Grid>
-    </Container>
+    );
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="lg">
+        <Grid container spacing={2} justifyContent='center'>
+          <Grid>
+            <Typography gutterBottom variant="h5" component="div" color="secondary">
+              <strong>Resumo da Pegada de carbono</strong>
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Stack direction="row" width="100%" textAlign="center" spacing={2}>
+            <Grid container size={{ xs: 12, md: 12 }}>
+              {renderLines(records)}
+            </Grid>
+          </Stack>
+        </Grid>
+      </Container>
+    </ThemeProvider>
   );
 }
 
