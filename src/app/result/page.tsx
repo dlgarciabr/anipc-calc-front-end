@@ -212,7 +212,7 @@ powered by impact partners www.impactpartners.pt
 
   const renderGraphic = (line: Line, index: number) => {
     return (
-      <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{marginBottom: '20px', height: '400px'}}>
+      <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{margin: '30px 0 30px 0', height: '400px'}}>
         <Grid container size={{ xs: 12, md: 6 }}>
           <Grid size={{ xs: 12, md: 12 }}>
             <Typography variant="button" color="secondary">
