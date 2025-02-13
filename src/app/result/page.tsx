@@ -118,7 +118,7 @@ const Result = () => {
         undefined,
         {
           key: 'Produção',
-          value: '19000'
+          value: '19000 unidade'
         }
       ]
     },
@@ -129,7 +129,32 @@ const Result = () => {
       data: [
         {
           key: 'Emissões',
-          value: '6775.65'
+          value: '6775.65 tCO2e'
+        },
+        undefined,
+        {
+          key: 'Emissões específicas',
+          value: '234 tCO2e/Unidade'
+        }
+      ]
+    },
+    {
+      title: 'Emissão de gases com efeito de estufa - por âmbito',
+      type: 'data',
+      data: [
+        {
+          key: 'Emissões diretas (scope 1)',
+          value: '6775.65 tCO2e'
+        },
+        undefined,
+        {
+          key: 'Emissões indiretas (scope 2)',
+          value: '234 tCO2e'
+        },
+        undefined,
+        {
+          key: 'Outras emissões (biomassa)',
+          value: '234 tCO2e'
         }
       ]
     },
@@ -190,7 +215,7 @@ powered by impact partners www.impactpartners.pt
       </Grid>
       {
         line.data.map((item, j) => (
-          <Grid container size={{ xs: 12, md: 6 }} key={`item${j}`}>
+          <Grid container size={{ xs: 12, md: 6 }} key={`item${j}`} alignItems='center'>
             {
               item ? 
               <>
