@@ -1,9 +1,8 @@
 "use client"
 
 import React from "react";
-import { Box, Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
+import { Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
-import Decimal from 'decimal.js';
 import { BarChart, PieChart } from "@mui/x-charts";
 
 const mockedData = [
@@ -72,7 +71,7 @@ const theme = createTheme({
 
 const Result = () => {
 
-  const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
+  // const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const calcSubgroupTotal = (items: any[]) => items.reduce((prev, {value}) => prev + value, 0);
