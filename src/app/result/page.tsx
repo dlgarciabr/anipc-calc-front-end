@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
-import dynamic from "next/dynamic";
+import dynamic from "next/dynamic"
 import { BarChart, PieChart } from "@mui/x-charts";
 
 const mockedData = [
@@ -245,12 +245,12 @@ powered by impact partners www.impactpartners.pt
           </Grid>
           <Grid size={{ xs: 12, md: 12 }}>
             <PieChart
-              colors={[primaryColor, secondayColor]}
+              colors={[secondayColor, primaryColor]}
               series={[
                 {
                   data: [
-                    { id: 0, value: calcPercentual(calcGroupTotal(mockedData[0].groups)), label: mockedData[0].title },
-                    { id: 1, value: calcPercentual(calcGroupTotal(mockedData[1].groups)), label: mockedData[1].title },
+                    { id: 0, value: calcPercentual(calcGroupTotal(mockedData[1].groups)), label: mockedData[0].title },
+                    { id: 1, value: calcPercentual(calcGroupTotal(mockedData[0].groups)), label: mockedData[1].title },
                   ],
                   innerRadius: 50,
                   outerRadius: 130,
