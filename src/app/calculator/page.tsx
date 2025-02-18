@@ -8,14 +8,20 @@ import CalculatorNavigator from "@/components/CalculatorNavigator";
 import { useSimulationStore } from "../stores/simulation";
 import { getForm } from "./api";
 import DynamicGroupForm from "@/components/wizardSteps/DynamicGroupForm";
-import { Container, Grid2 as Grid } from "@mui/material";
+import { Container, createTheme, Grid2 as Grid, ThemeProvider } from "@mui/material";
 import FinalStep from "@/components/wizardSteps/FinalStep";
 import InitialStep from "@/components/wizardSteps/InitialStep";
+import { setupScheme } from "@/components/utils/scheme";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
   previousStep: () => void;
 }
+
+const primaryColor = '#c3cf21';
+const secondayColor = '#53534a';
+
+const theme = createTheme(setupScheme(primaryColor, secondayColor));
 
 const Calculator = () => {
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
@@ -75,22 +81,26 @@ const Calculator = () => {
   ];
 
   return (
-    !form ? 
-    <>loading</> :
-    <Container maxWidth="md">
-      <Grid container>
-        <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
-          {
-            <StepWizard instance={setInstance} >
-              {generateSteps()}
-            </StepWizard>
-          }
-        </Grid>
-        <Grid size={{ xs: 12, md: 12 }}>
-          <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
-        </Grid>
-      </Grid>
-    </Container>
+    <ThemeProvider theme={theme} defaultMode="light">
+      {
+        !form ? 
+        <>loading</> :
+        <Container maxWidth="md">
+          <Grid container>
+            <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
+              {
+                <StepWizard instance={setInstance} >
+                  {generateSteps()}
+                </StepWizard>
+              }
+            </Grid>
+            <Grid size={{ xs: 12, md: 12 }}>
+              <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
+            </Grid>
+          </Grid>
+        </Container>
+      }
+    </ThemeProvider>
   );
 }
 

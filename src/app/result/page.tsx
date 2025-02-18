@@ -4,6 +4,7 @@ import React from "react";
 import { Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
 import dynamic from "next/dynamic"
 import { BarChart, PieChart } from "@mui/x-charts";
+import { setupScheme } from "@/components/utils/scheme";
 
 const mockedData = [
   {
@@ -54,20 +55,10 @@ const mockedData = [
   }
 ];
 
-const primaryColor = '#53534a';
-const secondayColor = '#c3cf21';
+const primaryColor = '#c3cf21';
+const secondayColor = '#53534a';
 
-const theme = createTheme({
-  palette: {
-    primary: { main: primaryColor },
-    secondary: { main: secondayColor },
-  },
-  typography: {
-    allVariants: {
-      color: primaryColor
-    }
-  }
-});
+const theme = createTheme(setupScheme(primaryColor, secondayColor));
 
 const Result = () => {
 
@@ -197,7 +188,7 @@ powered by impact partners www.impactpartners.pt
     <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{marginBottom: '20px'}}>
       <Grid size={{ xs: 12, md: 12 }}>
         <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
-          <Typography variant="h5" color="secondary">
+          <Typography variant="h5">
             <strong>{line.title}</strong>
           </Typography>
         </Grid>
@@ -207,7 +198,7 @@ powered by impact partners www.impactpartners.pt
         {
           line.description ? 
           <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
-            <Typography variant='caption'>{line.description}</Typography>
+            <Typography variant='caption' color="secondary">{line.description}</Typography>
           </Grid> : 
           null
         }
@@ -219,12 +210,12 @@ powered by impact partners www.impactpartners.pt
               item ? 
               <>
                 <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-                  <Typography variant="h6">
+                  <Typography variant="h6" color="secondary">
                     <strong>{item.key}</strong>
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-                  <Typography variant="body1">{item.value}</Typography>
+                  <Typography variant="body1" color="secondary">{item.value}</Typography>
                 </Grid> 
               </> : null
             }
@@ -239,13 +230,13 @@ powered by impact partners www.impactpartners.pt
       <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{margin: '30px 0 30px 0', height: '400px'}}>
         <Grid container size={{ xs: 12, md: 6 }}>
           <Grid size={{ xs: 12, md: 12 }}>
-            <Typography variant="button" color="secondary">
+            <Typography variant="button">
               <strong>Pegada de carbono</strong>
             </Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 12 }}>
             <PieChart
-              colors={[secondayColor, primaryColor]}
+              colors={[primaryColor, secondayColor]}
               series={[
                 {
                   data: [
@@ -264,7 +255,7 @@ powered by impact partners www.impactpartners.pt
         </Grid>
         <Grid container size={{ xs: 12, md: 6 }}>
           <Grid size={{ xs: 12, md: 12 }}>
-            <Typography variant="button" color="secondary">
+            <Typography variant="button">
               <strong>Impacto das emissões de gases com efeito estufa</strong>
             </Typography>
           </Grid>
@@ -282,7 +273,7 @@ powered by impact partners www.impactpartners.pt
                   scaleType: 'band',
                   colorMap: {
                     type: 'ordinal',
-                    colors: [secondayColor, secondayColor, secondayColor, primaryColor]
+                    colors: [ primaryColor, primaryColor, primaryColor, secondayColor ]
                   }
                 },
               ]}
@@ -303,11 +294,11 @@ powered by impact partners www.impactpartners.pt
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} defaultMode="light">
       <Container maxWidth="lg">
         <Grid container spacing={2} justifyContent='center'>
           <Grid>
-            <Typography gutterBottom variant="h5" component="div" color="secondary">
+            <Typography gutterBottom variant="h5" component="div" color="primary">
               <strong>Resumo da Pegada de carbono</strong>
             </Typography>
           </Grid>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, Button, createTheme, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
+import { Alert, Button, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,19 +12,6 @@ import BackspaceIcon from '@mui/icons-material/Backspace';
 interface DynamicCategoryFormProps {
   group: RequestGroup;
 }
-
-const theme = createTheme({
-  components: {
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'white',
-          padding: '0 10px 0 10px',
-        }
-      }
-    }
-  }
-});
 
 const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   const { setInput, getInput, errors, inputGroups, deleteInput } = useSimulationStore((state) => state);
@@ -251,47 +238,45 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   },[group, inputGroups, multifields, handleAddMultifields]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container>
-        <Grid size={{xs: 10, md: 10}}>
-          <Typography variant="h5" component="h5"  style={{margin: '20px 0 20px 0'}}>{group.Name}</Typography>
+      <>
+        <Grid container>
+          <Grid size={{ xs: 10, md: 10 }}>
+            <Typography variant="h5" component="h5" style={{ margin: '20px 0 20px 0' }}>{group.Name}</Typography>
+          </Grid>
+          <Grid alignContent='center'>
+            <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
+              <Button variant="outlined" onClick={() => exportToJSONFile(inputGroups)} endIcon={<FileDownloadIcon />}>Exportar</Button>
+            </Tooltip>
+          </Grid>
         </Grid>
-        <Grid alignContent='center'>
-          <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
-            <Button variant="outlined" onClick={()=>exportToJSONFile(inputGroups)} endIcon={<FileDownloadIcon />} >Exportar</Button>
-          </Tooltip>
-        </Grid>
-      </Grid>
-      <Grid container>
-        {
-          group.Desc ? (
-            <Grid size={{ xs: 12, md: 12 }} sx={{margin: '10px 0 20px 0'}}>
-              <Alert icon={<InfoOutlinedIcon fontSize="inherit" />} severity="warning">
-                {group.Desc}
-              </Alert>
-            </Grid>
-          ): undefined
-        }
-        {
-          group.Fields.some(field => field.MultiField) ? 
+        <Grid container>
+          {
+            group.Desc ? (
+              <Grid size={{ xs: 12, md: 12 }} sx={{ margin: '10px 0 20px 0' }}>
+                <Alert icon={<InfoOutlinedIcon fontSize="inherit" />} severity="warning">
+                  {group.Desc}
+                </Alert>
+              </Grid>
+            ) : undefined
+          }
+          {
+            group.Fields.some(field => field.MultiField) ?
             <>
-              {
-                multifields.map(field => (
-                  <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '85px'}}>
-                    {renderField(field)}
-                  </Grid>
-                ))
-              }
+              {multifields.map(field => (
+                <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{ minHeight: '85px' }}>
+                  {renderField(field)}
+                </Grid>
+              ))}
               {renderMultifieldCombo()}
-            </> : 
+            </> :
             group.Fields.map(field => (
-              <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{minHeight: '85px'}}>
+              <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{ minHeight: '85px' }}>
                 {renderField(field)}
               </Grid>
             ))
-        }
-      </Grid>
-    </ThemeProvider>
+          }
+        </Grid>
+      </>
   )
 }
 
