@@ -7,57 +7,8 @@ import { BarChart, PieChart } from "@mui/x-charts";
 import { setupScheme } from "@/components/utils/scheme";
 import { useSimulationStore } from "../stores/simulation";
 import { redirect } from "next/navigation";
-import { SimulationResultGroup, SimulationResultReport } from "@/types";
+import { SimulationResultGroup, SimulationResultReport, SimulationResultValue } from "@/types";
 import Decimal from "decimal.js";
-
-const mockedData = [
-  {
-    title: 'Ambito 1',
-    groups: [
-      {
-        title: 'Combustão Estacionaria',
-        items: [{
-          title: 'Gás propano',
-          value: 7.54
-        }] 
-      },
-      {
-        title: 'Combustão Móvel',
-        items: [
-          {
-            title: 'Gasóleo',
-            value: 1289.3
-          },
-          {
-            title: 'Gasolina',
-            value: 38.6
-          },
-          {
-            title: 'GPL Auto',
-            value: 6.6
-          }
-        ] 
-      },
-      {
-        title: 'Emissões fugitivas',
-        items: [{
-          title: 'Gases fluorados',
-          value: 3.4
-        }] 
-      },
-    ]
-  },
-  {
-    title: 'Ambito 2',
-    groups: [{
-      title: 'Energia Elétrica',
-      items: [{
-        title: 'Energia Elétrica (faturada)',
-        value: 3616.90
-      }] 
-    }]
-  }
-];
 
 const Result = () => {
   const { form, result } = useSimulationStore((state) => state);
@@ -74,239 +25,15 @@ const Result = () => {
     if(isNaN(nValue)){
       return value;
     }else{
-      return formatNumber(nValue, 2);
+      return formatNumber(nValue, decimals);
     }
   }
 
   const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const calcSubgroupTotal = (items: any[]) => items.reduce((prev, {value}) => prev + value, 0);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const calcGroupTotal = (subgroups: any[]) => subgroups.reduce((prev, {items}) => prev + calcSubgroupTotal(items), 0);
-
-  const calcTotal = () => mockedData.reduce((prev, {groups}) => prev + calcGroupTotal(groups), 0);
-
-  const calcPercentual = (value: number) => value * 100 / calcTotal();
-
-  // const calcFormattedPercentual = (value: number) => formatNumber(calcPercentual(value), 1);
-
-  interface Data {
-    key: string;
-    value: string;
-  }
-
-  interface Line {
-    title: string;
-    description?: string;
-    data: (Data | undefined)[];
-    type: 'data' | 'graphic'
-  }
-
-  const records: Line[] = [
-    {
-      title: 'Empresa',
-      type: 'data',
-      data: [
-        {
-          key: 'Entidade',
-          value: 'Empresa XPTO'
-        },
-        {
-          key: 'NIPC',
-          value: '3545453'
-        },
-        {
-          key: 'Ano',
-          value: '2025'
-        },
-        undefined,
-        {
-          key: 'Produção',
-          value: '19000 unidade'
-        }
-      ]
-    },
-    {
-      title: 'Emissão de gases com efeito de estufa - resumo',
-      type: 'data',
-      description: 'A pegada de carbono reflete a quantidade total de gases com efeito de estufa (GEE) que são emitidos direta ou indiretamente como resultado das atividades da sua indústria. O resultado apresentado apenas considera o âmbito 1 (emissões diretas) e âmbito 2 (emissões com a aquisição de energia)',
-      data: [
-        {
-          key: 'Emissões',
-          value: '6775.65 tCO2e'
-        },
-        undefined,
-        {
-          key: 'Emissões específicas',
-          value: '234 tCO2e/Unidade'
-        }
-      ]
-    },
-    {
-      title: 'Emissão de gases com efeito de estufa - por âmbito',
-      type: 'data',
-      data: [
-        {
-          key: 'Emissões diretas (scope 1)',
-          value: '6775.65 tCO2e'
-        },
-        undefined,
-        {
-          key: 'Emissões indiretas (scope 2)',
-          value: '234 tCO2e'
-        },
-        undefined,
-        {
-          key: 'Outras emissões (biomassa)',
-          value: '234 tCO2e'
-        }
-      ]
-    },
-    {
-      title: 'Graphic',
-      type: 'graphic',
-      data: []
-    },
-    {
-      title: 'Disclaimer',
-      type: 'data',
-      description: `
-Esta ferramenta de cálculo de emissões de Gases com Efeito de Estufa (GEE) enquadra-se no âmbito do projeto Paper4Neutral – Roteiro para a descarbonização do setor do papel e cartão desenvolvido pela ANIPC – Associação Nacional dos Industriais do Papel e Cartão.
-
-O cálculo das emissões de GEE considera apenas as emissões diretas de âmbito 1 (e.g., consumo de combustíveis, utilização de colas e tintas com solventes, utilização de fluídos refrigerantes) e as emissões indiretas de âmbito 2 (consumo de eletricidade adquirida) das instalações e processos industriais do setor do papel e cartão.
-
-Os dados e informações utilizadas no preenchimento dos campos da ferramenta são da única e inteira responsabilidade dos utilizadores. Omissões ou inexatidões poderão influenciar a fiabilidade dos resultados apresentados. A ANIPC não se responsabiliza pela precisão dos resultados obtidos.
-
-Notas metedológicas são apresentadas no relatório das emissão de gases com efeito de estufa (após  download).
-
-
-powered by impact partners www.impactpartners.pt
-      `,
-      data: []
-    }
-  ];
-
-  const renderLines = (lines: Line[]) => {
-    return (
-      lines.map((line, i) => {
-        if(line.type === 'data'){
-          return renderLine(line, i); 
-        }else {
-          return renderGraphic(line, i);
-        }
-      }
-    ));
-  };
-
-  const renderLine = (line: Line, index: number) => (
-    <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{marginBottom: '20px'}}>
-      <Grid size={{ xs: 12, md: 12 }}>
-        <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
-          <Typography variant="h5">
-            <strong>{line.title}</strong>
-          </Typography>
-        </Grid>
-        <Grid size={{ xs: 12, md: 12 }}>
-          <Divider style={{marginBottom: '15px'}}/>
-        </Grid>
-        {
-          line.description ? 
-          <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
-            <Typography variant='caption' color="secondary">{line.description}</Typography>
-          </Grid> : 
-          null
-        }
-      </Grid>
-      {
-        line.data.map((item, j) => (
-          <Grid container size={{ xs: 12, md: 6 }} key={`item${j}`} alignItems='center'>
-            {
-              item ? 
-              <>
-                <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-                  <Typography variant="h6" color="secondary">
-                    <strong>{item.key}</strong>
-                  </Typography>
-                </Grid>
-                <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-                  <Typography variant="body1" color="secondary">{item.value}</Typography>
-                </Grid> 
-              </> : null
-            }
-          </Grid>
-        ))
-      }
-    </Grid>
-  );
-
-  const renderGraphic = (line: Line, index: number) => {
-    return (
-      <Grid container size={{ xs: 12, md: 12 }} key={`line${index}`} style={{margin: '30px 0 30px 0', height: '400px'}}>
-        <Grid container size={{ xs: 12, md: 6 }}>
-          <Grid size={{ xs: 12, md: 12 }}>
-            <Typography variant="button">
-              <strong>Pegada de carbono</strong>
-            </Typography>
-          </Grid>
-          <Grid size={{ xs: 12, md: 12 }}>
-            <PieChart
-              colors={[primaryColor, secondayColor]}
-              series={[
-                {
-                  data: [
-                    { id: 0, value: calcPercentual(calcGroupTotal(mockedData[1].groups)), label: mockedData[0].title },
-                    { id: 1, value: calcPercentual(calcGroupTotal(mockedData[0].groups)), label: mockedData[1].title },
-                  ],
-                  innerRadius: 50,
-                  outerRadius: 130,
-                  paddingAngle: 5,
-                  cornerRadius: 5,
-                  startAngle: 0,
-                }
-              ]}
-            />
-          </Grid>
-        </Grid>
-        <Grid container size={{ xs: 12, md: 6 }}>
-          <Grid size={{ xs: 12, md: 12 }}>
-            <Typography variant="button">
-              <strong>Impacto das emissões de gases com efeito estufa</strong>
-            </Typography>
-          </Grid>
-          <Grid size={{ xs: 12, md: 12 }}>
-            <BarChart
-              xAxis={[
-                {
-                  id: 'barCategories',
-                  data: [
-                    'Combustão estacionária', 
-                    'Combustao móvel', 
-                    'Emissões de processo e fugitivas', 
-                    'Emissões indiretas: energia elétrica'
-                  ],
-                  scaleType: 'band',
-                  colorMap: {
-                    type: 'ordinal',
-                    colors: [ primaryColor, primaryColor, primaryColor, secondayColor ]
-                  }
-                },
-              ]}
-              barLabel="value"
-              series={[
-                {
-                  data: [22, 7.7, 1.54, 1.3],
-                },
-              ]}
-              width={500}
-              height={300}
-              grid={{ horizontal: true }}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    );
+  const calcPercentual = (values: SimulationResultValue[], index: number) => {
+    const total = values.slice(0,2).reduce((prev, {Value}) => prev + Number(Value), 0);
+    return Number(values[index].Value) * 100 / total;
   }
 
   const renderGroups = (groups: SimulationResultGroup[]) => {
@@ -340,12 +67,101 @@ powered by impact partners www.impactpartners.pt
     )
   };
 
+  const renderGraphicGroups = (groups: SimulationResultGroup[]) => {
+    return (
+      <Grid container size={{ xs: 12, md: 12 }} style={{margin: '30px 0 30px 0', height: '400px'}}>
+        {
+          groups.map(group => {
+            if(group.Type === 'graph:bars'){
+              return renderBarGraphic(group);
+            }else if(group.Type === 'graph:circular'){
+              return renderCircularGraphic(group);
+            }
+          })
+        }
+      </Grid>
+    );
+  };
+
+  const renderCircularGraphic = (group: SimulationResultGroup) => {
+    return (
+      <Grid container size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <Typography variant="h6">
+            <strong>{group.Title}</strong>
+          </Typography>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <PieChart
+            colors={[primaryColor, secondayColor]}
+            series={[
+              {
+                data: [
+                  { id: 0, value: calcPercentual(group.Values, 0), label: group.Values[0].Title },
+                  { id: 1, value: calcPercentual(group.Values, 1), label: group.Values[1].Title },
+                ],
+                innerRadius: 50,
+                outerRadius: 130,
+                paddingAngle: 5,
+                cornerRadius: 5,
+                startAngle: 0,
+              }
+            ]}
+          />
+        </Grid>
+      </Grid>
+    );
+  }
+
+  const renderBarGraphic = (group: SimulationResultGroup) => {
+    return (
+      <Grid container size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <Typography variant="h6">
+            <strong>{group.Title}</strong>
+          </Typography>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <BarChart
+            xAxis={[
+              {
+                id: 'barCategories',
+                data: [
+                  'Combustão estacionária', 
+                  'Combustao móvel', 
+                  'Emissões de processo e fugitivas', 
+                  'Emissões indiretas: energia elétrica'
+                ],
+                scaleType: 'band',
+                colorMap: {
+                  type: 'ordinal',
+                  colors: [ primaryColor, primaryColor, primaryColor, secondayColor ]
+                }
+              },
+            ]}
+            barLabel="value"
+            series={[
+              {
+                data: [22, 7.7, 1.54, 1.3],
+              },
+            ]}
+            width={500}
+            height={300}
+            grid={{ horizontal: true }}
+          />
+        </Grid>
+      </Grid>
+    );
+  }
+
   const renderReport = (report: SimulationResultReport) => {
-    const groups = report.Groups[0];
-    console.log(groups)
-    if(!groups){
+
+    if(report.Groups.length === 0){
       return null;
     }
+    const dataGroups = report.Groups[0];
+    const graphicGroups = report.Groups.length === 2 ? report.Groups[1] : undefined;
+
     return (
       <Grid container size={{ xs: 12, md: 12 }} key={report.Title} style={{marginBottom: '20px'}}>
         <Grid size={{ xs: 12, md: 12 }}>
@@ -368,14 +184,17 @@ powered by impact partners www.impactpartners.pt
           }
         </Grid>
         {
-          renderGroups(groups)
+          renderGroups(dataGroups)
+        }
+        {
+          graphicGroups ? renderGraphicGroups(graphicGroups) : null
         }
       </Grid>
     );
   }
 
   const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
-  // console.log(result)
+
   return (
     <ThemeProvider theme={customTheme} defaultMode="light">
       <Container maxWidth="lg">
@@ -389,14 +208,7 @@ powered by impact partners www.impactpartners.pt
         <Grid container spacing={2}>
           <Stack direction="row" width="100%" textAlign="center" spacing={2}>
             <Grid container size={{ xs: 12, md: 12 }}>
-              {result.Reports.map(renderReport)}
-              ###################################
-              ##                              ##
-              ##                              ##
-              ##                              ##
-              ##                              ##
-              ###################################
-              {renderLines(records)}              
+              {result.Reports.map(renderReport)}      
             </Grid>
           </Stack>
         </Grid>

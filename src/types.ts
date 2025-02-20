@@ -97,7 +97,6 @@ export interface SimulationResultGroup {
 export interface SimulationResultReport {
   Title: string
   Desc: string[];
-  // Groups: SimulationResultGroup[];
   Groups: SimulationResultGroup[][];
 }
 
