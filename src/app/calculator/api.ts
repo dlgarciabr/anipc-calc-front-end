@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CalculatorResult, RequestForm, SimulationData } from "../../types";
+import { SimulationResult, RequestForm, SimulationData } from "../../types";
 
 const mocks = {
     getForm: false,
@@ -862,29 +862,22 @@ export const getForm = async (id : string): Promise<RequestForm> => {
   return response.data;
 }
 
-//TODO remove
-export const getCaeList = (): string[] => [
-  '11234',
-  '22222',
-  '33333'
-];
-
-export const sendData = async (data: SimulationData): Promise<CalculatorResult> => {
+export const sendData = async (data: SimulationData): Promise<SimulationResult> => {
   const url = 'https://calc.ghg-impact.eu/calc.php';
 
   if(mocks.calculate){
-    return Promise.resolve({ data: 'teste'} as CalculatorResult);
+    // return Promise.resolve({ data: 'teste'} as SimulationResult);
   }
 
-  const response = await axios<CalculatorResult>({
+  const response = await axios<SimulationResult>({
     method: 'post',
     url,
     data
   });
 
-  if(response.status !== 200){
-    return { error: response.statusText };
-  }
+//   if(response.status !== 200){
+//     return { error: response.statusText };
+//   }
 
   return response.data;
 }

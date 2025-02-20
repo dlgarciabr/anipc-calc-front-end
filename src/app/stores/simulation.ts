@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { InputValue, InputGroup, Simulation, RequestForm, FieldError, SimulationData } from '../../types';
+import { InputValue, InputGroup, Simulation, RequestForm, FieldError, SimulationData, SimulationResult } from '../../types';
 import { hasErrors } from '../validation';
 
 const initialState: Simulation = {
@@ -21,6 +21,8 @@ const initialState: Simulation = {
   setNextStep: (nextStep: number) => { console.log(nextStep) },
   hasErrors: () => Promise.resolve(false),
   errors: [],
+  result: undefined,
+  setResult: (result: SimulationResult) => { console.log(result) },
 }
 
 export const useSimulationStore = create<Simulation>((set, get) => ({
@@ -115,4 +117,8 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       }
     }
   }),
+  setResult: (result: SimulationResult) => set((state) => ({
+    ...state,
+    result
+  })),
 }));

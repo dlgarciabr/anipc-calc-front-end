@@ -29,6 +29,8 @@ export interface Simulation {
   setNextStep: (nextStep: number) => void;
   hasErrors: () => Promise<boolean>;
   errors: FieldError[];
+  result?: SimulationResult;
+  setResult: (result: SimulationResult) => void;
 }
 
 export interface RequestForm {
@@ -80,7 +82,8 @@ export interface SimulationData {
   Groups: SimulationDataGroup[];
 }
 
-export interface CalculatorResult {
-  error?: string;
-  data?: string;
+export interface SimulationResult {
+  ID: string;
+  Title: string;
+  Description: string;
 }

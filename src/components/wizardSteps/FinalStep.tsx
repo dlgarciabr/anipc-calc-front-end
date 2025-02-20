@@ -7,16 +7,15 @@ import FileDownload from '@mui/icons-material/Download';
 import { redirect } from "next/navigation";
 
 const FinalStep = () => {
-  const { getData, inputGroups } = useSimulationStore((state) => state);
+  const { getData, inputGroups, setResult } = useSimulationStore((state) => state);
 
   const handleSendData = async () => {
     const calcResponse = await sendData(getData());
-
-    if(calcResponse.error){
-      //TODO show error
-    } else {
-      //TODO redirect to result page
+    if(calcResponse){
+      setResult(calcResponse);
       redirect('result');
+    }else{
+      //TODO show error
     }
   }
 
