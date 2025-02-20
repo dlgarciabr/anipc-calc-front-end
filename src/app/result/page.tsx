@@ -1,12 +1,14 @@
 "use client"
 
-import React from "react";
+import React, { Fragment } from "react";
 import { Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
 import dynamic from "next/dynamic"
 import { BarChart, PieChart } from "@mui/x-charts";
 import { setupScheme } from "@/components/utils/scheme";
 import { useSimulationStore } from "../stores/simulation";
 import { redirect } from "next/navigation";
+import { SimulationResultGroup, SimulationResultReport } from "@/types";
+import Decimal from "decimal.js";
 
 const mockedData = [
   {
@@ -58,16 +60,25 @@ const mockedData = [
 ];
 
 const Result = () => {
-  const { form } = useSimulationStore((state) => state);
+  const { form, result } = useSimulationStore((state) => state);
 
-  if(!form.ID){
+  if(!form.ID || !result){
     redirect('calculator');
   }
 
   const primaryColor = `#${form.Colors[0]}`;
   const secondayColor = `#${form.Colors[1]}`;
 
-  // const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
+  const formatValue = (value: string, decimals: number) => {
+    const nValue = Number(value);
+    if(isNaN(nValue)){
+      return value;
+    }else{
+      return formatNumber(nValue, 2);
+    }
+  }
+
+  const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const calcSubgroupTotal = (items: any[]) => items.reduce((prev, {value}) => prev + value, 0);
@@ -298,22 +309,94 @@ powered by impact partners www.impactpartners.pt
     );
   }
 
-  const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
+  const renderGroups = (groups: SimulationResultGroup[]) => {
+    const fullWidth = groups.some(group => group.Type === 'blank');
+    return (
+      groups.map((group, i) => (
+        <Grid key={i} container size={{ xs: 12, md: fullWidth ? 12 : 6 }} alignItems='start'>
+          {renderGroup(group)}
+        </Grid>
+        )
+      )
+    );
+  }
 
+  const renderGroup = (group: SimulationResultGroup) => {
+    return (
+      group.Values.map(value => (
+        <Fragment key={value.Title}>
+          <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+            <Typography variant="h6" color="secondary">
+              <strong>{value.Title}</strong>
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+            <Typography variant="body1" color="secondary">
+              {value.Unit ? `${formatValue(value.Value, 2)} ${value.Unit}` : formatValue(value.Value, 2)}
+            </Typography>
+          </Grid> 
+        </Fragment>
+      ))
+    )
+  };
+
+  const renderReport = (report: SimulationResultReport) => {
+    const groups = report.Groups[0];
+    console.log(groups)
+    if(!groups){
+      return null;
+    }
+    return (
+      <Grid container size={{ xs: 12, md: 12 }} key={report.Title} style={{marginBottom: '20px'}}>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+            <Typography variant="h5">
+              <strong>{report.Title}</strong>
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 12 }}>
+            <Divider style={{marginBottom: '15px'}}/>
+          </Grid>
+          {
+            report.Desc ? 
+              report.Desc.map((desc, i) => (
+                <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+                  <Typography variant='caption' color="secondary">{desc}</Typography>
+                </Grid>
+              ))
+            : null
+          }
+        </Grid>
+        {
+          renderGroups(groups)
+        }
+      </Grid>
+    );
+  }
+
+  const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
+  // console.log(result)
   return (
     <ThemeProvider theme={customTheme} defaultMode="light">
       <Container maxWidth="lg">
         <Grid container spacing={2} justifyContent='center'>
           <Grid>
             <Typography gutterBottom variant="h5" component="div" color="primary">
-              <strong>Resumo da Pegada de carbono</strong>
+              <strong>{result.Title}</strong>
             </Typography>
           </Grid>
         </Grid>
         <Grid container spacing={2}>
           <Stack direction="row" width="100%" textAlign="center" spacing={2}>
             <Grid container size={{ xs: 12, md: 12 }}>
-              {renderLines(records)}
+              {result.Reports.map(renderReport)}
+              ###################################
+              ##                              ##
+              ##                              ##
+              ##                              ##
+              ##                              ##
+              ###################################
+              {renderLines(records)}              
             </Grid>
           </Stack>
         </Grid>

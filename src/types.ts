@@ -82,8 +82,28 @@ export interface SimulationData {
   Groups: SimulationDataGroup[];
 }
 
+export interface SimulationResultValue {
+  Title: string
+  Unit: string;
+  Value: string;
+}
+
+export interface SimulationResultGroup {
+  Title: string
+  Type: string;
+  Values: SimulationResultValue[];
+}
+
+export interface SimulationResultReport {
+  Title: string
+  Desc: string[];
+  // Groups: SimulationResultGroup[];
+  Groups: SimulationResultGroup[][];
+}
+
 export interface SimulationResult {
   ID: string;
   Title: string;
   Description: string;
+  Reports: SimulationResultReport[];
 }
