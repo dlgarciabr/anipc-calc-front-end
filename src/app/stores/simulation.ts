@@ -8,6 +8,7 @@ const initialState: Simulation = {
     ID: '', 
     Groups: [],
     Title: '',
+    Colors: [],
     Desc: ''
   },
   setForm: (form: RequestForm) => {console.log(form)},

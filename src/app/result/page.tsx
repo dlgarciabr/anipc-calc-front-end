@@ -5,6 +5,8 @@ import { Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, T
 import dynamic from "next/dynamic"
 import { BarChart, PieChart } from "@mui/x-charts";
 import { setupScheme } from "@/components/utils/scheme";
+import { useSimulationStore } from "../stores/simulation";
+import { redirect } from "next/navigation";
 
 const mockedData = [
   {
@@ -55,12 +57,15 @@ const mockedData = [
   }
 ];
 
-const primaryColor = '#c3cf21';
-const secondayColor = '#53534a';
-
-const theme = createTheme(setupScheme(primaryColor, secondayColor));
-
 const Result = () => {
+  const { form } = useSimulationStore((state) => state);
+
+  if(!form.ID){
+    redirect('calculator');
+  }
+
+  const primaryColor = `#${form.Colors[0]}`;
+  const secondayColor = `#${form.Colors[1]}`;
 
   // const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
 
@@ -293,8 +298,10 @@ powered by impact partners www.impactpartners.pt
     );
   }
 
+  const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
+
   return (
-    <ThemeProvider theme={theme} defaultMode="light">
+    <ThemeProvider theme={customTheme} defaultMode="light">
       <Container maxWidth="lg">
         <Grid container spacing={2} justifyContent='center'>
           <Grid>
