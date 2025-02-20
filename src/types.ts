@@ -86,6 +86,7 @@ export interface SimulationResultValue {
   Title: string
   Unit: string;
   Value: string;
+  Color: string;
 }
 
 export interface SimulationResultGroup {

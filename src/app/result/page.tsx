@@ -68,6 +68,7 @@ const Result = () => {
   };
 
   const renderGraphicGroups = (groups: SimulationResultGroup[]) => {
+    console.log(groups)
     return (
       <Grid container size={{ xs: 12, md: 12 }} style={{margin: '30px 0 30px 0', height: '400px'}}>
         {
@@ -127,22 +128,32 @@ const Result = () => {
               {
                 id: 'barCategories',
                 data: [
-                  'Combustão estacionária', 
-                  'Combustao móvel', 
-                  'Emissões de processo e fugitivas', 
-                  'Emissões indiretas: energia elétrica'
+                  group.Values[0].Title, 
+                  group.Values[1].Title, 
+                  group.Values[2].Title, 
+                  group.Values[3].Title
                 ],
                 scaleType: 'band',
                 colorMap: {
                   type: 'ordinal',
-                  colors: [ primaryColor, primaryColor, primaryColor, secondayColor ]
+                  colors: [ 
+                    `#${group.Values[0].Color}`, 
+                    `#${group.Values[1].Color}`, 
+                    `#${group.Values[2].Color}`, 
+                    `#${group.Values[3].Color}` 
+                  ]
                 }
               },
             ]}
             barLabel="value"
             series={[
               {
-                data: [22, 7.7, 1.54, 1.3],
+                data: [
+                  Number(group.Values[0].Value),
+                  Number(group.Values[1].Value),
+                  Number(group.Values[2].Value),
+                  Number(group.Values[3].Value)
+                ],
               },
             ]}
             width={500}
