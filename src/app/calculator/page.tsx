@@ -8,20 +8,16 @@ import CalculatorNavigator from "@/components/CalculatorNavigator";
 import { useSimulationStore } from "../stores/simulation";
 import { getForm } from "./api";
 import DynamicGroupForm from "@/components/wizardSteps/DynamicGroupForm";
-import { Container, createTheme, Grid2 as Grid, ThemeProvider } from "@mui/material";
+import { Container, createTheme, Grid2 as Grid, Theme, ThemeProvider } from "@mui/material";
 import FinalStep from "@/components/wizardSteps/FinalStep";
 import InitialStep from "@/components/wizardSteps/InitialStep";
 import { setupScheme } from "@/components/utils/scheme";
+import Loading from "@/components/Loading";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
   previousStep: () => void;
 }
-
-const primaryColor = '#c3cf21';
-const secondayColor = '#53534a';
-
-const theme = createTheme(setupScheme(primaryColor, secondayColor));
 
 const Calculator = () => {
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
@@ -31,6 +27,7 @@ const Calculator = () => {
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
   const { setNextStep, setForm, form, hasErrors } = useSimulationStore((state) => state);
+  const [ theme, setTheme ] = React.useState<Theme>(createTheme());
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -56,6 +53,8 @@ const Calculator = () => {
 
   const loadForm = useCallback(async () => {
     const form = await getForm('anipc');
+    const customTheme = createTheme(setupScheme(`#${form.Colors[0]}`, `#${form.Colors[1]}`));
+    setTheme(customTheme);
     setForm(form);
   }, [setForm]);
 
@@ -83,8 +82,8 @@ const Calculator = () => {
   return (
     <ThemeProvider theme={theme} defaultMode="light">
       {
-        !form ? 
-        <>loading</> :
+        !form.ID ? 
+        <Loading /> :
         <Container maxWidth="md">
           <Grid container>
             <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>

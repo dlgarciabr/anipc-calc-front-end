@@ -5,7 +5,8 @@ import { hasErrors } from '../validation';
 const initialState: Simulation = {
   nextStep: 0,
   form: {
-    ID: '', Groups: [],
+    ID: '', 
+    Groups: [],
     Title: '',
     Desc: ''
   },

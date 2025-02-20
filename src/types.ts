@@ -35,6 +35,7 @@ export interface RequestForm {
   ID: string;
   Title: string;
   Desc: string;
+  Colors: string[];
   Groups: RequestGroup[];
 }
 
