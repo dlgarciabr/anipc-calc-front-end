@@ -83,7 +83,8 @@ export interface SimulationData {
 }
 
 export interface SimulationResultValue {
-  Title: string
+  Title: string;
+  ShortTitle: string;//TODO use from backend
   Unit: string;
   Value: string;
   Color: string;

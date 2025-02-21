@@ -1,3 +1,4 @@
+import React from "react";
 import { sendData } from "@/app/calculator/api";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { Button, Grid2 as Grid, Tooltip, Typography } from "@mui/material";
@@ -8,6 +9,7 @@ import { redirect } from "next/navigation";
 
 const FinalStep = () => {
   const { getData, inputGroups, setResult } = useSimulationStore((state) => state);
+  // const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleSendData = async () => {
     const calcResponse = await sendData(getData());

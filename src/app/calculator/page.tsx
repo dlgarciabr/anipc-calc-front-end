@@ -17,6 +17,7 @@ import Loading from "@/components/Loading";
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
   previousStep: () => void;
+  goToStep: (step: number) => void;
 }
 
 const Calculator = () => {
@@ -24,6 +25,7 @@ const Calculator = () => {
     initialStep: 0,
     nextStep: () => {},
     previousStep: () => {},
+    goToStep: (step: number) => {console.log(step)},
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
   const { setNextStep, setForm, form, hasErrors } = useSimulationStore((state) => state);
@@ -45,6 +47,17 @@ const Calculator = () => {
     setActiveStep(nextStep);
     wizardState.previousStep();
   };
+  
+  //TODO remove after result implementation
+  const temporaryLastStepFunc = async () => {
+    const nextStep = 7;
+    setNextStep(nextStep);
+    const isStepValid = (!await hasErrors());
+    if(isStepValid){
+      setActiveStep(nextStep);
+      wizardState.goToStep(8);
+    }
+  }
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
     ...wizardState,
@@ -74,7 +87,7 @@ const Calculator = () => {
 };
 
   const generateSteps = (): JSX.Element[] => [
-    <InitialStep key="initialStep" onBegin={handleNext}/>,
+    <InitialStep key="initialStep" onBegin={/*handleNext*/temporaryLastStepFunc}/>,
     ...renderDynamicSteps(),
     <FinalStep key="finalStep"/>
   ];

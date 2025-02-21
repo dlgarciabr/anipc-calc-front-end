@@ -1,17 +1,20 @@
+/* eslint-disable react/jsx-no-undef */
 "use client"
 
 import React, { Fragment } from "react";
 import { Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
 import dynamic from "next/dynamic"
-import { BarChart, PieChart } from "@mui/x-charts";
+import { BarPlot, ChartsClipPath, ChartsXAxis, ChartsYAxis, PieChart, ResponsiveChartContainer } from "@mui/x-charts";
 import { setupScheme } from "@/components/utils/scheme";
 import { useSimulationStore } from "../stores/simulation";
 import { redirect } from "next/navigation";
 import { SimulationResultGroup, SimulationResultReport, SimulationResultValue } from "@/types";
 import Decimal from "decimal.js";
+import CustomItemTooltip from "./CustomItemTooltip";
 
 const Result = () => {
   const { form, result } = useSimulationStore((state) => state);
+  const id = React.useId();
 
   if(!form.ID || !result){
     redirect('calculator');
@@ -99,6 +102,7 @@ const Result = () => {
         <Grid size={{ xs: 12, md: 12 }}>
           <PieChart
             colors={[primaryColor, secondayColor]}
+
             series={[
               {
                 data: [
@@ -106,10 +110,11 @@ const Result = () => {
                   { id: 1, value: calcPercentual(group.Values, 1), label: group.Values[1].Title },
                 ],
                 innerRadius: 50,
-                outerRadius: 130,
+                outerRadius: 120,
                 paddingAngle: 5,
                 cornerRadius: 5,
                 startAngle: 0,
+                cx: 120,
               }
             ]}
           />
@@ -118,7 +123,59 @@ const Result = () => {
     );
   }
 
+  // const renderBarGraphic = (group: SimulationResultGroup) => {
+  //   return (
+  //     <Grid container size={{ xs: 12, md: 6 }}>
+  //       <Grid size={{ xs: 12, md: 12 }}>
+  //         <Typography variant="h6">
+  //           <strong>{group.Title}</strong>
+  //         </Typography>
+  //       </Grid>
+  //       <Grid size={{ xs: 12, md: 12 }}>
+  //         <BarChart
+  //           xAxis={[
+  //             {
+  //               id: 'barCategories',
+  //               data: [
+  //                 group.Values[0].Title, 
+  //                 group.Values[1].Title, 
+  //                 group.Values[2].Title, 
+  //                 group.Values[3].Title
+  //               ],
+  //               scaleType: 'band',
+  //               colorMap: {
+  //                 type: 'ordinal',
+  //                 colors: [ 
+  //                   `#${group.Values[0].Color}`, 
+  //                   `#${group.Values[1].Color}`, 
+  //                   `#${group.Values[2].Color}`, 
+  //                   `#${group.Values[3].Color}` 
+  //                 ]
+  //               },
+  //             },
+  //           ]}
+  //           barLabel={(item) => formatNumber(Number(item.value), 2)}
+  //           series={[
+  //             {
+  //               data: [
+  //                 Number(group.Values[0].Value),
+  //                 Number(group.Values[1].Value),
+  //                 Number(group.Values[2].Value),
+  //                 Number(group.Values[3].Value)
+  //               ],
+  //             },
+  //           ]}
+  //           width={500}
+  //           height={300}
+  //           grid={{ horizontal: true }}
+  //         />
+  //       </Grid>
+  //     </Grid>
+  //   );
+  // }
+
   const renderBarGraphic = (group: SimulationResultGroup) => {
+    const clipPathId = `${id}-clip-path`;
     return (
       <Grid container size={{ xs: 12, md: 6 }}>
         <Grid size={{ xs: 12, md: 12 }}>
@@ -127,17 +184,33 @@ const Result = () => {
           </Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
-          <BarChart
+          <ResponsiveChartContainer
+            height={300}
+            dataset={[
+              { 
+                shortLabel: 'Comb. Est.',//TODO receber do modelo
+                value:  Number(group.Values[0].Value) 
+              },
+              { 
+                shortLabel: 'Comb. Mov.',
+                value:  Number(group.Values[1].Value),
+              },
+              { 
+                shortLabel: 'Emis. Pr. Fg',
+                value:  Number(group.Values[2].Value),
+              },
+              { 
+                shortLabel: 'Emis. Ind.',
+                value:  Number(group.Values[3].Value),
+              },
+            ]}
+            series={[
+              {type: 'bar', dataKey: 'value', },
+            ]}
             xAxis={[
-              {
-                id: 'barCategories',
-                data: [
-                  group.Values[0].Title, 
-                  group.Values[1].Title, 
-                  group.Values[2].Title, 
-                  group.Values[3].Title
-                ],
-                scaleType: 'band',
+              { 
+                scaleType: 'band', 
+                dataKey: 'shortLabel',
                 colorMap: {
                   type: 'ordinal',
                   colors: [ 
@@ -146,24 +219,18 @@ const Result = () => {
                     `#${group.Values[2].Color}`, 
                     `#${group.Values[3].Color}` 
                   ]
-                }
-              },
+                },
+              }
             ]}
-            barLabel="value"
-            series={[
-              {
-                data: [
-                  Number(group.Values[0].Value),
-                  Number(group.Values[1].Value),
-                  Number(group.Values[2].Value),
-                  Number(group.Values[3].Value)
-                ],
-              },
-            ]}
-            width={500}
-            height={300}
-            grid={{ horizontal: true }}
-          />
+          >
+            <ChartsClipPath id={clipPathId} />
+            <g clipPath={`url(#${clipPathId})`}>
+              <BarPlot />
+            </g>
+            <ChartsXAxis />
+            <ChartsYAxis />
+            <CustomItemTooltip group={group}/>
+          </ResponsiveChartContainer>
         </Grid>
       </Grid>
     );
