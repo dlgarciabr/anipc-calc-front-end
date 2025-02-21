@@ -36,36 +36,40 @@ const Result = () => {
     return Number(values[index].Value) * 100 / total;
   }
 
-  const renderGroups = (groups: SimulationResultGroup[]) => {
+  const renderGroups = (groups: SimulationResultGroup[], numberFormatEnabled: boolean) => {
     const fullWidth = groups.some(group => group.Type === 'blank');
     return (
       groups.map((group, i) => (
         <Grid key={i} container size={{ xs: 12, md: fullWidth ? 12 : 6 }} alignItems='start'>
-          {renderGroup(group)}
+          {renderGroup(group, numberFormatEnabled)}
         </Grid>
         )
       )
     );
   }
 
-  const renderGroup = (group: SimulationResultGroup) => {
-    return (
-      group.Values.map(value => (
-        <Fragment key={value.Title}>
-          <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-            <Typography variant="h6" color="secondary">
-              <strong>{value.Title}</strong>
-            </Typography>
-          </Grid>
-          <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-            <Typography variant="body1" color="secondary">
-              {value.Unit ? `${formatValue(value.Value, 2)} ${value.Unit}` : formatValue(value.Value, 2)}
-            </Typography>
-          </Grid> 
-        </Fragment>
-      ))
-    )
-  };
+  const renderGroup = (group: SimulationResultGroup, numberFormatEnabled: boolean) => (
+    group.Values.map(value => {
+        let finalValue = value.Unit ? `${value.Value} ${value.Unit}` : value.Value;
+        if(numberFormatEnabled){
+          finalValue = value.Unit ? `${formatValue(value.Value, 2)} ${value.Unit}` : formatValue(value.Value, 2);
+        }
+        return ( 
+          <Fragment key={value.Title}>
+            <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+              <Typography variant="h6" color="secondary">
+                <strong>{value.Title}</strong>
+              </Typography>
+            </Grid>
+            <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+              <Typography variant="body1" color="secondary">
+                {finalValue}
+              </Typography>
+            </Grid> 
+          </Fragment>
+        )
+      })
+    );
 
   const renderGraphicGroups = (groups: SimulationResultGroup[]) => {
     console.log(groups)
@@ -165,7 +169,7 @@ const Result = () => {
     );
   }
 
-  const renderReport = (report: SimulationResultReport) => {
+  const renderReport = (report: SimulationResultReport, index: number) => {
 
     if(report.Groups.length === 0){
       return null;
@@ -195,7 +199,7 @@ const Result = () => {
           }
         </Grid>
         {
-          renderGroups(dataGroups)
+          renderGroups(dataGroups, index != 0)
         }
         {
           graphicGroups ? renderGraphicGroups(graphicGroups) : null
