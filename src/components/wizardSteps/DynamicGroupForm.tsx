@@ -1,7 +1,7 @@
 import React from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, Button, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider, Tooltip, Typography } from "@mui/material";
+import { Alert, Button, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
