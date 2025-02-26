@@ -84,7 +84,7 @@ export interface SimulationData {
 
 export interface SimulationResultValue {
   Title: string;
-  ShortTitle: string;//TODO use from backend
+  Label: string;
   Unit: string;
   Value: string;
   Color: string;

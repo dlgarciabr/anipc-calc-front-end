@@ -187,19 +187,19 @@ const Result = () => {
             height={300}
             dataset={[
               { 
-                shortLabel: 'Comb. Est.',//TODO receber do modelo
+                shortLabel: group.Values[0].Label,
                 value:  Number(group.Values[0].Value) 
               },
               { 
-                shortLabel: 'Comb. Mov.',
+                shortLabel: group.Values[1].Label,
                 value:  Number(group.Values[1].Value),
               },
               { 
-                shortLabel: 'Emis. Pr. Fg',
+                shortLabel: group.Values[2].Label,
                 value:  Number(group.Values[2].Value),
               },
               { 
-                shortLabel: 'Emis. Ind.',
+                shortLabel: group.Values[3].Label,
                 value:  Number(group.Values[3].Value),
               },
             ]}
