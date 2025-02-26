@@ -72,6 +72,5 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
       });
     }
   });
-  console.log('errors ', errors)
   return await runCustomeFieldValidations();
 }

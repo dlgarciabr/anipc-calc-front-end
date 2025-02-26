@@ -3,6 +3,7 @@ import { InputValue, InputGroup, Simulation, RequestForm, FieldError, Simulation
 import { hasErrors } from '../validation';
 
 const initialState: Simulation = {
+  routerParam: '',
   nextStep: 0,
   form: {
     ID: '', 
@@ -23,6 +24,7 @@ const initialState: Simulation = {
   errors: [],
   result: undefined,
   setResult: (result: SimulationResult) => { console.log(result) },
+  setRouterParam : (origin: string) => { console.log(origin) },
 }
 
 export const useSimulationStore = create<Simulation>((set, get) => ({
@@ -121,4 +123,8 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     ...state,
     result
   })),
+  setRouterParam: (param: string) => set((state) => ({
+    ...state,
+    routerParam: param
+  }))
 }));

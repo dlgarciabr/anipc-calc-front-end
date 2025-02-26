@@ -2,7 +2,7 @@
 "use client"
 
 import React, { Fragment } from "react";
-import { Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Typography } from "@mui/material";
+import { Button, Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Tooltip, Typography } from "@mui/material";
 import dynamic from "next/dynamic"
 import { BarPlot, ChartsClipPath, ChartsXAxis, ChartsYAxis, PieChart, ResponsiveChartContainer } from "@mui/x-charts";
 import { setupScheme } from "@/components/utils/scheme";
@@ -11,9 +11,12 @@ import { redirect } from "next/navigation";
 import { SimulationResultGroup, SimulationResultReport, SimulationResultValue } from "@/types";
 import Decimal from "decimal.js";
 import CustomItemTooltip from "./CustomItemTooltip";
+import EditIcon from '@mui/icons-material/Edit';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const Result = () => {
-  const { form, result } = useSimulationStore((state) => state);
+  const { form, result, setRouterParam } = useSimulationStore((state) => state);
   const id = React.useId();
 
   if(!form.ID || !result){
@@ -22,6 +25,11 @@ const Result = () => {
 
   const primaryColor = `#${form.Colors[0]}`;
   const secondayColor = `#${form.Colors[1]}`;
+
+  const handleClickEdit = () => {
+    setRouterParam('edit');
+    redirect('calculator');
+  }
 
   const formatValue = (value: string, decimals: number) => {
     const nValue = Number(value);
@@ -266,6 +274,23 @@ const Result = () => {
               {renderDisclaimer(result.Reports[3])}
             </Grid>
           </Stack>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }} container justifyContent='space-evenly' alignContent='flex-start' sx={{marginBottom: '50px'}}>
+          <Tooltip title='Iniciar o preenchimento dos dados para a calculadora' arrow>
+            <Button variant="outlined" endIcon={<EditIcon />} onClick={handleClickEdit} size="large">
+              voltar
+            </Button>
+          </Tooltip>
+          <Tooltip title='Exportar simulação para Excel' arrow>
+            <Button variant="contained" endIcon={<DescriptionIcon />} size="large" component="label" onClick={()=>alert('em breve!')}>
+              Excel
+            </Button>
+          </Tooltip>
+          <Tooltip title='Exportar simulação para PDF' arrow>
+            <Button variant="contained" endIcon={<PictureAsPdfIcon />} size="large" component="label" onClick={()=>alert('em breve!')}>
+              PDF
+            </Button>
+          </Tooltip>
         </Grid>
       </Container>
     </ThemeProvider>

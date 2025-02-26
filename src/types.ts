@@ -17,6 +17,7 @@ export interface InputValue {
 }
 
 export interface Simulation {
+  routerParam: string;
   nextStep: number;
   form: RequestForm;
   setForm: (form: RequestForm) => void;
@@ -31,6 +32,7 @@ export interface Simulation {
   errors: FieldError[];
   result?: SimulationResult;
   setResult: (result: SimulationResult) => void;
+  setRouterParam: (origin: string) => void;
 }
 
 export interface RequestForm {

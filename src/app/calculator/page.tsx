@@ -17,17 +17,20 @@ import Loading from "@/components/Loading";
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
   previousStep: () => void;
+  goToStep: (step: number) => void;
 }
 
 const Calculator = () => {
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
     initialStep: 0,
     nextStep: () => {},
-    previousStep: () => {}
+    previousStep: () => {},
+    goToStep: (_step: number) => {},
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
-  const { setNextStep, setForm, form, hasErrors } = useSimulationStore((state) => state);
+  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam } = useSimulationStore((state) => state);
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
+  const [ loading, setLoading ] = React.useState<boolean>(false);
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -45,16 +48,6 @@ const Calculator = () => {
     setActiveStep(nextStep);
     wizardState.previousStep();
   };
-  
-  //TODO remove after result implementation
-  // const temporaryLastStepFunc = async () => {
-  //   const nextStep = 7;
-  //   setNextStep(nextStep);
-  //   const isStepValid = (!await hasErrors());
-  //   if(isStepValid){
-  //     setActiveStep(nextStep);
-  //   }
-  // }
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
     ...wizardState,
@@ -62,15 +55,14 @@ const Calculator = () => {
   });
 
   const loadForm = useCallback(async () => {
-    const form = await getForm('anipc');
-    const customTheme = createTheme(setupScheme(`#${form.Colors[0]}`, `#${form.Colors[1]}`));
+    let calcForm = form;
+    if(!calcForm.ID){
+      calcForm = await getForm('anipc');
+      setForm(calcForm);
+    }
+    const customTheme = createTheme(setupScheme(`#${calcForm.Colors[0]}`, `#${calcForm.Colors[1]}`));
     setTheme(customTheme);
-    setForm(form);
-  }, [setForm]);
-
-  useEffect(()=>{
-    void loadForm();
-  },[loadForm])
+  }, [form, setForm]);
 
   const renderDynamicSteps = () => { 
     if(!form){
@@ -81,18 +73,39 @@ const Calculator = () => {
         <DynamicGroupForm group={group} />
       </CalculatorStep>
     ));
-};
+  };
+
+  const goToLastStep = React.useCallback(async () => {
+    const nextStep = 7;
+    setNextStep(nextStep);
+    const isStepValid = (!await hasErrors());
+    if(isStepValid){
+      setActiveStep(nextStep);
+      wizardState.goToStep(8);
+      setRouterParam('');
+    }
+  },[hasErrors, setNextStep, wizardState, setRouterParam]);
+
+  useEffect(() => {
+    void loadForm();
+  },[loadForm])
+
+  useEffect(() => {
+    if(routerParam === 'edit' && activeStep === 0){
+      goToLastStep();
+    }
+  },[activeStep, goToLastStep, routerParam])
 
   const generateSteps = (): JSX.Element[] => [
-    <InitialStep key="initialStep" onBegin={handleNext/*temporaryLastStepFunc*/}/>,
+    <InitialStep key="initialStep" onBegin={handleNext}/>,
     ...renderDynamicSteps(),
-    <FinalStep key="finalStep"/>
+    <FinalStep key="finalStep" onBeforeSend={() => setLoading(true)}/>
   ];
 
   return (
     <ThemeProvider theme={theme} defaultMode="light">
       {
-        !form.ID ? 
+        !form.ID || loading? 
         <Loading /> :
         <Container maxWidth="md">
           <Grid container>

@@ -7,11 +7,15 @@ import { exportToJSONFile } from "@/app/calculator/utils";
 import FileDownload from '@mui/icons-material/Download';
 import { redirect } from "next/navigation";
 
-const FinalStep = () => {
+export interface FinalStepProps {
+  onBeforeSend: () => void;
+}
+
+const FinalStep = ({ onBeforeSend } : FinalStepProps) => {
   const { getData, inputGroups, setResult } = useSimulationStore((state) => state);
-  // const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleSendData = async () => {
+    onBeforeSend();
     const calcResponse = await sendData(getData());
     if(calcResponse){
       setResult(calcResponse);
