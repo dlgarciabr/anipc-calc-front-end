@@ -27,7 +27,7 @@ const Calculator = () => {
     initialStep: 0,
     nextStep: () => {},
     previousStep: () => {},
-    goToStep: (_step: number) => {},
+    goToStep: (step: number) => {console.log('navigate to step ' + step)},
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
   const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups } = useSimulationStore((state) => state);
