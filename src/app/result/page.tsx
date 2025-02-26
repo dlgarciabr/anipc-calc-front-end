@@ -75,7 +75,6 @@ const Result = () => {
     );
 
   const renderGraphicGroups = (groups: SimulationResultGroup[]) => {
-    console.log(groups)
     return (
       <Grid container size={{ xs: 12, md: 12 }} style={{margin: '30px 0 30px 0', height: '400px'}}>
         {
@@ -93,7 +92,7 @@ const Result = () => {
 
   const renderCircularGraphic = (group: SimulationResultGroup) => {
     return (
-      <Grid container size={{ xs: 12, md: 6 }}>
+      <Grid key={group.Title} container size={{ xs: 12, md: 6 }}>
         <Grid size={{ xs: 12, md: 12 }}>
           <Typography variant="h6">
             <strong>{group.Title}</strong>
@@ -177,7 +176,7 @@ const Result = () => {
   const renderBarGraphic = (group: SimulationResultGroup) => {
     const clipPathId = `${id}-clip-path`;
     return (
-      <Grid container size={{ xs: 12, md: 6 }}>
+      <Grid key={group.Title} container size={{ xs: 12, md: 6 }}>
         <Grid size={{ xs: 12, md: 12 }}>
           <Typography variant="h6">
             <strong>{group.Title}</strong>

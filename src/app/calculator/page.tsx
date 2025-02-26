@@ -17,15 +17,13 @@ import Loading from "@/components/Loading";
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
   previousStep: () => void;
-  goToStep: (step: number) => void;
 }
 
 const Calculator = () => {
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
     initialStep: 0,
     nextStep: () => {},
-    previousStep: () => {},
-    goToStep: (step: number) => {console.log(step)},
+    previousStep: () => {}
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
   const { setNextStep, setForm, form, hasErrors } = useSimulationStore((state) => state);
@@ -49,15 +47,14 @@ const Calculator = () => {
   };
   
   //TODO remove after result implementation
-  const temporaryLastStepFunc = async () => {
-    const nextStep = 7;
-    setNextStep(nextStep);
-    const isStepValid = (!await hasErrors());
-    if(isStepValid){
-      setActiveStep(nextStep);
-      wizardState.goToStep(8);
-    }
-  }
+  // const temporaryLastStepFunc = async () => {
+  //   const nextStep = 7;
+  //   setNextStep(nextStep);
+  //   const isStepValid = (!await hasErrors());
+  //   if(isStepValid){
+  //     setActiveStep(nextStep);
+  //   }
+  // }
 
   const setInstance = (wizard: StepWizardProps) => setWizardState({
     ...wizardState,
@@ -87,7 +84,7 @@ const Calculator = () => {
 };
 
   const generateSteps = (): JSX.Element[] => [
-    <InitialStep key="initialStep" onBegin={/*handleNext*/temporaryLastStepFunc}/>,
+    <InitialStep key="initialStep" onBegin={handleNext/*temporaryLastStepFunc*/}/>,
     ...renderDynamicSteps(),
     <FinalStep key="finalStep"/>
   ];

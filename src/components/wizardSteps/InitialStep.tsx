@@ -49,7 +49,7 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
     setToastProps({show: true, message: 'Ficheiro importado com sucesso!'});
 
     //TODO remove after tests
-    onBegin();
+    //onBegin();
   }
 
   return (
