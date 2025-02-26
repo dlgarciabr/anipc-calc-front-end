@@ -53,26 +53,26 @@ const Result = () => {
 
   const renderGroup = (group: SimulationResultGroup, numberFormatEnabled: boolean) => (
     group.Values.map(value => {
-        let finalValue = value.Unit ? `${value.Value} ${value.Unit}` : value.Value;
-        if(numberFormatEnabled){
-          finalValue = value.Unit ? `${formatValue(value.Value, 2)} ${value.Unit}` : formatValue(value.Value, 2);
-        }
-        return ( 
-          <Fragment key={value.Title}>
-            <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-              <Typography variant="h6" color="secondary">
-                <strong>{value.Title}</strong>
-              </Typography>
-            </Grid>
-            <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-              <Typography variant="body1" color="secondary">
-                {finalValue}
-              </Typography>
-            </Grid> 
-          </Fragment>
-        )
-      })
-    );
+      let finalValue = value.Unit ? `${value.Value} ${value.Unit}` : value.Value;
+      if(numberFormatEnabled){
+        finalValue = value.Unit ? `${formatValue(value.Value, 2)} ${value.Unit}` : formatValue(value.Value, 2);
+      }
+      return ( 
+        <Fragment key={value.Title}>
+          <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+            <Typography variant="h6" color="secondary">
+              <strong>{value.Title}</strong>
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
+            <Typography variant="body1" color="secondary">
+              {finalValue}
+            </Typography>
+          </Grid> 
+        </Fragment>
+      )
+    })
+  );
 
   const renderGraphicGroups = (groups: SimulationResultGroup[]) => {
     return (
@@ -121,57 +121,6 @@ const Result = () => {
       </Grid>
     );
   }
-
-  // const renderBarGraphic = (group: SimulationResultGroup) => {
-  //   return (
-  //     <Grid container size={{ xs: 12, md: 6 }}>
-  //       <Grid size={{ xs: 12, md: 12 }}>
-  //         <Typography variant="h6">
-  //           <strong>{group.Title}</strong>
-  //         </Typography>
-  //       </Grid>
-  //       <Grid size={{ xs: 12, md: 12 }}>
-  //         <BarChart
-  //           xAxis={[
-  //             {
-  //               id: 'barCategories',
-  //               data: [
-  //                 group.Values[0].Title, 
-  //                 group.Values[1].Title, 
-  //                 group.Values[2].Title, 
-  //                 group.Values[3].Title
-  //               ],
-  //               scaleType: 'band',
-  //               colorMap: {
-  //                 type: 'ordinal',
-  //                 colors: [ 
-  //                   `#${group.Values[0].Color}`, 
-  //                   `#${group.Values[1].Color}`, 
-  //                   `#${group.Values[2].Color}`, 
-  //                   `#${group.Values[3].Color}` 
-  //                 ]
-  //               },
-  //             },
-  //           ]}
-  //           barLabel={(item) => formatNumber(Number(item.value), 2)}
-  //           series={[
-  //             {
-  //               data: [
-  //                 Number(group.Values[0].Value),
-  //                 Number(group.Values[1].Value),
-  //                 Number(group.Values[2].Value),
-  //                 Number(group.Values[3].Value)
-  //               ],
-  //             },
-  //           ]}
-  //           width={500}
-  //           height={300}
-  //           grid={{ horizontal: true }}
-  //         />
-  //       </Grid>
-  //     </Grid>
-  //   );
-  // }
 
   const renderBarGraphic = (group: SimulationResultGroup) => {
     const clipPathId = `${id}-clip-path`;
@@ -236,7 +185,6 @@ const Result = () => {
   }
 
   const renderReport = (report: SimulationResultReport, index: number) => {
-
     if(report.Groups.length === 0){
       return null;
     }
@@ -244,7 +192,7 @@ const Result = () => {
     const graphicGroups = report.Groups.length === 2 ? report.Groups[1] : undefined;
 
     return (
-      <Grid container size={{ xs: 12, md: 12 }} key={report.Title} style={{marginBottom: '20px'}}>
+      <Grid container size={{ xs: 12, md: 12 }} key={report.Title}>
         <Grid size={{ xs: 12, md: 12 }}>
           <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
             <Typography variant="h5">
@@ -274,8 +222,33 @@ const Result = () => {
     );
   }
 
-  const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
+  const renderDisclaimer = (report: SimulationResultReport) => {
+    return (
+      <Grid container size={{ xs: 12, md: 12 }} key={report.Title} style={{marginBottom: '20px'}}>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+            <Typography variant="h5">
+              <strong>{report.Title}</strong>
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 12 }}>
+            <Divider style={{marginBottom: '15px'}}/>
+          </Grid>
+          {
+            report.Desc ? 
+              report.Desc.map((desc, i) => (
+                <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+                  <Typography variant='caption' color="secondary">{desc}</Typography>
+                </Grid>
+              ))
+            : null
+          }
+        </Grid>
+      </Grid>
+    );
+  }
 
+  const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
   return (
     <ThemeProvider theme={customTheme} defaultMode="light">
       <Container maxWidth="lg">
@@ -289,7 +262,8 @@ const Result = () => {
         <Grid container spacing={2}>
           <Stack direction="row" width="100%" textAlign="center" spacing={2}>
             <Grid container size={{ xs: 12, md: 12 }}>
-              {result.Reports.map(renderReport)}      
+              {result.Reports.map(renderReport)}
+              {renderDisclaimer(result.Reports[3])}
             </Grid>
           </Stack>
         </Grid>
