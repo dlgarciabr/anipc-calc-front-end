@@ -2,7 +2,7 @@
 "use client"
 
 import React, { Fragment } from "react";
-import { Button, Container, createTheme, Divider, Grid2 as Grid, Stack, ThemeProvider, Tooltip, Typography } from "@mui/material";
+import { Button, Container, createTheme, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid2 as Grid, Stack, ThemeProvider, Tooltip, Typography } from "@mui/material";
 import dynamic from "next/dynamic"
 import { BarPlot, ChartsClipPath, ChartsXAxis, ChartsYAxis, PieChart, ResponsiveChartContainer } from "@mui/x-charts";
 import { setupScheme } from "@/components/utils/scheme";
@@ -14,9 +14,13 @@ import CustomItemTooltip from "./CustomItemTooltip";
 import EditIcon from '@mui/icons-material/Edit';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DescriptionIcon from '@mui/icons-material/Description';
+import AddIcon from '@mui/icons-material/Add';
+import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
 
 const Result = () => {
+  useLeavePageConfirm(true);
   const { form, result, setRouterParam } = useSimulationStore((state) => state);
+  const [resetModalOpened, setResetModalOpened] = React.useState<boolean>(false);
   const id = React.useId();
 
   if(!form.ID || !result){
@@ -28,6 +32,11 @@ const Result = () => {
 
   const handleClickEdit = () => {
     setRouterParam('edit');
+    redirect('calculator');
+  }
+
+  const handleClickConfirmReset = () => {
+    setRouterParam('new');
     redirect('calculator');
   }
 
@@ -257,6 +266,31 @@ const Result = () => {
   }
 
   const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
+
+  const renderResetDialog = () => (
+    <Dialog
+      open={resetModalOpened}
+      onClose={()=>setResetModalOpened(false)}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        <Typography color="secondary">Deseja preencher uma nova simulação?</Typography>
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Ao continuar as informações previamente preenchidas serão perdidas.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={()=>setResetModalOpened(false)}>Cancelar</Button>
+        <Button onClick={handleClickConfirmReset} autoFocus>
+          Continuar
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   return (
     <ThemeProvider theme={customTheme} defaultMode="light">
       <Container maxWidth="lg">
@@ -276,7 +310,7 @@ const Result = () => {
           </Stack>
         </Grid>
         <Grid size={{ xs: 12, md: 12 }} container justifyContent='space-evenly' alignContent='flex-start' sx={{marginBottom: '50px'}}>
-          <Tooltip title='Iniciar o preenchimento dos dados para a calculadora' arrow>
+          <Tooltip title='Voltar e editar a simulação atual' arrow>
             <Button variant="outlined" endIcon={<EditIcon />} onClick={handleClickEdit} size="large">
               voltar
             </Button>
@@ -291,8 +325,14 @@ const Result = () => {
               PDF
             </Button>
           </Tooltip>
+          <Tooltip title='Iniciar o preenchimento de uma nova simulação' arrow>
+            <Button variant="outlined" endIcon={<AddIcon />} onClick={()=>setResetModalOpened(true)} size="large">
+              Nova
+            </Button>
+          </Tooltip>
         </Grid>
       </Container>
+      {renderResetDialog()}
     </ThemeProvider>
   );
 }

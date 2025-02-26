@@ -13,6 +13,7 @@ import FinalStep from "@/components/wizardSteps/FinalStep";
 import InitialStep from "@/components/wizardSteps/InitialStep";
 import { setupScheme } from "@/components/utils/scheme";
 import Loading from "@/components/Loading";
+import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -21,6 +22,7 @@ export interface ExtendedWizardProps extends StepWizardProps {
 }
 
 const Calculator = () => {
+  useLeavePageConfirm(true);
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
     initialStep: 0,
     nextStep: () => {},
@@ -28,7 +30,7 @@ const Calculator = () => {
     goToStep: (_step: number) => {},
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
-  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam } = useSimulationStore((state) => state);
+  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups } = useSimulationStore((state) => state);
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
 
@@ -91,10 +93,14 @@ const Calculator = () => {
   },[loadForm])
 
   useEffect(() => {
+    if(routerParam === 'new' && activeStep === 0){
+      setRouterParam('');
+      setInputGroups([]);
+    }
     if(routerParam === 'edit' && activeStep === 0){
       goToLastStep();
     }
-  },[activeStep, goToLastStep, routerParam])
+  },[activeStep, goToLastStep, routerParam, setForm, setInputGroups, setRouterParam])
 
   const generateSteps = (): JSX.Element[] => [
     <InitialStep key="initialStep" onBegin={handleNext}/>,

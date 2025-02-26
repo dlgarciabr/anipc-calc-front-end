@@ -2,16 +2,18 @@ import { create } from 'zustand';
 import { InputValue, InputGroup, Simulation, RequestForm, FieldError, SimulationData, SimulationResult } from '../../types';
 import { hasErrors } from '../validation';
 
+export const initialFormState: RequestForm = {
+  ID: '', 
+  Groups: [],
+  Title: '',
+  Colors: [],
+  Desc: ''
+}
+
 const initialState: Simulation = {
   routerParam: '',
   nextStep: 0,
-  form: {
-    ID: '', 
-    Groups: [],
-    Title: '',
-    Colors: [],
-    Desc: ''
-  },
+  form: { ...initialFormState },
   setForm: (form: RequestForm) => {console.log(form)},
   inputGroups: {},
   setInputGroups: (groups: InputGroup[]) => {console.log(groups)},
