@@ -77,8 +77,8 @@ const Result = () => {
       return ( 
         <Fragment key={value.Title}>
           <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
-            <Typography variant="h6" color="secondary">
-              <strong>{value.Title}</strong>
+            <Typography variant="body1" color="secondary">
+              {value.Title}
             </Typography>
           </Grid>
           <Grid size={{ xs: 6, md: 6 }} style={{textAlign: 'left'}}>
@@ -213,7 +213,7 @@ const Result = () => {
         <Grid size={{ xs: 12, md: 12 }}>
           <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
             <Typography variant="h5">
-              <strong>{report.Title}</strong>
+              {report.Title}
             </Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 12 }}>
