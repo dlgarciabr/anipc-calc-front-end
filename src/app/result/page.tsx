@@ -93,7 +93,7 @@ const Result = () => {
 
   const renderGraphicGroups = (groups: SimulationResultGroup[]) => {
     return (
-      <Grid container size={{ xs: 12, md: 12 }} style={{margin: '30px 0 30px 0', height: '400px'}}>
+      <Grid container size={{ xs: 12, md: 12 }} style={{margin: '30px 0 30px 0'}}>
         {
           groups.map(group => {
             if(group.Type === 'graph:bars'){
@@ -112,13 +112,14 @@ const Result = () => {
       <Grid key={group.Title} container size={{ xs: 12, md: 6 }}>
         <Grid size={{ xs: 12, md: 12 }}>
           <Typography variant="h6">
-            <strong>{group.Title}</strong>
+            {group.Title}
           </Typography>
         </Grid>
-        <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 12 }} justifyItems='center'>
           <PieChart
+            width={270}
+            height={320}
             colors={[primaryColor, secondayColor]}
-
             series={[
               {
                 data: [
@@ -126,13 +127,21 @@ const Result = () => {
                   { id: 1, value: calcPercentual(group.Values, 1), label: group.Values[1].Title },
                 ],
                 innerRadius: 50,
-                outerRadius: 120,
+                outerRadius: 100,
                 paddingAngle: 5,
                 cornerRadius: 5,
                 startAngle: 0,
-                cx: 120,
+                cx: 130,
+                cy: 130
               }
             ]}
+            slotProps={{
+              legend: {
+                direction: 'column',
+                position: { vertical: 'bottom', horizontal: 'middle' },
+                padding: 0,
+              },
+            }}
           />
         </Grid>
       </Grid>
@@ -142,10 +151,10 @@ const Result = () => {
   const renderBarGraphic = (group: SimulationResultGroup) => {
     const clipPathId = `${id}-clip-path`;
     return (
-      <Grid key={group.Title} container size={{ xs: 12, md: 6 }}>
+      <Grid key={group.Title} container size={{ xs: 12, md: 6 }} sx={{marginTop: {xs: '20px', md: '0'}}}>
         <Grid size={{ xs: 12, md: 12 }}>
           <Typography variant="h6">
-            <strong>{group.Title}</strong>
+            {group.Title}
           </Typography>
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
@@ -245,7 +254,7 @@ const Result = () => {
         <Grid size={{ xs: 12, md: 12 }}>
           <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
             <Typography variant="h5">
-              <strong>{report.Title}</strong>
+              {report.Title}
             </Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 12 }}>
