@@ -248,31 +248,33 @@ const Result = () => {
     );
   }
 
-  const renderDisclaimer = (report: SimulationResultReport) => {
-    return (
-      <Grid container size={{ xs: 12, md: 12 }} key={report.Title} style={{marginBottom: '20px'}}>
-        <Grid size={{ xs: 12, md: 12 }}>
-          <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
-            <Typography variant="h5">
-              {report.Title}
-            </Typography>
-          </Grid>
-          <Grid size={{ xs: 12, md: 12 }}>
-            <Divider style={{marginBottom: '15px'}}/>
-          </Grid>
-          {
-            report.Desc ? 
-              report.Desc.map((desc, i) => (
-                <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
-                  <Typography variant='caption' color="secondary">{desc}</Typography>
-                </Grid>
-              ))
-            : null
-          }
+  const renderDisclaimer = (report: SimulationResultReport) => (
+    <Grid container size={{ xs: 12, md: 12 }} key={report.Title} style={{marginBottom: '20px'}}>
+      <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+          <Typography variant="h5">
+            {report.Title}
+          </Typography>
         </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
+          <Divider style={{marginBottom: '15px'}}/>
+        </Grid>
+        {
+          report.Desc ? 
+            report.Desc.map((line, i) => (
+              <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+                {
+                  line === '' ? 
+                  <Typography variant='caption' color="secondary">&nbsp;</Typography> :
+                  <Typography variant='caption' color="secondary">{line}</Typography>
+                }
+              </Grid>
+            ))
+          : null
+        }
       </Grid>
-    );
-  }
+    </Grid>
+  );
 
   const customTheme = createTheme(setupScheme(primaryColor, secondayColor));
 
