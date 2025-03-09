@@ -33,12 +33,12 @@ const Result = () => {
 
   const handleClickEdit = () => {
     setRouterParam('edit');
-    redirect('calculator?id=' + form.ID);
+    redirect('calculator');
   }
 
   const handleClickConfirmReset = () => {
     setRouterParam('new');
-    redirect('calculator?id=' + form.ID);
+    redirect('calculator');
   }
 
   const formatValue = (value: string, decimals: number) => {
