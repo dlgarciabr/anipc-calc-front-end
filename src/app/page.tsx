@@ -6,7 +6,7 @@ import React from "react";
 export default function Home() {
 
   React.useEffect(()=>{
-    redirect('calculator?id=ANIPC');
+    redirect('calculator');
   },[])
   
   return undefined;
