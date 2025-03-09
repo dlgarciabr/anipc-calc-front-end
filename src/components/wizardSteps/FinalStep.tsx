@@ -32,7 +32,7 @@ const FinalStep = ({ onBeforeSend } : FinalStepProps) => {
           Preenchimento concluído
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Iremos agora efectuar os cálculos e gerar os resultados.
+          Nota: Ao clicar em “calcular”, concorda que os dados fornecidos sejam armazenados pela ANIPC para fins estatísticos. A análise será realizada de forma agregada, garantindo a confidencialidade das informações.
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='flex-start'>

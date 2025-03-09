@@ -132,7 +132,8 @@ const Result = () => {
                 cornerRadius: 5,
                 startAngle: 0,
                 cx: 130,
-                cy: 130
+                cy: 130,
+                valueFormatter: (v) => v === null ? '' : formatNumber(v.value, 2)
               }
             ]}
             slotProps={{
@@ -220,7 +221,7 @@ const Result = () => {
     return (
       <Grid container size={{ xs: 12, md: 12 }} key={report.Title}>
         <Grid size={{ xs: 12, md: 12 }}>
-          <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+          <Grid size={{ xs: 12, md: 12 }} style={{textAlign: 'left', marginTop: '20px'}}>
             <Typography variant="h5">
               {report.Title}
             </Typography>
@@ -231,7 +232,7 @@ const Result = () => {
           {
             report.Desc ? 
               report.Desc.map((desc, i) => (
-                <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left'}}>
+                <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left', marginBottom: '20px'}}>
                   <Typography variant='caption' color="secondary">{desc}</Typography>
                 </Grid>
               ))

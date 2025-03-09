@@ -7,10 +7,13 @@ import Typography from '@mui/material/Typography';
 import { useItemTooltip, useMouseTracker } from '@mui/x-charts/ChartsTooltip';
 import { generateVirtualElement } from './generateVirtualElement';
 import { SimulationResultGroup } from '@/types';
+import Decimal from "decimal.js";
 
 interface CustomItemTooltipProps {
   group: SimulationResultGroup;
 }
+
+const formatNumber = (value: number, decimals: number) => new Decimal(value).toFixed(decimals).replaceAll('.',',');
 
 const CustomItemTooltip = ({group}:CustomItemTooltipProps) => {
   const tooltipData = useItemTooltip();
@@ -63,10 +66,10 @@ const CustomItemTooltip = ({group}:CustomItemTooltipProps) => {
                 backgroundColor: tooltipData.color,
               }}
             />
-            <Typography sx={{ ml: 2 }} fontWeight="light">
+            <Typography sx={{ ml: 2 }} color="secondary" fontWeight="light">
               {group.Values[tooltipData.identifier.dataIndex].Title}
             </Typography>
-            <Typography sx={{ ml: 2 }}>{tooltipData.formattedValue}</Typography>
+            <Typography sx={{ ml: 2, color: 'black' }}>{formatNumber(tooltipData.value, 2)}</Typography>
           </Stack>
         </Paper>
       </Popper>
