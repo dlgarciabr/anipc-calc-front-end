@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
 import { Alert, Button, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { exportToJSONFile } from "@/app/calculator/utils";
 import FileDownloadIcon from '@mui/icons-material/Download';
@@ -92,7 +91,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     if(!inputValue){
       return <></>;
     }
-    const textFieldSize = field.Units.length > 0 ? 8 : 12;
+    const textFieldSize = field.Units.length > 0 ? 8 : (inputValue.customValue ? 11 : 12);
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>

@@ -14,6 +14,7 @@ import InitialStep from "@/components/wizardSteps/InitialStep";
 import { setupScheme } from "@/components/utils/scheme";
 import Loading from "@/components/Loading";
 import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
+import { useSearchParams } from "next/navigation";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -22,6 +23,8 @@ export interface ExtendedWizardProps extends StepWizardProps {
 }
 
 const Calculator = () => {
+  const searchParams = useSearchParams()
+  const calcId = searchParams.get('id');
   useLeavePageConfirm(true);
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
     initialStep: 0,
@@ -33,6 +36,7 @@ const Calculator = () => {
   const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups } = useSimulationStore((state) => state);
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
+  const [ calcNotFound, setCalcNotFound ] = React.useState<boolean>(false);
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -58,9 +62,15 @@ const Calculator = () => {
 
   const loadForm = useCallback(async () => {
     let calcForm = form;
-    if(!calcForm.ID){
-      calcForm = await getForm('anipc');
-      setForm(calcForm);
+    if(!calcForm.ID && calcId){
+      try{
+        setCalcNotFound(false);
+        calcForm = await getForm(calcId);
+        setForm(calcForm);
+      }catch{
+        setCalcNotFound(true);
+        alert('calculadora nao encontrada');
+      }
     }
     const customTheme = createTheme(setupScheme(`#${calcForm.Colors[0]}`, `#${calcForm.Colors[1]}`));
     setTheme(customTheme);
@@ -111,22 +121,25 @@ const Calculator = () => {
   return (
     <ThemeProvider theme={theme} defaultMode="light">
       {
-        !form.ID || loading? 
-        <Loading /> :
-        <Container maxWidth="md">
-          <Grid container>
-            <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
-              {
-                <StepWizard instance={setInstance} >
-                  {generateSteps()}
-                </StepWizard>
-              }
+        calcNotFound ? 
+        'calc not found' : (
+          !form.ID || loading? 
+          <Loading /> :
+          <Container maxWidth="md">
+            <Grid container>
+              <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
+                {
+                  <StepWizard instance={setInstance} >
+                    {generateSteps()}
+                  </StepWizard>
+                }
+              </Grid>
+              <Grid size={{ xs: 12, md: 12 }}>
+                <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
+              </Grid>
             </Grid>
-            <Grid size={{ xs: 12, md: 12 }}>
-              <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
-            </Grid>
-          </Grid>
-        </Container>
+          </Container>
+        )
       }
     </ThemeProvider>
   );
