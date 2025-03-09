@@ -62,11 +62,12 @@ const Calculator = () => {
 
   const loadForm = useCallback(async () => {
     let calcForm = form;
-    if(!calcId && !calcForm.ID){
-      setCalcNotFound(true);
-      alert('calculadora nao identificada');
-      return;
-    }
+    // if(!calcId && !calcForm.ID){
+    //   setCalcNotFound(true);
+    //   alert('calculadora nao identificada');
+    //   return;
+    // }
+    debugger
     if(!calcForm.ID && calcId){
       try{
         setCalcNotFound(false);
