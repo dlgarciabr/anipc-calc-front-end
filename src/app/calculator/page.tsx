@@ -78,7 +78,7 @@ const Calculator = () => {
     }
     const customTheme = createTheme(setupScheme(`#${calcForm.Colors[0]}`, `#${calcForm.Colors[1]}`));
     setTheme(customTheme);
-  }, [form, setForm]);
+  }, [form, setForm, calcId]);
 
   const renderDynamicSteps = () => { 
     if(!form){

@@ -21,7 +21,7 @@ const FinalStep = ({ onBeforeSend } : FinalStepProps) => {
       setResult(calcResponse);
       redirect('result');
     }else{
-      //TODO show error
+      // TODO show error 
     }
   }
 
