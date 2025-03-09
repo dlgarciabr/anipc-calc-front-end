@@ -69,7 +69,7 @@ const CustomItemTooltip = ({group}:CustomItemTooltipProps) => {
             <Typography sx={{ ml: 2 }} color="secondary" fontWeight="light">
               {group.Values[tooltipData.identifier.dataIndex].Title}
             </Typography>
-            <Typography sx={{ ml: 2, color: 'black' }}>{formatNumber(tooltipData.value, 2)}</Typography>
+            <Typography sx={{ ml: 2, color: 'black' }}>{tooltipData.value === null ? '' : formatNumber(tooltipData.value as number, 2)}</Typography>
           </Stack>
         </Paper>
       </Popper>
