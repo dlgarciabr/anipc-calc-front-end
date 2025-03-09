@@ -7,7 +7,7 @@ import dynamic from "next/dynamic"
 import { BarPlot, ChartsClipPath, ChartsXAxis, ChartsYAxis, PieChart, ResponsiveChartContainer } from "@mui/x-charts";
 import { setupScheme } from "@/components/utils/scheme";
 import { useSimulationStore } from "../stores/simulation";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { SimulationResultGroup, SimulationResultReport, SimulationResultValue } from "@/types";
 import Decimal from "decimal.js";
 import CustomItemTooltip from "./CustomItemTooltip";
@@ -19,6 +19,7 @@ import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
 
 const Result = () => {
   useLeavePageConfirm(true);
+  const router = useRouter();
   const { form, result, setRouterParam } = useSimulationStore((state) => state);
   const [resetModalOpened, setResetModalOpened] = React.useState<boolean>(false);
   const id = React.useId();
@@ -32,12 +33,12 @@ const Result = () => {
 
   const handleClickEdit = () => {
     setRouterParam('edit');
-    redirect('calculator');
+    redirect('calculator?id=' + form.ID);
   }
 
   const handleClickConfirmReset = () => {
     setRouterParam('new');
-    redirect('calculator');
+    redirect('calculator?id=' + form.ID);
   }
 
   const formatValue = (value: string, decimals: number) => {
