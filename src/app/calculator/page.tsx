@@ -14,7 +14,7 @@ import InitialStep from "@/components/wizardSteps/InitialStep";
 import { setupScheme } from "@/components/utils/scheme";
 import Loading from "@/components/Loading";
 import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
-//import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -23,8 +23,8 @@ export interface ExtendedWizardProps extends StepWizardProps {
 }
 
 const Calculator = () => {
-  //const searchParams = useSearchParams()
-  //const calcId = searchParams.get('id');
+  const searchParams = useSearchParams()
+  const calcId = searchParams.get('id');
   useLeavePageConfirm(true);
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
     initialStep: 0,
@@ -62,15 +62,15 @@ const Calculator = () => {
 
   const loadForm = useCallback(async () => {
     let calcForm = form;
-    // if(!calcId && !calcForm.ID){
-    //   setCalcNotFound(true);
-    //   alert('calculadora nao identificada');
-    //   return;
-    // }
-    if(!calcForm.ID /*&& calcId*/){
+    if(!calcId && !calcForm.ID){
+      setCalcNotFound(true);
+      alert('calculadora nao identificada');
+      return;
+    }
+    if(!calcForm.ID && calcId){
       try{
         setCalcNotFound(false);
-        calcForm = await getForm('ANIPC');
+        calcForm = await getForm(calcId);
         setForm(calcForm);
       }catch{
         setCalcNotFound(true);
