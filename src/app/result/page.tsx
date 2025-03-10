@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
 
 const Result = () => {
-  useLeavePageConfirm(false);
+  useLeavePageConfirm(true);
   const { form, result, setRouterParam } = useSimulationStore((state) => state);
   const [resetModalOpened, setResetModalOpened] = React.useState<boolean>(false);
   const id = React.useId();
