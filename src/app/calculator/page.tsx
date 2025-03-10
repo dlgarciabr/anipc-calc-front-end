@@ -23,7 +23,7 @@ export interface ExtendedWizardProps extends StepWizardProps {
 }
 
 const Calculator = () => {
-  const searchParams = useSearchParams()
+  //const searchParams = useSearchParams()
   //const calcId = searchParams.get('id');
   useLeavePageConfirm(true);
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
@@ -79,7 +79,7 @@ const Calculator = () => {
     }
     const customTheme = createTheme(setupScheme(`#${calcForm.Colors[0]}`, `#${calcForm.Colors[1]}`));
     setTheme(customTheme);
-  }, [form, setForm, calcId]);
+  }, [form, setForm]);
 
   const renderDynamicSteps = () => { 
     if(!form){
