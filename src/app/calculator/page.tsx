@@ -23,7 +23,6 @@ export interface ExtendedWizardProps extends StepWizardProps {
 }
 
 const Calculator = () => {
-  console.log('Calculator:page')
   const searchParams = useSearchParams()
   const calcId = searchParams.get('id');
   useLeavePageConfirm(true);
@@ -63,11 +62,11 @@ const Calculator = () => {
 
   const loadForm = useCallback(async () => {
     let calcForm = form;
-    if(!calcId && !calcForm.ID){
-      setCalcNotFound(true);
-      alert('calculadora nao identificada');
-      return;
-    }
+    // if(!calcId && !calcForm.ID){
+    //   setCalcNotFound(true);
+    //   alert('calculadora nao identificada');
+    //   return;
+    // }
     if(!calcForm.ID && calcId){
       try{
         setCalcNotFound(false);
