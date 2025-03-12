@@ -866,7 +866,7 @@ export const sendData = async (data: SimulationData): Promise<SimulationResult> 
   const url = 'https://calc.ghg-impact.eu/calc.php';
 
   if(mocks.calculate){
-    // return Promise.resolve({ data: 'teste'} as SimulationResult);
+    return Promise.reject();
   }
 
   const response = await axios<SimulationResult>({
@@ -874,10 +874,6 @@ export const sendData = async (data: SimulationData): Promise<SimulationResult> 
     url,
     data
   });
-
-//   if(response.status !== 200){
-//     return { error: response.statusText };
-//   }
 
   return response.data;
 }

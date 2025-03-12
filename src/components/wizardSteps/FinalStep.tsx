@@ -9,20 +9,27 @@ import { redirect } from "next/navigation";
 
 export interface FinalStepProps {
   onBeforeSend: () => void;
+  onError: (error: string) => void;
 }
 
-const FinalStep = ({ onBeforeSend } : FinalStepProps) => {
+const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
   const { getData, inputGroups, setResult } = useSimulationStore((state) => state);
 
   const handleSendData = async () => {
     onBeforeSend();
-    const calcResponse = await sendData(getData());
-    if(calcResponse){
-      setResult(calcResponse);
-      redirect('result');
-    }else{
-      // TODO show error 
+    let calcResponse;
+    try {
+      calcResponse = await sendData(getData());
+      if(calcResponse){
+        setResult(calcResponse);
+      }
+    } catch (error) {
+      console.log('error', error);
     }
+    if(calcResponse){
+      redirect('result');
+    }
+    onError('error');
   }
 
   return (

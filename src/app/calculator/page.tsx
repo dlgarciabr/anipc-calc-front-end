@@ -15,11 +15,18 @@ import { setupScheme } from "@/components/utils/scheme";
 import Loading from "@/components/Loading";
 import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
 import { useSearchParams } from "next/navigation";
+import Error from "@/components/Error";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
   previousStep: () => void;
   goToStep: (step: number) => void;
+}
+
+export interface ErrorProps {
+  title?: string; 
+  description?: string; 
+  onRetry?: () => void;
 }
 
 const Calculator = () => {
@@ -36,7 +43,7 @@ const Calculator = () => {
   const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups } = useSimulationStore((state) => state);
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
-  const [ calcNotFound, setCalcNotFound ] = React.useState<boolean>(false);
+  const [ error, setError ] = React.useState<ErrorProps | undefined>();
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -61,25 +68,27 @@ const Calculator = () => {
   });
 
   const loadForm = useCallback(async () => {
+    setLoading(true);
     let calcForm = form;
     if(!calcId && !calcForm.ID){
-      setCalcNotFound(true);
-      alert('calculadora nao identificada');
+      setError({});
+      setLoading(false);
       return;
     }
     if(!calcForm.ID && calcId){
       try{
-        setCalcNotFound(false);
+        setError(undefined);
         calcForm = await getForm(calcId);
         setForm(calcForm);
       }catch{
-        setCalcNotFound(true);
-        alert('calculadora nao encontrada');
+        setError({});
+        setLoading(false);
       }
     }
     const customTheme = createTheme(setupScheme(`#${calcForm.Colors[0]}`, `#${calcForm.Colors[1]}`));
     setTheme(customTheme);
-  }, [form, setForm]);
+    setLoading(false);
+  }, [calcId, form, setForm]);
 
   const renderDynamicSteps = () => { 
     if(!form){
@@ -120,30 +129,40 @@ const Calculator = () => {
   const generateSteps = (): JSX.Element[] => [
     <InitialStep key="initialStep" onBegin={handleNext}/>,
     ...renderDynamicSteps(),
-    <FinalStep key="finalStep" onBeforeSend={() => setLoading(true)}/>
+    <FinalStep key="finalStep" onBeforeSend={() => setLoading(true)} onError={onFinalStepError}/>
   ];
+
+  const onFinalStepError = () => {
+    setLoading(false); 
+    setError({
+      onRetry: () => {
+        setError(undefined);
+        setActiveStep(0);
+      }
+    });
+  }
 
   return (
     <ThemeProvider theme={theme} defaultMode="light">
-      {
-        calcNotFound ? 
-        'calc not found' : (
-          !form.ID || loading? 
-          <Loading /> :
-          <Container maxWidth="md">
-            <Grid container>
-              <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
-                {
-                  <StepWizard instance={setInstance} >
-                    {generateSteps()}
-                  </StepWizard>
-                }
+      { loading ? 
+        <Loading /> : (
+          error ? 
+            <Error onRetry={error.onRetry}/> : (
+            <Container maxWidth="md">
+              <Grid container>
+                <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
+                  {
+                    <StepWizard instance={setInstance} >
+                      {generateSteps()}
+                    </StepWizard>
+                  }
+                </Grid>
+                <Grid size={{ xs: 12, md: 12 }}>
+                  <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
+                </Grid>
               </Grid>
-              <Grid size={{ xs: 12, md: 12 }}>
-                <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
-              </Grid>
-            </Grid>
-          </Container>
+            </Container>
+          )
         )
       }
     </ThemeProvider>
