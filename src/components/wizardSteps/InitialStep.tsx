@@ -77,9 +77,9 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
       </Grid>
       <Snackbar 
         open={toastProps.show} 
-        autoHideDuration={6000} 
+        autoHideDuration={6000}
         onClose={()=>setToastProps({show: false})} 
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
         <Alert
           onClose={()=>setToastProps({show: false})}
           severity={toastProps.severity || 'success'}
