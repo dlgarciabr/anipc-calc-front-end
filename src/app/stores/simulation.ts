@@ -7,7 +7,8 @@ export const initialFormState: RequestForm = {
   Groups: [],
   Title: '',
   Colors: [],
-  Desc: ''
+  Desc: '',
+  Disclaimer: ''
 }
 
 const initialState: Simulation = {
