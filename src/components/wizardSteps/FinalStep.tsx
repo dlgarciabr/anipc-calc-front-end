@@ -13,7 +13,7 @@ export interface FinalStepProps {
 }
 
 const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
-  const { getData, inputGroups, setResult } = useSimulationStore((state) => state);
+  const { getData, inputGroups, setResult, form: { Disclaimer } } = useSimulationStore((state) => state);
 
   const handleSendData = async () => {
     onBeforeSend();
@@ -39,7 +39,7 @@ const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
           Preenchimento concluído
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Nota: Ao clicar em “calcular”, concorda que os dados fornecidos sejam armazenados pela ANIPC para fins estatísticos. A análise será realizada de forma agregada, garantindo a confidencialidade das informações.
+          {Disclaimer}
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='flex-start'>
