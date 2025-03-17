@@ -877,3 +877,16 @@ export const sendData = async (data: SimulationData): Promise<SimulationResult> 
 
   return response.data;
 }
+
+export const downloadExcel = async (data: SimulationData): Promise<Blob> => {
+    const url = 'https://calc.ghg-impact.eu/export.php';
+  
+    const response = await axios<Blob>({
+      method: 'post',
+      url,
+      data,
+      responseType: 'blob'
+    });
+  
+    return response.data;
+  }

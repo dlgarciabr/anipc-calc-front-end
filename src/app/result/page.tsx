@@ -16,11 +16,14 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AddIcon from '@mui/icons-material/Add';
 import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
+import { downloadExcel } from "../calculator/api";
 
 const Result = () => {
   useLeavePageConfirm(true);
-  const { form, result, setRouterParam } = useSimulationStore((state) => state);
+  const { form, result, setRouterParam, getData } = useSimulationStore((state) => state);
   const [resetModalOpened, setResetModalOpened] = React.useState<boolean>(false);
+  const [isLoadingExcel, setLoadingExcel] = React.useState<boolean>(false);
+
   const id = React.useId();
 
   if(!form.ID || !result){
@@ -38,6 +41,22 @@ const Result = () => {
   const handleClickConfirmReset = () => {
     setRouterParam('new');
     redirect('calculator');
+  }
+
+  const handleClickExportExcel = async () => {
+    setLoadingExcel(true);
+    try {
+      const file = await downloadExcel(getData());
+      const url = window.URL.createObjectURL(file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'simulation.xlsx');
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.log('error', error);
+    }
+    setLoadingExcel(false);
   }
 
   const formatValue = (value: string, decimals: number) => {
@@ -328,7 +347,7 @@ const Result = () => {
             </Button>
           </Tooltip>
           <Tooltip title='Exportar simulação para Excel' arrow>
-            <Button variant="contained" endIcon={<DescriptionIcon />} size="large" component="label" onClick={()=>alert('em breve!')}>
+            <Button variant="contained" endIcon={<DescriptionIcon />} size="large" component="label" onClick={handleClickExportExcel} loading={isLoadingExcel}>
               Excel
             </Button>
           </Tooltip>
