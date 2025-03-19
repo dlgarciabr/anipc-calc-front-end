@@ -2,9 +2,11 @@ import axios from "axios";
 import { SimulationResult, RequestForm, SimulationData } from "../../types";
 
 const mocks = {
-    getForm: false,
-    calculate: false,
+	getForm: false,
+	calculate: false,
 }
+
+const url = 'https://calc.ghg-impact.eu';
 
 const newMockdData = {
   "ID": "ANIPC",
@@ -848,7 +850,7 @@ const newMockdData = {
 } as RequestForm;
 
 export const getForm = async (id : string): Promise<RequestForm> => {
-  const url = `https://calc.ghg-impact.eu/form.php?id=${id}`;
+  const endpoint = `${url}/form.php?id=${id}`;
 
   if(mocks.getForm){
     return Promise.resolve(newMockdData);
@@ -856,14 +858,14 @@ export const getForm = async (id : string): Promise<RequestForm> => {
 
   const response = await axios<RequestForm>({
     method: 'get',
-    url,
+    url: endpoint,
   });
 
   return response.data;
 }
 
 export const sendData = async (data: SimulationData): Promise<SimulationResult> => {
-  const url = 'https://calc.ghg-impact.eu/calc.php';
+  const endpoint = `${url}/calc.php`;
 
   if(mocks.calculate){
     return Promise.reject();
@@ -871,7 +873,7 @@ export const sendData = async (data: SimulationData): Promise<SimulationResult> 
 
   const response = await axios<SimulationResult>({
     method: 'post',
-    url,
+    url: endpoint,
     data
   });
 
@@ -879,14 +881,27 @@ export const sendData = async (data: SimulationData): Promise<SimulationResult> 
 }
 
 export const downloadExcel = async (data: SimulationData): Promise<Blob> => {
-    const url = 'https://calc.ghg-impact.eu/export.php';
-  
-    const response = await axios<Blob>({
-      method: 'post',
-      url,
-      data,
-      responseType: 'blob'
-    });
-  
-    return response.data;
-  }
+	const endpoint = `${url}/export.php`;
+
+	const response = await axios<Blob>({
+		method: 'post',
+    url: endpoint,
+		data,
+		responseType: 'blob'
+	});
+
+	return response.data;
+}
+
+export const downloadPDF = async (data: SimulationData): Promise<Blob> => {
+	const endpoint = `${url}/report.php`;
+
+	const response = await axios<Blob>({
+		method: 'post',
+    url: endpoint,
+		data,
+		responseType: 'blob'
+	});
+
+	return response.data;
+}
