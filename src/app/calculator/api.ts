@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SimulationResult, RequestForm, SimulationData } from "../../types";
+import { SimulationResult, RequestForm, SimulationData, FileDownloadble } from "../../types";
 
 const mocks = {
 	getForm: false,
@@ -880,7 +880,7 @@ export const sendData = async (data: SimulationData): Promise<SimulationResult> 
   return response.data;
 }
 
-export const downloadExcel = async (data: SimulationData): Promise<Blob> => {
+export const downloadExcel = async (data: SimulationData): Promise<FileDownloadble> => {
 	const endpoint = `${url}/export.php`;
 
 	const response = await axios<Blob>({
@@ -890,10 +890,15 @@ export const downloadExcel = async (data: SimulationData): Promise<Blob> => {
 		responseType: 'blob'
 	});
 
-	return response.data;
+  const name = response.headers['content-disposition'].match(/filename="([^"]+)"/)[1];
+
+  return {
+    name,
+    content: response.data
+  };
 }
 
-export const downloadPDF = async (data: SimulationData): Promise<Blob> => {
+export const downloadPDF = async (data: SimulationData): Promise<FileDownloadble> => {
 	const endpoint = `${url}/report.php`;
 
 	const response = await axios<Blob>({
@@ -902,6 +907,11 @@ export const downloadPDF = async (data: SimulationData): Promise<Blob> => {
 		data,
 		responseType: 'blob'
 	});
+  
+  const name = response.headers['content-disposition'].match(/filename="([^"]+)"/)[1];
 
-	return response.data;
+  return {
+    name,
+    content: response.data
+  };
 }

@@ -48,10 +48,10 @@ const Result = () => {
     setLoadingExcel(true);
     try {
       const file = await downloadExcel(getData());
-      const url = window.URL.createObjectURL(file);
+      const url = window.URL.createObjectURL(file.content);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'simulation.xlsx');
+      link.setAttribute('download', file.name);
       document.body.appendChild(link);
       link.click();
     } catch (error) {
@@ -64,10 +64,10 @@ const Result = () => {
     setLoadingPDF(true);
     try {
       const file = await downloadPDF(getData());
-      const url = window.URL.createObjectURL(file);
+      const url = window.URL.createObjectURL(file.content);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'simulation.pdf');
+      link.setAttribute('download', file.name);
       document.body.appendChild(link);
       link.click();
     } catch (error) {

@@ -111,3 +111,8 @@ export interface SimulationResult {
   Description: string;
   Reports: SimulationResultReport[];
 }
+
+export interface FileDownloadble {
+  name: string;
+  content: Blob;
+}
