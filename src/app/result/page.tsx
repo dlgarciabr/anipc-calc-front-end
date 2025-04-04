@@ -12,18 +12,18 @@ import { SimulationResultGroup, SimulationResultReport, SimulationResultValue } 
 import Decimal from "decimal.js";
 import CustomItemTooltip from "./CustomItemTooltip";
 import EditIcon from '@mui/icons-material/Edit';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+// import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AddIcon from '@mui/icons-material/Add';
 import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
-import { downloadExcel, downloadPDF } from "../calculator/api";
+import { downloadExcel/*, downloadPDF */} from "../calculator/api";
 
 const Result = () => {
   useLeavePageConfirm(true);
   const { form, result, setRouterParam, getData } = useSimulationStore((state) => state);
   const [resetModalOpened, setResetModalOpened] = React.useState<boolean>(false);
   const [isLoadingExcel, setLoadingExcel] = React.useState<boolean>(false);
-  const [isLoadingPDF, setLoadingPDF] = React.useState<boolean>(false);
+  // const [isLoadingPDF, setLoadingPDF] = React.useState<boolean>(false);
 
   const id = React.useId();
 
@@ -60,21 +60,21 @@ const Result = () => {
     setLoadingExcel(false);
   }
 
-  const handleClickExportPDF = async () => {
-    setLoadingPDF(true);
-    try {
-      const file = await downloadPDF(getData());
-      const url = window.URL.createObjectURL(file.content);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', file.name);
-      document.body.appendChild(link);
-      link.click();
-    } catch (error) {
-      console.log('error', error);
-    }
-    setLoadingPDF(false);
-  }
+  // const handleClickExportPDF = async () => {
+  //   setLoadingPDF(true);
+  //   try {
+  //     const file = await downloadPDF(getData());
+  //     const url = window.URL.createObjectURL(file.content);
+  //     const link = document.createElement('a');
+  //     link.href = url;
+  //     link.setAttribute('download', file.name);
+  //     document.body.appendChild(link);
+  //     link.click();
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  //   setLoadingPDF(false);
+  // }
 
   const formatValue = (value: string, decimals: number) => {
     const nValue = Number(value);
@@ -368,11 +368,11 @@ const Result = () => {
               Excel
             </Button>
           </Tooltip>
-          <Tooltip title='Exportar simulação para PDF' arrow>
+          {/* <Tooltip title='Exportar simulação para PDF' arrow>
             <Button variant="contained" endIcon={<PictureAsPdfIcon />} size="large" component="label"  onClick={handleClickExportPDF} loading={isLoadingPDF}>
               PDF
             </Button>
-          </Tooltip>
+          </Tooltip> */}
           <Tooltip title='Iniciar o preenchimento de uma nova simulação' arrow>
             <Button variant="outlined" endIcon={<AddIcon />} onClick={()=>setResetModalOpened(true)} size="large">
               Nova
