@@ -169,7 +169,7 @@ const Result = () => {
                 startAngle: 0,
                 cx: 130,
                 cy: 130,
-                valueFormatter: (v) => v === null ? '' : formatNumber(v.value, 2)
+                valueFormatter: (v) => v === null ? '' : `${formatNumber(v.value, 2)}%`
               }
             ]}
             slotProps={{
