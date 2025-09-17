@@ -29,9 +29,14 @@ export interface ErrorProps {
   onRetry?: () => void;
 }
 
+let initialized = false;
+
 const Calculator = () => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
+  const [securityToken, setSecurityToken] = React.useState<string>("");
   const calcId = searchParams.get('id');
+  const securedSearchParam = searchParams.get('secured');
+  const isSecured = !!securedSearchParam ? eval(securedSearchParam) : false;
   useLeavePageConfirm(true);
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
     initialStep: 0,
@@ -78,7 +83,7 @@ const Calculator = () => {
     if(!calcForm.ID && calcId){
       try{
         setError(undefined);
-        calcForm = await getForm(calcId);
+        calcForm = await getForm(calcId, securityToken);
         setForm(calcForm);
       }catch{
         setError({});
@@ -88,7 +93,7 @@ const Calculator = () => {
     const customTheme = createTheme(setupScheme(`#${calcForm.Colors[0]}`, `#${calcForm.Colors[1]}`));
     setTheme(customTheme);
     setLoading(false);
-  }, [calcId, form, setForm]);
+  }, [calcId, form, setForm, securityToken]);
 
   const renderDynamicSteps = () => { 
     if(!form){
@@ -113,8 +118,10 @@ const Calculator = () => {
   },[hasErrors, setNextStep, wizardState, setRouterParam]);
 
   useEffect(() => {
-    void loadForm();
-  },[loadForm])
+    if(!isSecured || (isSecured && securityToken)){
+      void loadForm();
+    }
+  },[loadForm, securityToken])
 
   useEffect(() => {
     if(routerParam === 'new' && activeStep === 0){
@@ -125,6 +132,23 @@ const Calculator = () => {
       goToLastStep();
     }
   },[activeStep, goToLastStep, routerParam, setForm, setInputGroups, setRouterParam])
+
+  useEffect(()=>{
+    if(isSecured && !initialized){
+      window.parent.postMessage(
+        'react_loaded', 
+        '*'
+      );
+      window.addEventListener(
+        "message",
+        (event) => {
+          setSecurityToken(event.data);
+        },
+        false,
+      );
+      initialized = true;
+    }
+  },[]);
 
   const generateSteps = (): JSX.Element[] => [
     <InitialStep key="initialStep" onBegin={handleNext}/>,

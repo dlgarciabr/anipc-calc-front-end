@@ -849,8 +849,12 @@ const newMockdData = {
   ]
 } as RequestForm;
 
-export const getForm = async (id : string): Promise<RequestForm> => {
-  const endpoint = `${url}/form.php?id=${id}`;
+export const getForm = async (id : string, securityToken?: string): Promise<RequestForm> => {
+  let endpoint = `${url}/form.php?id=${id}`;
+
+  if(securityToken){
+    endpoint = endpoint.concat(`&token_login=${securityToken}`)
+  }
 
   if(mocks.getForm){
     return Promise.resolve(newMockdData);
