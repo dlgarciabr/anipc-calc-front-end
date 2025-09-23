@@ -153,22 +153,30 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       setInput(group.ID, {id: field.ID, value: isOtherOption ? '' : value, customValue: isOtherOption});
     }
 
+    const isOnlyOneOption = options.length === 1;
+
     return (
-      <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
-        <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
-          <Tooltip title={field.Desc} arrow>
-            <Select
-              labelId={`combo-${field.ID}`}
-              id={`combo-${field.ID}-label`}
-              value={inputValue.value}
-              onChange={ handleChange }
-              fullWidth
-            >
-              {options}
-            </Select>
-          </Tooltip>
-        <FormHelperText>{errors.find(error => error.id === field.ID.toString())?.message}</FormHelperText>
-      </FormControl>
+      isOnlyOneOption ? 
+        <TextField fullWidth
+          label={field.Name}
+          value={options[0].key}
+          disabled={true}
+        /> :
+        <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
+          <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
+            <Tooltip title={field.Desc} arrow>
+              <Select
+                labelId={`combo-${field.ID}`}
+                id={`combo-${field.ID}-label`}
+                value={inputValue.value}
+                onChange={ handleChange }
+                fullWidth
+              >
+                {options}
+              </Select>
+            </Tooltip>
+          <FormHelperText>{errors.find(error => error.id === field.ID.toString())?.message}</FormHelperText>
+        </FormControl>
     );
   }
 
