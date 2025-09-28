@@ -144,7 +144,7 @@ const Calculator = () => {
         "message",
         (event) => {
           setSecurityToken(event.data);
-          console.log('secure data received...', event.data);
+          console.log('secure data received...', event.data);//TODO remove unsafe data
         },
         false,
       );
