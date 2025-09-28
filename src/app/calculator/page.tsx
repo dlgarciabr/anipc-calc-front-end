@@ -119,6 +119,7 @@ const Calculator = () => {
 
   useEffect(() => {
     if(!isSecured || (isSecured && securityToken)){
+      console.log('loading calculator data...');
       void loadForm();
     }
   },[loadForm, securityToken])
@@ -136,7 +137,6 @@ const Calculator = () => {
   useEffect(()=>{
     console.log('react initializing...');
     if(isSecured && !initialized){
-      debugger;
       console.log('react loaded...');
       window.parent.postMessage(
         'react_loaded', 
@@ -145,9 +145,7 @@ const Calculator = () => {
       window.addEventListener(
         "message",
         (event) => {
-          debugger;
           setSecurityToken(event.data);
-          console.log('secure data received...', event.data);//TODO remove unsafe data
         },
         false,
       );
