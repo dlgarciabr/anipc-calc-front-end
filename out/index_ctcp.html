@@ -1,0 +1,32 @@
+<html lang="en-US" style="overflow-y: hidden;">
+  <head>
+    <script>
+      const token = "a0685aad-9620-447a-bb0f-7870c19cc0c8";//TODO mock
+
+      window.addEventListener(
+        "message",
+        (event) => {
+          if(event.data === 'react_loaded'){
+            document.getElementById("inlineCalcFrame").contentWindow.postMessage(token, "*");
+          }
+        },
+        false,
+      );
+    </script>
+  </head>
+  <div style="display: flex; justify-content: center;flex-direction: column;" >
+    <div style="display: flex; justify-content: center;">
+      <h1 style="color: #5e9ca0;">Calculadora de pegada de carbono</h1>
+    </div>
+    <div style="display: flex; justify-content: center;">
+      <iframe
+        id="inlineCalcFrame"
+        title="Inline Frame Example"
+        width="1000"
+        height="900"
+        style="border: none;"
+        src="http://localhost:3000/calculator?id=ctcp&secured=true">
+      </iframe>
+    </div>
+  </div>
+</html>
