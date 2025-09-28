@@ -135,6 +135,7 @@ const Calculator = () => {
 
   useEffect(()=>{
     if(isSecured && !initialized){
+      debugger;
       console.log('react loaded...');
       window.parent.postMessage(
         'react_loaded', 
@@ -143,6 +144,7 @@ const Calculator = () => {
       window.addEventListener(
         "message",
         (event) => {
+          debugger;
           setSecurityToken(event.data);
           console.log('secure data received...', event.data);//TODO remove unsafe data
         },
