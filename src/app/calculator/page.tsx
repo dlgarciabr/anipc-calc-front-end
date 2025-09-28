@@ -135,6 +135,7 @@ const Calculator = () => {
 
   useEffect(()=>{
     if(isSecured && !initialized){
+      console.log('react loaded...');
       window.parent.postMessage(
         'react_loaded', 
         '*'
@@ -143,6 +144,7 @@ const Calculator = () => {
         "message",
         (event) => {
           setSecurityToken(event.data);
+          console.log('secure data received...', event.data);
         },
         false,
       );
