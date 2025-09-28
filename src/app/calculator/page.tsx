@@ -134,6 +134,7 @@ const Calculator = () => {
   },[activeStep, goToLastStep, routerParam, setForm, setInputGroups, setRouterParam])
 
   useEffect(()=>{
+    console.log('react initializing...');
     if(isSecured && !initialized){
       debugger;
       console.log('react loaded...');
