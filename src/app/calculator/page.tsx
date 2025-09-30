@@ -147,8 +147,9 @@ const Calculator = () => {
       window.addEventListener(
         "message",
         (event) => {
-          setToken(event.data);
-          //setSecurityToken(event.data);//TODO reuse token from session storage
+          if((event.data as string).startsWith("token:")){
+            setToken(event.data.substring(6));
+          }
         },
         false,
       );
