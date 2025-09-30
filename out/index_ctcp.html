@@ -7,7 +7,7 @@
         "message",
         (event) => {
           if(event.data === 'react_loaded'){
-            document.getElementById("inlineCalcFrame").contentWindow.postMessage(token, "*");
+            document.getElementById("inlineCalcFrame").contentWindow.postMessage(`token:${token}`, "*");
           }
         },
         false,
