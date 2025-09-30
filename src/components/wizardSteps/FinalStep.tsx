@@ -16,7 +16,7 @@ export interface FinalStepProps {
 const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
   const { token } = useSessionStore();
   const { getData, inputGroups, setResult, form: { Disclaimer } } = useSimulationStore((state) => state);
-
+  console.log('token', token);
   const handleSendData = async () => {
     onBeforeSend();
     let calcResponse;
