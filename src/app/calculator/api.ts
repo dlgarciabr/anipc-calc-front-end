@@ -868,7 +868,7 @@ export const getForm = async (id : string, securityToken?: string): Promise<Requ
   return response.data;
 }
 
-export const sendData = async (data: SimulationData): Promise<SimulationResult> => {
+export const sendData = async (data: SimulationData, token: string): Promise<SimulationResult> => {
   const endpoint = `${url}/calc.php`;
 
   if(mocks.calculate){
@@ -878,7 +878,10 @@ export const sendData = async (data: SimulationData): Promise<SimulationResult> 
   const response = await axios<SimulationResult>({
     method: 'post',
     url: endpoint,
-    data
+    data: {
+        ...data,
+       "token_login": token
+    }
   });
 
   return response.data;

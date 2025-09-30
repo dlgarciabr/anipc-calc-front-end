@@ -34,7 +34,7 @@ let initialized = false;
 
 const Calculator = () => {
   const searchParams = useSearchParams();
-  const [securityToken, setSecurityToken] = React.useState<string>("");//TODO reuse token from session storage
+  //const [securityToken, setSecurityToken] = React.useState<string>("");//TODO reuse token from session storage
   const calcId = searchParams.get('id');
   const securedSearchParam = searchParams.get('secured');
   const isSecured = !!securedSearchParam ? eval(securedSearchParam) : false;
@@ -50,7 +50,7 @@ const Calculator = () => {
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
   const [ error, setError ] = React.useState<ErrorProps | undefined>();
-  const { setToken } = useSessionStore((state) => state);
+  const { setToken, token } = useSessionStore((state) => state);
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -85,7 +85,7 @@ const Calculator = () => {
     if(!calcForm.ID && calcId){
       try{
         setError(undefined);
-        calcForm = await getForm(calcId, securityToken);
+        calcForm = await getForm(calcId, token);
         setForm(calcForm);
       }catch{
         setError({});
@@ -95,7 +95,7 @@ const Calculator = () => {
     const customTheme = createTheme(setupScheme(`#${calcForm.Colors[0]}`, `#${calcForm.Colors[1]}`));
     setTheme(customTheme);
     setLoading(false);
-  }, [calcId, form, setForm, securityToken]);
+  }, [calcId, form, setForm, token]);
 
   const renderDynamicSteps = () => { 
     if(!form){
@@ -120,11 +120,11 @@ const Calculator = () => {
   },[hasErrors, setNextStep, wizardState, setRouterParam]);
 
   useEffect(() => {
-    if(!isSecured || (isSecured && securityToken)){
+    if(!isSecured || (isSecured && token)){
       console.log('loading calculator data...');
       void loadForm();
     }
-  },[loadForm, securityToken])
+  },[loadForm, token])
 
   useEffect(() => {
     if(routerParam === 'new' && activeStep === 0){
@@ -148,7 +148,7 @@ const Calculator = () => {
         "message",
         (event) => {
           setToken(event.data);
-          setSecurityToken(event.data);//TODO reuse token from session storage
+          //setSecurityToken(event.data);//TODO reuse token from session storage
         },
         false,
       );
