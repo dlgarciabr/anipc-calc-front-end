@@ -147,7 +147,7 @@ const Calculator = () => {
       window.addEventListener(
         "message",
         (event) => {
-          if((event.data as string).startsWith("token:")){
+          if(typeof event.data === "string" && (event.data as string).startsWith("token:")){
             setToken(event.data.substring(6));
           }
         },
