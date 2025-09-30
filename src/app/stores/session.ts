@@ -7,7 +7,7 @@ const initialState: Session = {
     setToken: ()=>{}
 }
 
-export const useSessionStore = create<Session>((set, get) => ({
+export const useSessionStore = create<Session>((set) => ({
   ...initialState,
   setToken: (token: string) => set((state) => ({
     ...state,

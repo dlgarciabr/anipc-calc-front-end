@@ -88,6 +88,7 @@ export interface SimulationDataGroup {
 export interface SimulationData {
   ID: string;
   Groups: SimulationDataGroup[];
+  formData: { [key: string ]: InputGroup };
 }
 
 export interface SimulationResultValue {
