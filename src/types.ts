@@ -1,3 +1,8 @@
+export interface Session {
+  token: string;
+  setToken: (token: string) => void;
+}
+
 export interface FieldError {
   id: string;
   message: string;

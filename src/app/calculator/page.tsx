@@ -16,6 +16,7 @@ import Loading from "@/components/Loading";
 import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
 import { useSearchParams } from "next/navigation";
 import Error from "@/components/Error";
+import { useSessionStore } from "../stores/session";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -33,7 +34,7 @@ let initialized = false;
 
 const Calculator = () => {
   const searchParams = useSearchParams();
-  const [securityToken, setSecurityToken] = React.useState<string>("");
+  const [securityToken, setSecurityToken] = React.useState<string>("");//TODO reuse token from session storage
   const calcId = searchParams.get('id');
   const securedSearchParam = searchParams.get('secured');
   const isSecured = !!securedSearchParam ? eval(securedSearchParam) : false;
@@ -49,6 +50,7 @@ const Calculator = () => {
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
   const [ error, setError ] = React.useState<ErrorProps | undefined>();
+  const { setToken } = useSessionStore((state) => state);
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -145,7 +147,8 @@ const Calculator = () => {
       window.addEventListener(
         "message",
         (event) => {
-          setSecurityToken(event.data);
+          setToken(event.data);
+          setSecurityToken(event.data);//TODO reuse token from session storage
         },
         false,
       );
