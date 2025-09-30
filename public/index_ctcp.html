@@ -16,18 +16,20 @@
   </head>
   <div style="display: flex; justify-content: center;flex-direction: column;" >
     <div style="display: flex; justify-content: center;">
-      <h1 style="color: #5e9ca0;">Calculadora de pegada de carbono</h1>
-    </div>
-    <div style="display: flex; justify-content: center;">
       <iframe
         id="inlineCalcFrame"
         title="Inline Frame Example"
         width="1000"
         height="900"
         style="border: none;"
-        src="https://calculator.ghg-impact.eu/calculator.html?id=ctcp&secured=true"
+        src=""
         >
       </iframe>
+      <script>
+        //const url = "https://calculator.ghg-impact.eu/calculator.html?id=ctcp&secured=true";
+        const url = "http://localhost:3000/calculator?id=ctcp&secured=true";
+        document.getElementById("inlineCalcFrame").src = url;
+      </script>
     </div>
   </div>
 </html>

@@ -5,7 +5,6 @@ const customFieldValidators = [2002];
 const errors:FieldError[]  = [];
 
 export const hasErrors = async (simulation: Simulation, setErrors: (errors:FieldError[]) => void): Promise<boolean> => {
-
   const runCustomeFieldValidations = async () => {
     await Promise.all(customFieldValidators.map(async fieldId => {
       const validationModule = await import(`./fields/${fieldId}`);
@@ -28,19 +27,24 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
     return false;
   }
   
-  if(simulation.nextStep === 1){//control total steps on simulation
+  if(simulation.nextStep === 1){
     return false;
   }
 
-  const groupToValidade = simulation.form.Groups[simulation.nextStep - 2];//TODO modify to read the step from simulation including static
+  const groupToValidade = simulation.form.Groups[simulation.nextStep - 2];
 
-  const skipValidation = false;
+  const skipValidation = false;//change for debug tests only
 
   if(skipValidation){
     return false;
   }
 
   groupToValidade.Fields.forEach(field => {
+    const hasFixedValue = field.CustomValue === false && field.Values.length === 1;
+    if(hasFixedValue){
+      return;
+    }
+
     const inputValue = simulation.inputGroups[groupToValidade.ID]?.inputs[field.ID];
 
     if(field.Required && !inputValue){
