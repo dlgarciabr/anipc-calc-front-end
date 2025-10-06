@@ -47,10 +47,18 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   const handleRemoveMultifield = (fieldToRemove: RequestField) => {
     const newMultifields = multifields.filter(field => field.ID !== fieldToRemove.ID);
-    deleteInput(Number(fieldToRemove.ID));
+    deleteInput(group.ID, fieldToRemove.ID);
     setMultifields(newMultifields);
     setMultifieldOptions([...multifieldOptions, fieldToRemove]);
   }
+
+  //TODO evaluate
+  const callBackSetInput = (fieldId: number, value: string) => React.useCallback(
+    ()=>{
+       setInput(group.ID, {id: fieldId, value: value})
+    },
+    []
+  );
 
   const renderUnitField = (field: RequestField, inputValue: InputValue) => {
     if(field.Units.length === 0){
@@ -91,6 +99,28 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     if(!inputValue){
       return <></>;
     }
+
+    const isFixedValue = field.Values.length === 1;
+
+    //const newValue = field.Values[0];
+    
+    /*
+    if(isOnlyOneOption && newValue && inputValue.value != newValue){
+      const newValue = field.Values[0];
+      if(newValue && inputValue.value != newValue){
+          //setInput(group.ID, {id: field.ID, value: newValue})
+      }
+      console.log('render', field.Name)
+      return (
+        <TextField fullWidth
+          label={field.Name}
+          value={field.Values[0]}
+          disabled={true}
+        />
+      )
+    }
+*/
+
     const textFieldSize = field.Units.length > 0 ? 8 : (inputValue.customValue ? 11 : 12);
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
@@ -104,6 +134,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               error={errors.some(error => error.id === field.ID.toString())}
               helperText={errors.find(error => error.id === field.ID.toString())?.message}
               value={inputValue.value}
+              disabled={isFixedValue}
             />
           </Tooltip>
         </Grid>
@@ -141,6 +172,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     if(!inputValue){
       return <></>;
     }
+
     const options = field.Values.map(value => <MenuItem key={value} value={value}>{value}</MenuItem>);
     if(field.CustomValue){
       const customOption = <MenuItem key='other' value='other'>Outro</MenuItem>;
@@ -153,15 +185,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       setInput(group.ID, {id: field.ID, value: isOtherOption ? '' : value, customValue: isOtherOption});
     }
 
-    const isOnlyOneOption = options.length === 1;
-
     return (
-      isOnlyOneOption ? 
-        <TextField fullWidth
-          label={field.Name}
-          value={options[0].key}
-          disabled={true}
-        /> :
         <FormControl sx={{ minWidth: '50%' }} error={errors.some(error => error.id === field.ID.toString())} required={field.Required}>
           <InputLabel id={`combo-${field.ID}`}>{field.Name}</InputLabel>
             <Tooltip title={field.Desc} arrow>
@@ -225,7 +249,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       return <></>;
     }
     const isOtherOption = field.CustomValue && (inputValue.customValue);
-    if(!field.Values || !field.Values.length || isOtherOption){
+    const isFixedValue = field.Values.length === 1;
+    if(!field.Values || !field.Values.length || isOtherOption || isFixedValue){
       return renderTextField(field);
     }
 
@@ -234,7 +259,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   React.useEffect(()=>{
     const fieldsMultifield = group.Fields.filter(field => field.MultiField);
-    const inputGroup = inputGroups[group.ID];
+    const inputGroup = inputGroups.get(group.ID);
     if(!multifields.length && fieldsMultifield.length && inputGroup && inputGroup.inputs){
       const fieldsIdToAdd = Object.keys(inputGroup.inputs)
         .filter(inputId => fieldsMultifield.some(multifield => multifield.ID === Number(inputId)))

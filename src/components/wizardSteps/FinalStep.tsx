@@ -14,14 +14,13 @@ export interface FinalStepProps {
 }
 
 const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
-  const { token } = useSessionStore();
   const { getData, inputGroups, setResult, form: { Disclaimer } } = useSimulationStore((state) => state);
 
   const handleSendData = async () => {
     onBeforeSend();
     let calcResponse;
     try {
-      calcResponse = await sendData(getData(), token);
+      calcResponse = await sendData(getData());
       if(calcResponse){
         setResult(calcResponse);
       }

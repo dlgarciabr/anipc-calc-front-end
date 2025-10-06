@@ -44,7 +44,7 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
       return;
     }
 
-    setInputGroups(Object.values(content.data));
+    setInputGroups(content.data);
 
     setToastProps({show: true, message: 'Ficheiro importado com sucesso!'});
   }

@@ -46,7 +46,7 @@ const Calculator = () => {
     goToStep: (step: number) => {console.log('navigate to step ' + step)},
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
-  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups } = useSimulationStore((state) => state);
+  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups, inputGroups } = useSimulationStore((state) => state);
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
   const [ error, setError ] = React.useState<ErrorProps | undefined>();
@@ -129,7 +129,7 @@ const Calculator = () => {
   useEffect(() => {
     if(routerParam === 'new' && activeStep === 0){
       setRouterParam('');
-      setInputGroups([]);
+      setInputGroups(new Map());
     }
     if(routerParam === 'edit' && activeStep === 0){
       goToLastStep();

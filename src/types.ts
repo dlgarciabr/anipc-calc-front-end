@@ -11,7 +11,7 @@ export interface FieldError {
 export interface InputGroup {
   id: number;
   name: string;
-  inputs: { [key: string ]: InputValue },
+  inputs: Map<number, InputValue>;
 }
 
 export interface InputValue {
@@ -21,17 +21,30 @@ export interface InputValue {
   customValue?: boolean;
 }
 
+export interface FileInputValue {
+  id: number;
+  value: string;
+  unit?: string;
+  customValue?: boolean;
+}
+
+export interface FileInputGroup {
+  id: number; 
+  name: string;
+  inputs: {[key: string ]: FileInputValue };
+}
+
 export interface Simulation {
   routerParam: string;
   nextStep: number;
   form: RequestForm;
   setForm: (form: RequestForm) => void;
-  inputGroups: { [key: string ]: InputGroup };
+  inputGroups: Map<number, InputGroup>;
   getData: () => SimulationData;
-  setInputGroups: (categories: InputGroup[]) => void;
+  setInputGroups: (groups: Map<number, InputGroup>) => void;
   setInput: (groupId: number, input: InputValue) => void;
   getInput: (inputId: number) => InputValue | undefined;
-  deleteInput: (inputId: number) => void,
+  deleteInput: (groupId: number, inputId: number) => void,
   setNextStep: (nextStep: number) => void;
   hasErrors: () => Promise<boolean>;
   errors: FieldError[];
@@ -88,7 +101,7 @@ export interface SimulationDataGroup {
 export interface SimulationData {
   ID: string;
   Groups: SimulationDataGroup[];
-  formData: { [key: string ]: InputGroup };
+  formData: unknown;
 }
 
 export interface SimulationResultValue {

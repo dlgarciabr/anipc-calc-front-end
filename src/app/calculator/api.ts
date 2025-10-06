@@ -850,13 +850,12 @@ const newMockdData = {
 } as RequestForm;
 
 export const getForm = async (id : string, token?: string): Promise<RequestForm> => {
-  let endpoint = `${url}/form.php?id=${id}`;
+  const endpoint = `${url}/form.php?id=${id}`;
 
   if(token){
     axios.defaults.headers.common = {
         "token_login": token,
     };
-    //endpoint = endpoint.concat(`&token_login=${token}`);//TODO remove after changing the backend to support headers
   }
 
   if(mocks.getForm){
@@ -871,7 +870,7 @@ export const getForm = async (id : string, token?: string): Promise<RequestForm>
   return response.data;
 }
 
-export const sendData = async (data: SimulationData, token?: string): Promise<SimulationResult> => {
+export const sendData = async (data: SimulationData): Promise<SimulationResult> => {
   const endpoint = `${url}/calc.php`;
 
   if(mocks.calculate){
@@ -881,10 +880,7 @@ export const sendData = async (data: SimulationData, token?: string): Promise<Si
   const response = await axios<SimulationResult>({
     method: 'post',
     url: endpoint,
-    data: {
-        ...data,
-       "token_login": token
-    }
+    data
   });
 
   return response.data;
