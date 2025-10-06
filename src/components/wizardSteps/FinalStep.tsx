@@ -6,7 +6,6 @@ import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import { exportToJSONFile } from "@/app/calculator/utils";
 import FileDownload from '@mui/icons-material/Download';
 import { redirect } from "next/navigation";
-import { useSessionStore } from "@/app/stores/session";
 
 export interface FinalStepProps {
   onBeforeSend: () => void;

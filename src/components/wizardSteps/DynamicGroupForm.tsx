@@ -52,14 +52,6 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     setMultifieldOptions([...multifieldOptions, fieldToRemove]);
   }
 
-  //TODO evaluate
-  const callBackSetInput = (fieldId: number, value: string) => React.useCallback(
-    ()=>{
-       setInput(group.ID, {id: fieldId, value: value})
-    },
-    []
-  );
-
   const renderUnitField = (field: RequestField, inputValue: InputValue) => {
     if(field.Units.length === 0){
       return undefined;
