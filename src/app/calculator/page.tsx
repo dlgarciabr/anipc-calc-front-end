@@ -34,7 +34,6 @@ let initialized = false;
 
 const Calculator = () => {
   const searchParams = useSearchParams();
-  //const [securityToken, setSecurityToken] = React.useState<string>("");//TODO reuse token from session storage
   const calcId = searchParams.get('id');
   const securedSearchParam = searchParams.get('secured');
   const isSecured = !!securedSearchParam ? eval(securedSearchParam) : false;
