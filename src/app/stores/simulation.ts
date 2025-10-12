@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { InputValue, InputGroup, Simulation, RequestForm, FieldError, SimulationData, SimulationResult } from '../../types';
 import { hasErrors } from '../validation';
+import { mapToObject } from '../calculator/utils';
 
 export const initialFormState: RequestForm = {
   ID: '', 
@@ -16,12 +17,12 @@ const initialState: Simulation = {
   nextStep: 0,
   form: { ...initialFormState },
   setForm: (form: RequestForm) => {console.log(form)},
-  inputGroups: {},
-  setInputGroups: (groups: InputGroup[]) => {console.log(groups)},
+  inputGroups: new Map(),
+  setInputGroups: (groups: Map<number, InputGroup>) => {console.log(groups)},
   getData: () => ({} as SimulationData),
   setInput: (groupId: number, input: InputValue) => {console.log(groupId + input.value)},
   getInput: (inputId: number) => { console.log(inputId); return undefined},
-  deleteInput: (inputId: number) => { console.log(inputId) },
+  deleteInput: (groupId: number, inputId: number) => { console.log(groupId + inputId) },
   setNextStep: (nextStep: number) => { console.log(nextStep) },
   hasErrors: () => Promise.resolve(false),
   errors: [],
@@ -32,25 +33,45 @@ const initialState: Simulation = {
 
 export const useSimulationStore = create<Simulation>((set, get) => ({
   ...initialState,
-  setForm: (form: RequestForm) => set((state) => ({
+  setForm: (form: RequestForm) => set((state) => {
+    const inputGroups = new Map<number, InputGroup>();
+
+    form.Groups.forEach(group => {
+      group.Fields.forEach(field => {
+        const isFixedValue = field.Values.length === 1;
+        let inputGroup = inputGroups.get(group.ID);
+        if(!inputGroup){
+          inputGroup = { id: group.ID, name: group.Name, inputs: new Map<number, InputValue>()};
+        }
+        
+        if(isFixedValue){
+          inputGroup.inputs.set(field.ID, {id: field.ID,  value: field.Values[0]}); 
+        }
+        inputGroups.set(group.ID, inputGroup);
+      })
+    });
+
+    return {
+      ...state,
+       form,
+      inputGroups
+    }
+  }),
+  setInputGroups: (inputGroups: Map<number, InputGroup>) => set((state) => ({
     ...state,
-     form
+    inputGroups
   })),
   setNextStep: (nextStep: number) => set((state) => ({
     ...state,
     nextStep
   })),
-  setInputGroups: (groups: InputGroup[]) => set((state) => ({
-    ...state,
-    inputGroups: Object.fromEntries(groups.map(group => [group.id, group]))
-  })),
   getData: () => ({
     ID: get().form.ID,
-    Groups: Object.values(get().inputGroups).map(group => ({
+    Groups: Array.from(get().inputGroups.values()).map(group => ({
       ID: group.id,
-      Values: Object.values(group.inputs).map(inputValue => ({ID: inputValue.id, Value: inputValue.value, Unit: inputValue.unit})).filter(inputValue => !!inputValue.Value)
+      Values: Array.from(group.inputs.values()).map(inputValue => ({ID: inputValue.id, Value: inputValue.value, Unit: inputValue.unit})).filter(inputValue => !!inputValue.Value)
     })),
-    formData: get().inputGroups
+    formData: mapToObject(get().inputGroups)
   }),
   errors: [],
   hasErrors: () => hasErrors(
@@ -62,35 +83,29 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
   ),
   getInput: (inputId: number) => {
     const inputs:InputValue[] = [];
-    Object.values(get().inputGroups).forEach(group => inputs.push(...Object.values(group.inputs)));
+    Array.from(get().inputGroups.values()).forEach(group => inputs.push(...Array.from(group.inputs.values())));
     const input = inputs.find(input => input.id === inputId);
     if(!input){
       return {id: inputId, value: '', unit: ''};
     }
     return input;
   },
-  deleteInput: (inputId: number) => set((state) => { 
+  deleteInput: (groupId: number, inputId: number) => set((state) => { 
     if(!inputId){
       return state;
     }
 
-    const group = Object.values(state.inputGroups).find(group => Object.values(group.inputs).some(input => input.id === inputId));
+    const group = state.inputGroups.get(groupId);
 
     if(!group){
       return state;
     }
 
-    const newInputs = Object.values(group.inputs).filter(input => input.id !== inputId);
+    group.inputs.delete(inputId);
     
     return {
       ...state,
-      inputGroups: {
-        ...state.inputGroups, 
-        [group.id] : {
-          ...group,
-          inputs: newInputs
-        }
-      }
+      inputGroups: state.inputGroups.set(groupId, group)
     }
   }),
   setInput: (groupId: number, {id, value, unit, customValue}: InputValue) => set((state) => {
@@ -103,24 +118,13 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       unit: !!unit ? unit : currentValue.unit, 
       customValue: customValue != undefined ? customValue : currentValue.customValue
     };
-    const group = state.inputGroups[groupId] || { id: groupId, inputs: {}};
-    
-    const newInputs = Object.values(group.inputs).length > 0 ? 
-      {
-        ...group.inputs,
-        [id]: newInputValue
-      } : 
-      { [id]: newInputValue };
+
+    const group = state.inputGroups.get(groupId) || {id: groupId, name: '', inputs: new Map()};
+    group.inputs.set(id, newInputValue);
 
     return {
       ...state,
-      inputGroups: {
-        ...state.inputGroups, 
-        [groupId] : {
-          ...group,
-          inputs: newInputs
-        }
-      }
+      inputGroups: state.inputGroups.set(groupId, group)
     }
   }),
   setResult: (result: SimulationResult) => set((state) => ({

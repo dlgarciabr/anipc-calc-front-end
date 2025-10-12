@@ -6,7 +6,6 @@ import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import { exportToJSONFile } from "@/app/calculator/utils";
 import FileDownload from '@mui/icons-material/Download';
 import { redirect } from "next/navigation";
-import { useSessionStore } from "@/app/stores/session";
 
 export interface FinalStepProps {
   onBeforeSend: () => void;
@@ -14,14 +13,13 @@ export interface FinalStepProps {
 }
 
 const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
-  const { token } = useSessionStore();
   const { getData, inputGroups, setResult, form: { Disclaimer } } = useSimulationStore((state) => state);
 
   const handleSendData = async () => {
     onBeforeSend();
     let calcResponse;
     try {
-      calcResponse = await sendData(getData(), token);
+      calcResponse = await sendData(getData());
       if(calcResponse){
         setResult(calcResponse);
       }

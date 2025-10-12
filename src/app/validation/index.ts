@@ -45,7 +45,7 @@ export const hasErrors = async (simulation: Simulation, setErrors: (errors:Field
       return;
     }
 
-    const inputValue = simulation.inputGroups[groupToValidade.ID]?.inputs[field.ID];
+    const inputValue = simulation.inputGroups.get(groupToValidade.ID)?.inputs.get(field.ID);
 
     if(field.Required && !inputValue){
       errors.push({
