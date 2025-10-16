@@ -101,7 +101,7 @@ export interface SimulationDataGroup {
 export interface SimulationData {
   ID: string;
   Groups: SimulationDataGroup[];
-  formData: unknown;
+  FormData: unknown;
 }
 
 export interface SimulationResultValue {

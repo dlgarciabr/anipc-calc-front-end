@@ -71,7 +71,7 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       ID: group.id,
       Values: Array.from(group.inputs.values()).map(inputValue => ({ID: inputValue.id, Value: inputValue.value, Unit: inputValue.unit})).filter(inputValue => !!inputValue.Value)
     })),
-    formData: mapToObject(get().inputGroups)
+    FormData: mapToObject(get().inputGroups)
   }),
   errors: [],
   hasErrors: () => hasErrors(
