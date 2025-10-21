@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
 import { Alert, Button, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
@@ -262,7 +262,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   },[group, inputGroups, multifields, handleAddMultifields]);
 
   return (
-      <>
+      <div style={{height: '550px', overflowY: "auto"}}>
         <Grid container>
           <Grid size={{ xs: 10, md: 10 }}>
             <Typography variant="h5" component="h5" style={{ margin: '20px 0 20px 0' }}>{group.Name}</Typography>
@@ -300,7 +300,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
             ))
           }
         </Grid>
-      </>
+      </div>
   )
 }
 

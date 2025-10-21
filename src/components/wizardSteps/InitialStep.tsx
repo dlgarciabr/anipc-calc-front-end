@@ -50,7 +50,7 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
   }
 
   return (
-    <Grid container spacing={2} style={{height: '780px'}}>
+    <Grid container spacing={2} style={{height: '620px'}}>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='center' style={{textAlign: 'center'}}>
         <Typography gutterBottom variant="h5" component="div">
           {form.Title}

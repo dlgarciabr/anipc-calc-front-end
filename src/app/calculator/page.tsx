@@ -174,25 +174,23 @@ const Calculator = () => {
 
   return (
     <ThemeProvider theme={theme} defaultMode="light">
-      { loading ? 
-        <Loading /> : (
-          error ? 
-            <Error onRetry={error.onRetry}/> : (
-            <Container maxWidth="md">
-              <Grid container>
-                <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '780px'}}>
-                  {
-                    <StepWizard instance={setInstance} >
-                      {generateSteps()}
-                    </StepWizard>
-                  }
-                </Grid>
-                <Grid size={{ xs: 12, md: 12 }}>
-                  <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
-                </Grid>
-              </Grid>
-            </Container>
-          )
+      { loading && <Loading /> }
+      { error && <Error onRetry={error.onRetry} /> }
+      { !loading && !error && (
+        <Container maxWidth="md">
+          <Grid container>
+            <Grid size={{ xs: 12, md: 12 }} className="form-body" sx={{height: '620px'}}>
+              {
+                <StepWizard instance={setInstance} >
+                  {generateSteps()}
+                </StepWizard>
+              }
+            </Grid>
+            <Grid size={{ xs: 12, md: 12 }}>
+              <CalculatorNavigator activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} totalSteps={generateSteps().length} />
+            </Grid>
+          </Grid>
+        </Container>
         )
       }
     </ThemeProvider>
