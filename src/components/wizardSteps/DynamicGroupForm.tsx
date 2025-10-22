@@ -94,25 +94,6 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
     const isFixedValue = field.Values.length === 1;
 
-    //const newValue = field.Values[0];
-    
-    /*
-    if(isOnlyOneOption && newValue && inputValue.value != newValue){
-      const newValue = field.Values[0];
-      if(newValue && inputValue.value != newValue){
-          //setInput(group.ID, {id: field.ID, value: newValue})
-      }
-      console.log('render', field.Name)
-      return (
-        <TextField fullWidth
-          label={field.Name}
-          value={field.Values[0]}
-          disabled={true}
-        />
-      )
-    }
-*/
-
     const textFieldSize = field.Units.length > 0 ? 8 : (inputValue.customValue ? 11 : 12);
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
