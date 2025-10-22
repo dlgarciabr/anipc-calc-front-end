@@ -242,7 +242,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
   },[group, inputGroups, multifields, handleAddMultifields]);
 
   return (
-      <div style={{height: '550px', overflowY: "auto"}}>
+      <div style={{height: '600px', overflowY: "auto"}}>
         <Grid container>
           <Grid size={{ xs: 10, md: 10 }}>
             <Typography variant="h5" component="h5" style={{ margin: '20px 0 20px 0' }}>{group.Name}</Typography>
