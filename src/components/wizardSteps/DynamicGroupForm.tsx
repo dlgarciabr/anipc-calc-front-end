@@ -234,10 +234,9 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     const fieldsMultifield = group.Fields.filter(field => field.MultiField);
     const inputGroup = inputGroups.get(group.ID);
     if(!multifields.length && fieldsMultifield.length && inputGroup && inputGroup.inputs){
-      const fieldsIdToAdd = Object.keys(inputGroup.inputs)
+      const fieldsIdToAdd = Array.from(inputGroup.inputs.keys())
         .filter(inputId => fieldsMultifield.some(multifield => multifield.ID === Number(inputId)))
         .map(inputId => Number(inputId));
-
       handleAddMultifields(fieldsIdToAdd);
     }
   },[group, inputGroups, multifields, handleAddMultifields]);
