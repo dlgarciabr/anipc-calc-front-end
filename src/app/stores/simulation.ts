@@ -15,6 +15,7 @@ export const initialFormState: RequestForm = {
 const initialState: Simulation = {
   routerParam: '',
   nextStep: 0,
+  totalSteps: 0,
   form: { ...initialFormState },
   setForm: (form: RequestForm) => {console.log(form)},
   inputGroups: new Map(),
@@ -54,7 +55,8 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     return {
       ...state,
        form,
-      inputGroups
+      inputGroups,
+      totalSteps: form.Groups.length + 2
     }
   }),
   setInputGroups: (inputGroups: Map<number, InputGroup>) => set((state) => ({

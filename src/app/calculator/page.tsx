@@ -33,11 +33,12 @@ export interface ErrorProps {
 let initialized = false;
 
 const Calculator = () => {
+  useLeavePageConfirm(true);
   const searchParams = useSearchParams();
   const calcId = searchParams.get('id');
   const securedSearchParam = searchParams.get('secured');
   const isSecured = !!securedSearchParam ? eval(securedSearchParam) : false;
-  useLeavePageConfirm(true);
+  
   const [wizardState, setWizardState] = React.useState<ExtendedWizardProps>({
     initialStep: 0,
     nextStep: () => {},
@@ -45,7 +46,7 @@ const Calculator = () => {
     goToStep: (step: number) => {console.log('navigate to step ' + step)},
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
-  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups } = useSimulationStore((state) => state);
+  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups, totalSteps } = useSimulationStore((state) => state);
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
   const [ error, setError ] = React.useState<ErrorProps | undefined>();
@@ -107,13 +108,13 @@ const Calculator = () => {
     ));
   };
 
-  const goToLastStep = React.useCallback(async () => {
-    const nextStep = 7;
+  const goToLastStep = React.useCallback(async () => { 
+    const nextStep = totalSteps - 1;
     setNextStep(nextStep);
     const isStepValid = (!await hasErrors());
     if(isStepValid){
       setActiveStep(nextStep);
-      wizardState.goToStep(8);
+      wizardState.goToStep(totalSteps);
       setRouterParam('');
     }
   },[hasErrors, setNextStep, wizardState, setRouterParam]);

@@ -37,6 +37,7 @@ export interface FileInputGroup {
 export interface Simulation {
   routerParam: string;
   nextStep: number;
+  totalSteps: number;
   form: RequestForm;
   setForm: (form: RequestForm) => void;
   inputGroups: Map<number, InputGroup>;
