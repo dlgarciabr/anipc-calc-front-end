@@ -92,6 +92,8 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
       return <></>;
     }
 
+    const isOtherOptionChosen = !!inputValue.customValue; 
+
     const isFixedValue = field.Values.length === 1;
 
     const textFieldSize = field.Units.length > 0 ? 8 : (inputValue.customValue ? 11 : 12);
@@ -107,7 +109,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               error={errors.some(error => error.id === field.ID.toString())}
               helperText={errors.find(error => error.id === field.ID.toString())?.message}
               value={inputValue.value}
-              disabled={isFixedValue}
+              disabled={isFixedValue && !isOtherOptionChosen}
             />
           </Tooltip>
         </Grid>
@@ -221,9 +223,11 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     if(!inputValue){
       return <></>;
     }
-    const isOtherOption = field.CustomValue && (inputValue.customValue);
-    const isFixedValue = field.Values.length === 1;
-    if(!field.Values || !field.Values.length || isOtherOption || isFixedValue){
+    const isReadOnly = field.Values.length === 1 && !field.CustomValue;
+    const isOtherOptionChosen = !!inputValue.customValue; 
+    const isCustomValue = (field.Values.length === 0 && field.CustomValue) || isOtherOptionChosen;
+
+    if(isReadOnly || isCustomValue){
       return renderTextField(field);
     }
 

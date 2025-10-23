@@ -10,7 +10,7 @@ interface ErrorProps {
 const Error = ({ message, description, onRetry }: ErrorProps) => (
   <Container maxWidth="md">
     <Grid container>
-      <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '620px'}} alignContent='center' justifyItems='center'>
+      <Grid size={{ xs: 12, md: 12 }} sx={{minHeight: '620px'}} alignContent='center' justifyItems='center' display="grid">
         <ErrorIcon sx={{color: 'red', width: '50px', height: '50px'}}/>
         <Typography variant="h5">{message || 'Ocorreu um erro!'}</Typography>
         <Typography variant="h6" color="secondary">{description || 'Infelizmente nao fomos capazes de concluir a operação, por favor tente mais tarde.'}</Typography>

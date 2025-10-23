@@ -1,0 +1,1084 @@
+{
+    "ID": "CTCP",
+    "Colors": [
+        "63B454",
+        "16453E",
+        "16453E"
+    ],
+    "Title": "Calculadora da pegada de carbono",
+    "Desc": "Esta ferramenta de c\u00e1lculo de emiss\u00f5es de Gases com Efeito de Estufa (GEE) enquadra-se no \u00e2mbito do projeto \"Roteiro para a Descarboniza\u00e7\u00e3o da Fileira do Cal\u00e7ado\" desenvolvido pelo CTCP - Centro Tecnol\u00f3gico do Cal\u00e7ado de Portugal.",
+    "Disclaimer": "Nota: Ao clicar em 'calcular', concorda que os dados fornecidos sejam armazenados pelo CTCP para fins estat\u00edsticos. A an\u00e1lise ser\u00e1 realizada de forma agregada, garantindo a confidencialidade das informa\u00e7\u00f5es.",
+    "Groups": [
+        {
+            "ID": 1000,
+            "Name": "Dados da Empresa",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 1001,
+                    "Name": "Ano de C\u00e1lculo",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "2021",
+                        "2022",
+                        "2023",
+                        "2024"
+                    ],
+                    "CustomValue": false,
+                    "Regex": ""
+                },
+                {
+                    "ID": 1002,
+                    "Name": "Nome da Empresa",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "Centro Tecnol\u00f3gico do Cal\u00e7ado de Portugal"
+                    ],
+                    "CustomValue": false,
+                    "Regex": "^.{1,100}$"
+                },
+                {
+                    "ID": 1003,
+                    "Name": "NIPC",
+                    "Desc": "N\u00famero de Identifica\u00e7\u00e3o de Pessoa Coletiva",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "501846654"
+                    ],
+                    "CustomValue": false,
+                    "Regex": "^[0-9]{9}$"
+                },
+                {
+                    "ID": 1004,
+                    "Name": "CAE Principal",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "15201-Fabrica\u00e7\u00e3o de cal\u00e7ado"
+                    ],
+                    "CustomValue": false,
+                    "Regex": "^[0-9]{5}$"
+                },
+                {
+                    "ID": 1005,
+                    "Name": "Unidade de Produ\u00e7\u00e3o",
+                    "Desc": "Indicar a unidade de produ\u00e7\u00e3o aplic\u00e1vel (ex: par de sapatos)",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "par de sapatos"
+                    ],
+                    "CustomValue": true,
+                    "Regex": "^.{1,20}$"
+                },
+                {
+                    "ID": 1006,
+                    "Name": "Produ\u00e7\u00e3o Anual",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "^[1-9][0-9]{0,11}(,[0-9]{1,9})?$"
+                }
+            ]
+        },
+        {
+            "ID": 2000,
+            "Name": "Consumos de Energia El\u00e9trica",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 2001,
+                    "Name": "Faturada",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 2002,
+                    "Name": "Renov\u00e1vel (Garantias de Origem)",
+                    "Desc": "Se aplic\u00e1vel, dever\u00e1 ser indicada a quantidade de \"eletricidade verde\" dever\u00e1 basear-se em evid\u00eancias da respetiva contrata\u00e7\u00e3o junto do(s) comercializador(es) de energia (incluindo mobilidade el\u00e9trica) e\/ou de Certificados de Garantia de Origem.",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 2003,
+                    "Name": "Renov\u00e1vel (autoconsumo)",
+                    "Desc": "Se aplic\u00e1vel, dever\u00e1 ser indicada a quantidade de eletricidade renov\u00e1vel autoconsumida, excluindo a energia excedente.",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 2004,
+                    "Name": "Mobilidade El\u00e9trica",
+                    "Desc": "Se aplic\u00e1vel, dever\u00e1 ser indicada a quantidade de eletricidade faturada decorrente dos carregamentos efetuados em postos de carregamento fora da empresa.",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 2005,
+                    "Name": "Outra",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                }
+            ]
+        },
+        {
+            "ID": 3000,
+            "Name": "Combust\u00e3o Estacion\u00e1ria",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 3001,
+                    "Name": "Biomassa (certificada)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3002,
+                    "Name": "Biomassa (n\u00e3o certificada)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3003,
+                    "Name": "Querosene",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3004,
+                    "Name": "Coque de petr\u00f3leo",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3005,
+                    "Name": "Fuel\u00f3leo",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3006,
+                    "Name": "Nafta",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3007,
+                    "Name": "Hulha",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3008,
+                    "Name": "Antracite",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3009,
+                    "Name": "Coque de carv\u00e3o",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3010,
+                    "Name": "G\u00e1s natural",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        },
+                        {
+                            "Unit": "m3"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3011,
+                    "Name": "G\u00e1s propano",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3012,
+                    "Name": "Biog\u00e1s",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        },
+                        {
+                            "Unit": "m3"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3013,
+                    "Name": "Gas\u00f3leo (aquecimento e uso nas instala\u00e7\u00f5es)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3014,
+                    "Name": "Biodiesel",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 3015,
+                    "Name": "Outro (Renov\u00e1vel)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                }
+            ]
+        },
+        {
+            "ID": 4000,
+            "Name": "Combust\u00e3o M\u00f3vel (Frota)",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 4001,
+                    "Name": "Gas\u00f3leo",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 4002,
+                    "Name": "Biodiesel",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 4003,
+                    "Name": "Gasolina",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 4004,
+                    "Name": "GPL Auto",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 4005,
+                    "Name": "Biog\u00e1s",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        },
+                        {
+                            "Unit": "m3"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                },
+                {
+                    "ID": 4006,
+                    "Name": "Outro (Renov\u00e1vel)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                }
+            ]
+        },
+        {
+            "ID": 5000,
+            "Name": "Consumo de Solventes",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 5001,
+                    "Name": "Solventes",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                }
+            ]
+        },
+        {
+            "ID": 6000,
+            "Name": "Consumo de Gases Fluorados",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 6001,
+                    "Name": "HFC-125",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6002,
+                    "Name": "HFC-134",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6003,
+                    "Name": "HFC-143",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6004,
+                    "Name": "HFC-143a",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6005,
+                    "Name": "HFC-152a",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6006,
+                    "Name": "HFC-227ea",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6007,
+                    "Name": "HFC-23",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6008,
+                    "Name": "HFC-236fa",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6009,
+                    "Name": "HFC-245fa",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6010,
+                    "Name": "HFC-41",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6011,
+                    "Name": "HFC-43-I0mee",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6012,
+                    "Name": "R134a \/ HFC-134a",
+                    "Desc": "Designado como HFC-134a",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6029,
+                    "Name": "R22 \/ HCFC-22 ",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6013,
+                    "Name": "R32",
+                    "Desc": "Designado como HFC-32",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6014,
+                    "Name": "R404A",
+                    "Desc": "Blend 52:44:4 [HFC-143a, HFC-125, HFC-134a]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6026,
+                    "Name": "R407A",
+                    "Desc": "Blend 20:40:40 [HFC-32, HFC-125, HFC-134a]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6015,
+                    "Name": "R407C",
+                    "Desc": "Blend 23:25:52 [HFC-32, HFC-125, HFC-134a]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6016,
+                    "Name": "R410A",
+                    "Desc": "Blend 50:50 [HFC-32, HFC-125]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6027,
+                    "Name": "R417A",
+                    "Desc": "Blend 50:46,6:3,4 [HFC-134a, HFC-125, HC-600]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6017,
+                    "Name": "R427A",
+                    "Desc": "Blend 15:25:10:50 [HFC-32, HFC-125, HFC-134a, HFC-143]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6028,
+                    "Name": "R600",
+                    "Desc": "same as C4H10 \/ HC-60",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6030,
+                    "Name": "R600A",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6018,
+                    "Name": "PFC-116 (Perfluoroethane)",
+                    "Desc": "C2F6",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6019,
+                    "Name": "PFC-14 (Perfluoromethane)",
+                    "Desc": "CF4",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6020,
+                    "Name": "PFC-218 (Perfluoropropane)",
+                    "Desc": "C3F8",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6021,
+                    "Name": "PFC-31-10 (Perfluorobutane)",
+                    "Desc": "C4F10",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6022,
+                    "Name": "PFC-318 (Perfluorocyclobutane)",
+                    "Desc": "c-C4F8",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6023,
+                    "Name": "PFC-41-12 (Perfluoropentane)",
+                    "Desc": "C5F12",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6024,
+                    "Name": "PFC-51-14 (Perfluorohexane)",
+                    "Desc": "C6F14",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                },
+                {
+                    "ID": 6025,
+                    "Name": "SF6 (Sulphur hexafluoride)",
+                    "Desc": "SF6",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "SF6 (Sulphur Hexafluoride)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                }
+            ]
+        },
+        {
+            "ID": 7000,
+            "Name": "Consumo de Extintores",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 7001,
+                    "Name": "Extintores CO2",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                }
+            ]
+        }
+    ]
+}
