@@ -25,6 +25,7 @@ export interface InputValue {
 export interface FileInputValue {
   id: number;
   value: string;
+  name?: string;
   unit?: string;
   customValue?: boolean;
 }

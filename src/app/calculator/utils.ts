@@ -73,6 +73,7 @@ export const readDataFromFile = async (event: ChangeEvent<HTMLInputElement>): Pr
         id: importedValue.id,
         value: importedValue.value,
         unit: importedValue.unit,
+        name: importedValue.name || '',
         customValue: importedValue.customValue
       }
       inputGroup.inputs.set(parseInt(inputId), inputValue);

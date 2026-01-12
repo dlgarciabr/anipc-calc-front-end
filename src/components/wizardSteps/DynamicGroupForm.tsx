@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
 import { Alert, Button, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
@@ -73,7 +73,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               labelId={`combo-unit-${field.ID}`}
               id={`combo-unit-${field.ID}-label`}
               value={inputValue.unit}
-              onChange={e => setInput(group.ID, { id: field.ID, value: inputValue.value, unit: e.target.value })}
+              onChange={e => setInput(group.ID, { id: field.ID, value: inputValue.value, unit: e.target.value, name: field.Name })}
               fullWidth
             >
               <MenuItem key='' value='empty'>&nbsp;</MenuItem>
@@ -136,7 +136,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
         inputValue.customValue ? 
         <Tooltip title="Cancelar edição" placement="top">
           <IconButton size="large"
-            onClick={()=>setInput(group.ID, {id: field.ID, value: '', customValue: false})} >
+            onClick={()=>setInput(group.ID, {id: field.ID, value: '', customValue: false, name: field.Name})} >
             <BackspaceIcon />
           </IconButton>
         </Tooltip>
