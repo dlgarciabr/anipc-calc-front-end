@@ -17,6 +17,7 @@ export interface InputGroup {
 export interface InputValue {
   id: number;
   value: string;
+  name: string;
   unit?: string;
   customValue?: boolean;
 }

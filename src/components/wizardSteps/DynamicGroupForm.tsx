@@ -19,9 +19,9 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
 
   const handleChangeInput = (field: RequestField, value: string) => {
     if(field.Units.length === 1){
-      setInput(group.ID, {id: field.ID, value, unit: field.Units[0].Unit});
+      setInput(group.ID, {id: field.ID, value, unit: field.Units[0].Unit, name: field.Name});
     }else{
-      setInput(group.ID, {id: field.ID, value});
+      setInput(group.ID, {id: field.ID, value, name: field.Name});
     }
   }
 
@@ -102,6 +102,10 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
           <Tooltip title={field.Desc} arrow>
             <TextField
+              slotProps={{
+                htmlInput: {
+                  className:`${inputValue.id}`
+                }}}
               fullWidth
               label={field.Name}
               required={field.Required}
@@ -157,7 +161,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     const handleChange = (event: SelectChangeEvent<string>) => {
       const value = event.target.value;
       const isOtherOption = event.target.value === 'other';
-      setInput(group.ID, {id: field.ID, value: isOtherOption ? '' : value, customValue: isOtherOption});
+      setInput(group.ID, {id: field.ID, value: isOtherOption ? '' : value, customValue: isOtherOption, name: field.Name});
     }
 
     return (
@@ -170,6 +174,9 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
                 value={inputValue.value}
                 onChange={ handleChange }
                 fullWidth
+                inputProps={{
+                  className:`${inputValue.id}`
+                }}
               >
                 {options}
               </Select>

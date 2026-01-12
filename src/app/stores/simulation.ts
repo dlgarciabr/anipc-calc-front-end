@@ -46,7 +46,7 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
         }
         
         if(isFixedValue){
-          inputGroup.inputs.set(field.ID, {id: field.ID,  value: field.Values[0]}); 
+          inputGroup.inputs.set(field.ID, {id: field.ID,  value: field.Values[0], name: field.Name}); 
         }
         inputGroups.set(group.ID, inputGroup);
       })
@@ -88,7 +88,7 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     Array.from(get().inputGroups.values()).forEach(group => inputs.push(...Array.from(group.inputs.values())));
     const input = inputs.find(input => input.id === inputId);
     if(!input){
-      return {id: inputId, value: '', unit: ''};
+      return {id: inputId, value: '', unit: '', name: ''};
     }
     return input;
   },
@@ -110,7 +110,7 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       inputGroups: state.inputGroups.set(groupId, group)
     }
   }),
-  setInput: (groupId: number, {id, value, unit, customValue}: InputValue) => set((state) => {
+  setInput: (groupId: number, {id, value, unit, customValue, name}: InputValue) => set((state) => {
     const currentValue = get().getInput(id);
     if(!currentValue){
       return state;
@@ -118,7 +118,8 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
     const newInputValue =  { 
       id, value, 
       unit: !!unit ? unit : currentValue.unit, 
-      customValue: customValue != undefined ? customValue : currentValue.customValue
+      customValue: customValue != undefined ? customValue : currentValue.customValue,
+      name
     };
 
     const group = state.inputGroups.get(groupId) || {id: groupId, name: '', inputs: new Map()};

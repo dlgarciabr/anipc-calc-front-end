@@ -1,12 +1,14 @@
 import { InputValue, Simulation } from "@/types"
 
 const validate = (input: InputValue, simulation: Simulation) => {
-  const inputEnergiaFaturada = simulation.getInput(2001);
-  if(!input || !inputEnergiaFaturada){
+  const otherId = 2001;
+  const other = simulation.getInput(otherId);
+
+  if(!input || !other){
     return '';
   }
-  if(Number(input.value) > Number(inputEnergiaFaturada.value)){
-    return 'Valor preenchido maior que Energia Faturada';
+  if(Number(input.value) > Number(other.value)){
+    return `Valor preenchido maior que ${other.name}`;
   }
   return '';
 }
