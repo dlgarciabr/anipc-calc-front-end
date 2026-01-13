@@ -51,6 +51,7 @@ export interface Simulation {
   setNextStep: (nextStep: number) => void;
   hasErrors: () => Promise<boolean>;
   errors: FieldError[];
+  clearErrors: () => void;
   result?: SimulationResult;
   setResult: (result: SimulationResult) => void;
   setRouterParam: (origin: string) => void;

@@ -27,6 +27,7 @@ const initialState: Simulation = {
   setNextStep: (nextStep: number) => { console.log(nextStep) },
   hasErrors: () => Promise.resolve(false),
   errors: [],
+  clearErrors: () => { console.log('clear errors') },
   result: undefined,
   setResult: (result: SimulationResult) => { console.log(result) },
   setRouterParam : (origin: string) => { console.log(origin) },
@@ -83,6 +84,10 @@ export const useSimulationStore = create<Simulation>((set, get) => ({
       errors
     }))
   ),
+  clearErrors: () => set((state) => ({
+    ...state,
+    errors: []
+  })),
   getInput: (inputId: number) => {
     const inputs:InputValue[] = [];
     Array.from(get().inputGroups.values()).forEach(group => inputs.push(...Array.from(group.inputs.values())));

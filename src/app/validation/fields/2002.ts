@@ -8,7 +8,8 @@ const validate = (input: InputValue, simulation: Simulation) => {
     return '';
   }
   if(Number(input.value) > Number(other.value)){
-    return `Valor preenchido maior que ${other.name}`;
+    const name = simulation.form.Groups.flatMap(g => g.Fields).find(f => f.ID === otherId)?.Name || 'o outro campo';
+    return `Valor preenchido maior que ${name}`;
   }
   return '';
 }
