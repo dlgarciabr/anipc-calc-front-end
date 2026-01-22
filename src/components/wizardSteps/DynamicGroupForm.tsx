@@ -13,7 +13,7 @@ interface DynamicCategoryFormProps {
 }
 
 const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
-  const { setInput, getInput, errors, inputGroups, deleteInput } = useSimulationStore((state) => state);
+  const { setInput, getInput, errors, inputGroups, deleteInput, form } = useSimulationStore((state) => state);
   const [ multifieldOptions, setMultifieldOptions ] = useState<RequestField[]>(group.Fields);
   const [ multifields, setMultifields ] = useState<RequestField[]>([]);
 
@@ -260,7 +260,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
           </Grid>
           <Grid alignContent='center'>
             <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
-              <Button variant="outlined" onClick={() => exportToJSONFile(inputGroups)} endIcon={<FileDownloadIcon />}>Exportar</Button>
+              <Button variant="outlined" onClick={() => exportToJSONFile(form.CalculatorVersion, inputGroups)} endIcon={<FileDownloadIcon />}>Exportar</Button>
             </Tooltip>
           </Grid>
         </Grid>

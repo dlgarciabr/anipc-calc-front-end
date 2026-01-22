@@ -14,7 +14,7 @@ export const getForm = async (id : string, token?: string): Promise<RequestForm>
         "token_login": token,
     };
   }
-
+  console.log('MOCK ENABLED:', process.env.NEXT_PUBLIC_MOCK_ENABLED);
   if(process.env.NEXT_PUBLIC_MOCK_ENABLED === 'true'){
     return Promise.resolve(newMockdData);
   }
