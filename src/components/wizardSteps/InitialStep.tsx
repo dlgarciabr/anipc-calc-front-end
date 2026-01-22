@@ -59,7 +59,7 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
           {form.Desc}
         </Typography>
         <Typography variant="subtitle2" sx={{ color: 'black' }}>
-          {form.CalculatorVersion}
+          {form.Version}
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='flex-start'>

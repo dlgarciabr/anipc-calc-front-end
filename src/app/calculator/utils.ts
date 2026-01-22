@@ -32,7 +32,7 @@ export const mapToObject = (value: unknown): any => {
 export const exportToJSONFile = (versão: string, inputGroups: Map<number, InputGroup>) => {  
 
   const jsonStr = { 
-    CalculatorVersion: versão, 
+    Version: versão, 
     ...mapToObject(inputGroups) 
   };
 

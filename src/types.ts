@@ -62,7 +62,7 @@ export interface RequestForm {
   Title: string;
   Desc: string;
   Disclaimer: string;
-  CalculatorVersion: string;
+  Version: string;
   Colors: string[];
   Groups: RequestGroup[];
 }

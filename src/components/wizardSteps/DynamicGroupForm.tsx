@@ -260,7 +260,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
           </Grid>
           <Grid alignContent='center'>
             <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
-              <Button variant="outlined" onClick={() => exportToJSONFile(form.CalculatorVersion, inputGroups)} endIcon={<FileDownloadIcon />}>Exportar</Button>
+              <Button variant="outlined" onClick={() => exportToJSONFile(form.Version, inputGroups)} endIcon={<FileDownloadIcon />}>Exportar</Button>
             </Tooltip>
           </Grid>
         </Grid>

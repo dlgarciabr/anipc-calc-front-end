@@ -5,7 +5,7 @@ import { mapToObject } from '../calculator/utils';
 
 export const initialFormState: RequestForm = {
   ID: '', 
-  CalculatorVersion: '',
+  Version: '',
   Groups: [],
   Title: '',
   Colors: [],
