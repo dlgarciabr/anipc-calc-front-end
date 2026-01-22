@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useSimulationStore } from "@/app/stores/simulation";
 import { InputValue, RequestField, RequestGroup } from "@/types";
-import { Alert, Button, FormControl, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
+import { Alert, Button, FormControl, FormControlLabel, FormHelperText, Grid2 as Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { exportToJSONFile } from "@/app/calculator/utils";
 import FileDownloadIcon from '@mui/icons-material/Download';
 import BackspaceIcon from '@mui/icons-material/Backspace';
+import AndroidSwitch from "../AndroidSwitch";
 
 interface DynamicCategoryFormProps {
   group: RequestGroup;
@@ -99,6 +100,20 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
     const textFieldSize = field.Units.length > 0 ? 8 : (inputValue.customValue ? 11 : 12);
     return (
       <Grid size={{ xs: 12, md: 12 }} container spacing={1}>
+        {
+          field.Checkbox && (
+            <Grid size={{ xs: 12, md: 12 }} alignContent='center'>
+              <Tooltip title={field.CheckboxDesc} arrow>
+                <FormControlLabel
+                  style={{marginLeft: 0}}
+                  control={<AndroidSwitch defaultChecked />}
+                  label={field.CheckboxLabel}
+                  onChange={ (e, checked) => checked && handleChangeInput(field, field.CheckboxValue) }
+                />
+              </Tooltip>
+            </Grid>
+          )
+        }
         <Grid size={{ xs: textFieldSize, md: textFieldSize }}>
           <Tooltip title={field.Desc} arrow>
             <TextField
@@ -285,7 +300,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               {renderMultifieldCombo()}
             </> :
             group.Fields.map(field => (
-              <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{ minHeight: '85px' }}>
+              <Grid size={{ xs: 12, md: 12 }} key={field.ID} sx={{ minHeight: field.Checkbox ? '132px' : '85px' }}>
                 {renderField(field)}
               </Grid>
             ))

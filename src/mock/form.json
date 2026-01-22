@@ -126,7 +126,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": true,
+                    "CheckboxLabel": "Energia total renov\u00e1vel?",
+                    "CheckboxValue": "0",
+                    "CheckboxDesc": "Se selecionado, assume que toda a energia el\u00e9trica consumida nas instala\u00e7\u00f5es fabris \u00e9 de origem renov\u00e1vel."
                 },
                 {
                     "ID": 2006,

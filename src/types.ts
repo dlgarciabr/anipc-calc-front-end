@@ -85,6 +85,10 @@ export interface RequestField {
   Values: string[];
   CustomValue: boolean;
   Regex: string;
+  Checkbox: boolean;
+  CheckboxLabel: string;
+  CheckboxValue: string;
+  CheckboxDesc: string;
 }
 
 export interface RequestUnit {
