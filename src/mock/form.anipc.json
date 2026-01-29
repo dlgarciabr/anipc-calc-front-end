@@ -1,0 +1,1366 @@
+{
+    "ID": "ANIPC",
+    "Colors": [
+        "C3CF21",
+        "53534A",
+        "53534A"
+    ],
+    "Title": "Calculadora da pegada de carbono",
+    "Desc": "Esta ferramenta de cálculo de emissões de Gases com Efeito de Estufa (GEE) enquadra-se no âmbito do projeto Paper4Neutral - Roteiro para a descarbonização do setor do papel e cartão desenvolvido pela ANIPC - Associação Nacional dos Industriais do Papel e Cartão.",
+    "Disclaimer": "Nota: Ao clicar em 'calcular', concorda que os dados fornecidos sejam armazenados pela ANIPC para fins estatísticos. A análise será realizada de forma agregada, garantindo a confidencialidade das informações.",
+    "Version": "Versão 3.1 - 01/02/2026",
+    "Groups": [
+        {
+            "ID": 1000,
+            "Name": "Dados da Empresa",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 1001,
+                    "Name": "Ano de Cálculo",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "2021",
+                        "2022",
+                        "2023",
+                        "2024"
+                    ],
+                    "CustomValue": false,
+                    "Regex": "",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 1002,
+                    "Name": "Nome da Empresa",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "^.{1,100}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 1003,
+                    "Name": "NIPC",
+                    "Desc": "Número de Identificação de Pessoa Coletiva",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "^[0-9]{9}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 1004,
+                    "Name": "CAE Principal",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "17110 - Fabricação de pasta",
+                        "17120 - Fabricação de papel e de cartão (excepto canelado)",
+                        "17211 - Fabricação de papel e de cartão canelados (inclui embalagens)",
+                        "17212 - Fabricação de outras embalagens de papel e de cartão",
+                        "17220 - Fabricação de artigos de papel para uso doméstico e sanitário",
+                        "17230 - Fabricação de artigos de papel para papelaria",
+                        "17240 - Fabricação de papel de parede",
+                        "17290 - Fabricação de outros artigos de pasta de papel, de papel e de cartão"
+                    ],
+                    "CustomValue": true,
+                    "Regex": "^[0-9]{5}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 1005,
+                    "Name": "Unidade de Produção",
+                    "Desc": "Indicar a unidade de produção aplicável (ex: ton., m2)",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [
+                        "tonelada",
+                        "m2",
+                        "tonelada recolhida"
+                    ],
+                    "CustomValue": true,
+                    "Regex": "^.{1,20}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 1006,
+                    "Name": "Produção Anual",
+                    "Desc": "",
+                    "Units": [],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{0,9})?$)|(^0,[0-9]{0,8}[1-9]$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                }
+            ]
+        },
+        {
+            "ID": 2000,
+            "Name": "Consumos de Energia Elétrica",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 2001,
+                    "Name": "Instalações Fabris (faturada)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 2006,
+                    "Name": "Instalações Fabris (emissões CO2 market-based)",
+                    "Desc": "Preferencialmente, deverá ser indicada a emissão anual de CO2 em kg relativa à eletricidade adquirida, disponível no folheto enviado anualmente pelo(s) comercializador(es). Em alternativa, poderá ser utilizado o somatório das emissões constantes nas faturas.",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": true,
+                    "CheckboxLabel": "A energia elétrica adquirida é 100% renovável?",
+                    "CheckboxValue": "0",
+                    "CheckboxDesc": "Eletricidade 100% renovável, deve ser evidenciada, através de, por exemplo, garantias de origem, contratos 100% renováveis ou outros."
+                },
+                {
+                    "ID": 2004,
+                    "Name": "Mobilidade Elétrica (faturada)",
+                    "Desc": "Se aplicável, deverá ser indicada a quantidade de eletricidade faturada decorrente dos carregamentos efetuados em postos de carregamento fora da empresa.",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 2007,
+                    "Name": "Mobilidade Elétrica (emissões CO2 market-based)",
+                    "Desc": "Preferencialmente, deverá ser indicada a emissão anual de CO2 em kg relativa à eletricidade adquirida para mobilidade elétrica, disponível no folheto enviado anualmente pelo(s) comercializador(es). Em alternativa, poderá ser utilizado o somatório das emissões constantes nas faturas.",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 2003,
+                    "Name": "Autoconsumo (renovável)",
+                    "Desc": "Se aplicável, deverá ser indicada a quantidade de eletricidade renovável autoconsumida, excluindo a energia excedente.",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 2002,
+                    "Name": "Garantias de Origem (renovável)",
+                    "Desc": "Se aplicável, deverá ser indicada a quantidade de \"eletricidade verde\" baseada em evidências de Certificados de Garantia de Origem.",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                }
+            ]
+        },
+        {
+            "ID": 3000,
+            "Name": "Combustão Estacionária",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 3001,
+                    "Name": "Biomassa (certificada)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3002,
+                    "Name": "Biomassa (não certificada)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3003,
+                    "Name": "Querosene",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3004,
+                    "Name": "Coque de petróleo",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3005,
+                    "Name": "Fuelóleo",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3006,
+                    "Name": "Nafta",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3007,
+                    "Name": "Hulha",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3008,
+                    "Name": "Antracite",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3009,
+                    "Name": "Coque de carvão",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "ton"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3010,
+                    "Name": "Gás natural",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        },
+                        {
+                            "Unit": "m3"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3011,
+                    "Name": "Gás propano",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3012,
+                    "Name": "Biogás",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        },
+                        {
+                            "Unit": "m3"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3013,
+                    "Name": "Gasóleo (aquecimento e uso nas instalações)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3014,
+                    "Name": "Biodiesel",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 3015,
+                    "Name": "Outro (Renovável)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                }
+            ]
+        },
+        {
+            "ID": 4000,
+            "Name": "Combustão Móvel (Frota)",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 4001,
+                    "Name": "Gasóleo",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 4002,
+                    "Name": "Biodiesel",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 4003,
+                    "Name": "Gasolina",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 4004,
+                    "Name": "GPL Auto",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "litros"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 4005,
+                    "Name": "Biogás",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        },
+                        {
+                            "Unit": "m3"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 4006,
+                    "Name": "Outro (Renovável)",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kWh"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                }
+            ]
+        },
+        {
+            "ID": 5000,
+            "Name": "Consumo de Solventes",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 5001,
+                    "Name": "Solventes",
+                    "Desc": "Deverá ser indicado o consumo de solventes calculado de acordo com a metodologia disposta na legislação e regulamentação aplicáveis. Caso não existam consumos de solventes para o ano em análise, deverá ser inserido o valor 0.",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": true,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                }
+            ]
+        },
+        {
+            "ID": 6000,
+            "Name": "Consumo de Gases Fluorados",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 6001,
+                    "Name": "HFC-125",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6002,
+                    "Name": "HFC-134",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6003,
+                    "Name": "HFC-143",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6004,
+                    "Name": "HFC-143a",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6005,
+                    "Name": "HFC-152a",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6006,
+                    "Name": "HFC-227ea",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6007,
+                    "Name": "HFC-23",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6008,
+                    "Name": "HFC-236fa",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6009,
+                    "Name": "HFC-245fa",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6010,
+                    "Name": "HFC-41",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6011,
+                    "Name": "HFC-43-I0mee",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6012,
+                    "Name": "R134a / HFC-134a",
+                    "Desc": "Designado como HFC-134a",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6029,
+                    "Name": "R22 / HCFC-22 ",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6013,
+                    "Name": "R32",
+                    "Desc": "Designado como HFC-32",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6014,
+                    "Name": "R404A",
+                    "Desc": "Blend 52:44:4 [HFC-143a, HFC-125, HFC-134a]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6026,
+                    "Name": "R407A",
+                    "Desc": "Blend 20:40:40 [HFC-32, HFC-125, HFC-134a]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6015,
+                    "Name": "R407C",
+                    "Desc": "Blend 23:25:52 [HFC-32, HFC-125, HFC-134a]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6016,
+                    "Name": "R410A",
+                    "Desc": "Blend 50:50 [HFC-32, HFC-125]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6027,
+                    "Name": "R417A",
+                    "Desc": "Blend 50:46,6:3,4 [HFC-134a, HFC-125, HC-600]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6017,
+                    "Name": "R427A",
+                    "Desc": "Blend 15:25:10:50 [HFC-32, HFC-125, HFC-134a, HFC-143]",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6028,
+                    "Name": "R600",
+                    "Desc": "same as C4H10 / HC-60",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6030,
+                    "Name": "R600A",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6018,
+                    "Name": "PFC-116 (Perfluoroethane)",
+                    "Desc": "C2F6",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6019,
+                    "Name": "PFC-14 (Perfluoromethane)",
+                    "Desc": "CF4",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6020,
+                    "Name": "PFC-218 (Perfluoropropane)",
+                    "Desc": "C3F8",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6021,
+                    "Name": "PFC-31-10 (Perfluorobutane)",
+                    "Desc": "C4F10",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6022,
+                    "Name": "PFC-318 (Perfluorocyclobutane)",
+                    "Desc": "c-C4F8",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6023,
+                    "Name": "PFC-41-12 (Perfluoropentane)",
+                    "Desc": "C5F12",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6024,
+                    "Name": "PFC-51-14 (Perfluorohexane)",
+                    "Desc": "C6F14",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                },
+                {
+                    "ID": 6025,
+                    "Name": "SF6 (Sulphur hexafluoride)",
+                    "Desc": "SF6",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": true,
+                    "MultiFieldGroup": "SF6 (Sulphur Hexafluoride)",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                }
+            ]
+        },
+        {
+            "ID": 7000,
+            "Name": "Consumo de Extintores",
+            "Desc": "",
+            "Fields": [
+                {
+                    "ID": 7001,
+                    "Name": "Extintores CO2",
+                    "Desc": "",
+                    "Units": [
+                        {
+                            "Unit": "kg"
+                        }
+                    ],
+                    "Required": false,
+                    "MultiField": false,
+                    "MultiFieldGroup": "",
+                    "Values": [],
+                    "CustomValue": true,
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
+                }
+            ]
+        }
+    ]
+}

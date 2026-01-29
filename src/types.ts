@@ -130,13 +130,14 @@ export interface SimulationResultGroup {
 export interface SimulationResultReport {
   Title: string
   Desc: string[];
+  Footer: string[];
   Groups: SimulationResultGroup[][];
 }
 
 export interface SimulationResult {
   ID: string;
   Title: string;
-  Description: string;
+  Desc: string;
   Reports: SimulationResultReport[];
 }
 

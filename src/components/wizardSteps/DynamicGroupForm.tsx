@@ -106,7 +106,7 @@ const DynamicGroupForm = ({ group }: DynamicCategoryFormProps) => {
               <Tooltip title={field.CheckboxDesc} arrow>
                 <FormControlLabel
                   style={{marginLeft: 0}}
-                  control={<AndroidSwitch defaultChecked />}
+                  control={<AndroidSwitch />}
                   label={field.CheckboxLabel}
                   onChange={ (e, checked) => checked && handleChangeInput(field, field.CheckboxValue) }
                 />

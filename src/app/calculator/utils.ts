@@ -1,6 +1,7 @@
 import { FileInputGroup, InputGroup, InputValue } from "@/types"
 import { ChangeEvent } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mapToObject = (value: unknown): any => {
   if (value instanceof Map) {
     const obj: Record<string, unknown> = {};
