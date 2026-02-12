@@ -62,6 +62,7 @@ export interface RequestForm {
   Title: string;
   Desc: string;
   Disclaimer: string;
+  Version: string;
   Colors: string[];
   Groups: RequestGroup[];
 }
@@ -84,6 +85,10 @@ export interface RequestField {
   Values: string[];
   CustomValue: boolean;
   Regex: string;
+  Checkbox: boolean;
+  CheckboxLabel: string;
+  CheckboxValue: string;
+  CheckboxDesc: string;
 }
 
 export interface RequestUnit {
@@ -125,13 +130,14 @@ export interface SimulationResultGroup {
 export interface SimulationResultReport {
   Title: string
   Desc: string[];
+  Footer: string[];
   Groups: SimulationResultGroup[][];
 }
 
 export interface SimulationResult {
   ID: string;
   Title: string;
-  Description: string;
+  Desc: string;
   Reports: SimulationResultReport[];
 }
 

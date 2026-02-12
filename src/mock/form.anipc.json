@@ -6,9 +6,9 @@
         "53534A"
     ],
     "Title": "Calculadora da pegada de carbono",
-    "Version": "Versão da Calculadora: 1.0.0",
-    "Desc": "Esta ferramenta de c\u00e1lculo de emiss\u00f5es de Gases com Efeito de Estufa (GEE) enquadra-se no \u00e2mbito do projeto Paper4Neutral - Roteiro para a descarboniza\u00e7\u00e3o do setor do papel e cart\u00e3o desenvolvido pela ANIPC - Associa\u00e7\u00e3o Nacional dos Industriais do Papel e Cart\u00e3o.",
-    "Disclaimer": "Nota: Ao clicar em 'calcular', concorda que os dados fornecidos sejam armazenados pela ANIPC para fins estat\u00edsticos. A an\u00e1lise ser\u00e1 realizada de forma agregada, garantindo a confidencialidade das informa\u00e7\u00f5es.",
+    "Desc": "Esta ferramenta de cálculo de emissões de Gases com Efeito de Estufa (GEE) enquadra-se no âmbito do projeto Paper4Neutral - Roteiro para a descarbonização do setor do papel e cartão desenvolvido pela ANIPC - Associação Nacional dos Industriais do Papel e Cartão.",
+    "Disclaimer": "Nota: Ao clicar em 'calcular', concorda que os dados fornecidos sejam armazenados pela ANIPC para fins estatísticos. A análise será realizada de forma agregada, garantindo a confidencialidade das informações.",
+    "Version": "Versão 3.1 - 01/02/2026",
     "Groups": [
         {
             "ID": 1000,
@@ -17,7 +17,7 @@
             "Fields": [
                 {
                     "ID": 1001,
-                    "Name": "Ano de C\u00e1lculo",
+                    "Name": "Ano de Cálculo",
                     "Desc": "",
                     "Units": [],
                     "Required": true,
@@ -30,7 +30,11 @@
                         "2024"
                     ],
                     "CustomValue": false,
-                    "Regex": ""
+                    "Regex": "",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 1002,
@@ -42,19 +46,27 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "^.{1,100}$"
+                    "Regex": "^.{1,100}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 1003,
                     "Name": "NIPC",
-                    "Desc": "N\u00famero de Identifica\u00e7\u00e3o de Pessoa Coletiva",
+                    "Desc": "Número de Identificação de Pessoa Coletiva",
                     "Units": [],
                     "Required": true,
                     "MultiField": false,
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "^[0-9]{9}$"
+                    "Regex": "^[0-9]{9}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 1004,
@@ -65,22 +77,26 @@
                     "MultiField": false,
                     "MultiFieldGroup": "",
                     "Values": [
-                        "17110 - Fabrica\u00e7\u00e3o de pasta",
-                        "17120 - Fabrica\u00e7\u00e3o de papel e de cart\u00e3o (excepto canelado)",
-                        "17211 - Fabrica\u00e7\u00e3o de papel e de cart\u00e3o canelados (inclui embalagens)",
-                        "17212 - Fabrica\u00e7\u00e3o de outras embalagens de papel e de cart\u00e3o",
-                        "17220 - Fabrica\u00e7\u00e3o de artigos de papel para uso dom\u00e9stico e sanit\u00e1rio",
-                        "17230 - Fabrica\u00e7\u00e3o de artigos de papel para papelaria",
-                        "17240 - Fabrica\u00e7\u00e3o de papel de parede",
-                        "17290 - Fabrica\u00e7\u00e3o de outros artigos de pasta de papel, de papel e de cart\u00e3o"
+                        "17110 - Fabricação de pasta",
+                        "17120 - Fabricação de papel e de cartão (excepto canelado)",
+                        "17211 - Fabricação de papel e de cartão canelados (inclui embalagens)",
+                        "17212 - Fabricação de outras embalagens de papel e de cartão",
+                        "17220 - Fabricação de artigos de papel para uso doméstico e sanitário",
+                        "17230 - Fabricação de artigos de papel para papelaria",
+                        "17240 - Fabricação de papel de parede",
+                        "17290 - Fabricação de outros artigos de pasta de papel, de papel e de cartão"
                     ],
                     "CustomValue": true,
-                    "Regex": "^[0-9]{5}$"
+                    "Regex": "^[0-9]{5}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 1005,
-                    "Name": "Unidade de Produ\u00e7\u00e3o",
-                    "Desc": "Indicar a unidade de produ\u00e7\u00e3o aplic\u00e1vel (ex: ton., m2)",
+                    "Name": "Unidade de Produção",
+                    "Desc": "Indicar a unidade de produção aplicável (ex: ton., m2)",
                     "Units": [],
                     "Required": true,
                     "MultiField": false,
@@ -91,11 +107,15 @@
                         "tonelada recolhida"
                     ],
                     "CustomValue": true,
-                    "Regex": "^.{1,20}$"
+                    "Regex": "^.{1,20}$",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 1006,
-                    "Name": "Produ\u00e7\u00e3o Anual",
+                    "Name": "Produção Anual",
                     "Desc": "",
                     "Units": [],
                     "Required": true,
@@ -103,18 +123,22 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{0,9})?$)|(^0,[0-9]{0,8}[1-9]$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{0,9})?$)|(^0,[0-9]{0,8}[1-9]$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 }
             ]
         },
         {
             "ID": 2000,
-            "Name": "Consumos de Energia El\u00e9trica",
+            "Name": "Consumos de Energia Elétrica",
             "Desc": "",
             "Fields": [
                 {
                     "ID": 2001,
-                    "Name": "Instala\u00e7\u00f5es Fabris (faturada)",
+                    "Name": "Instalações Fabris (faturada)",
                     "Desc": "",
                     "Units": [
                         {
@@ -127,15 +151,15 @@
                     "Values": [],
                     "CustomValue": true,
                     "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
-                    "Checkbox": true,
-                    "CheckboxLabel": "Energia total renov\u00e1vel?",
-                    "CheckboxValue": "0",
-                    "CheckboxDesc": "Se selecionado, assume que toda a energia el\u00e9trica consumida nas instala\u00e7\u00f5es fabris \u00e9 de origem renov\u00e1vel."
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 2006,
-                    "Name": "Instala\u00e7\u00f5es Fabris (emiss\u00f5es CO2 market-based)",
-                    "Desc": "Preferencialmente, dever\u00e1 ser indicada a emiss\u00e3o anual de CO2 em kg relativa \u00e0 eletricidade adquirida, dispon\u00edvel no folheto enviado anualmente pelo(s) comercializador(es). Em alternativa, poder\u00e1 ser utilizado o somat\u00f3rio das emiss\u00f5es constantes nas faturas.",
+                    "Name": "Instalações Fabris (emissões CO2 market-based)",
+                    "Desc": "Preferencialmente, deverá ser indicada a emissão anual de CO2 em kg relativa à eletricidade adquirida, disponível no folheto enviado anualmente pelo(s) comercializador(es). Em alternativa, poderá ser utilizado o somatório das emissões constantes nas faturas.",
                     "Units": [
                         {
                             "Unit": "kg"
@@ -146,12 +170,16 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": true,
+                    "CheckboxLabel": "A energia elétrica adquirida é 100% renovável?",
+                    "CheckboxValue": "0",
+                    "CheckboxDesc": "Eletricidade 100% renovável, deve ser evidenciada, através de, por exemplo, garantias de origem, contratos 100% renováveis ou outros."
                 },
                 {
                     "ID": 2004,
-                    "Name": "Mobilidade El\u00e9trica (faturada)",
-                    "Desc": "Se aplic\u00e1vel, dever\u00e1 ser indicada a quantidade de eletricidade faturada decorrente dos carregamentos efetuados em postos de carregamento fora da empresa.",
+                    "Name": "Mobilidade Elétrica (faturada)",
+                    "Desc": "Se aplicável, deverá ser indicada a quantidade de eletricidade faturada decorrente dos carregamentos efetuados em postos de carregamento fora da empresa.",
                     "Units": [
                         {
                             "Unit": "kWh"
@@ -162,12 +190,16 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 2007,
-                    "Name": "Mobilidade El\u00e9trica (emiss\u00f5es CO2 market-based)",
-                    "Desc": "Preferencialmente, dever\u00e1 ser indicada a emiss\u00e3o anual de CO2 em kg relativa \u00e0 eletricidade adquirida para mobilidade el\u00e9trica, dispon\u00edvel no folheto enviado anualmente pelo(s) comercializador(es). Em alternativa, poder\u00e1 ser utilizado o somat\u00f3rio das emiss\u00f5es constantes nas faturas.",
+                    "Name": "Mobilidade Elétrica (emissões CO2 market-based)",
+                    "Desc": "Preferencialmente, deverá ser indicada a emissão anual de CO2 em kg relativa à eletricidade adquirida para mobilidade elétrica, disponível no folheto enviado anualmente pelo(s) comercializador(es). Em alternativa, poderá ser utilizado o somatório das emissões constantes nas faturas.",
                     "Units": [
                         {
                             "Unit": "kg"
@@ -178,12 +210,16 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 2003,
-                    "Name": "Autoconsumo (renov\u00e1vel)",
-                    "Desc": "Se aplic\u00e1vel, dever\u00e1 ser indicada a quantidade de eletricidade renov\u00e1vel autoconsumida, excluindo a energia excedente.",
+                    "Name": "Autoconsumo (renovável)",
+                    "Desc": "Se aplicável, deverá ser indicada a quantidade de eletricidade renovável autoconsumida, excluindo a energia excedente.",
                     "Units": [
                         {
                             "Unit": "kWh"
@@ -194,12 +230,16 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 2002,
-                    "Name": "Garantias de Origem (renov\u00e1vel)",
-                    "Desc": "Se aplic\u00e1vel, dever\u00e1 ser indicada a quantidade de \"eletricidade verde\" baseada em evid\u00eancias de Certificados de Garantia de Origem.",
+                    "Name": "Garantias de Origem (renovável)",
+                    "Desc": "Se aplicável, deverá ser indicada a quantidade de \"eletricidade verde\" baseada em evidências de Certificados de Garantia de Origem.",
                     "Units": [
                         {
                             "Unit": "kWh"
@@ -210,13 +250,17 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 }
             ]
         },
         {
             "ID": 3000,
-            "Name": "Combust\u00e3o Estacion\u00e1ria",
+            "Name": "Combustão Estacionária",
             "Desc": "",
             "Fields": [
                 {
@@ -233,11 +277,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3002,
-                    "Name": "Biomassa (n\u00e3o certificada)",
+                    "Name": "Biomassa (não certificada)",
                     "Desc": "",
                     "Units": [
                         {
@@ -249,7 +297,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3003,
@@ -265,11 +317,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3004,
-                    "Name": "Coque de petr\u00f3leo",
+                    "Name": "Coque de petróleo",
                     "Desc": "",
                     "Units": [
                         {
@@ -281,11 +337,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3005,
-                    "Name": "Fuel\u00f3leo",
+                    "Name": "Fuelóleo",
                     "Desc": "",
                     "Units": [
                         {
@@ -297,7 +357,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3006,
@@ -313,7 +377,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3007,
@@ -329,7 +397,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3008,
@@ -345,11 +417,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3009,
-                    "Name": "Coque de carv\u00e3o",
+                    "Name": "Coque de carvão",
                     "Desc": "",
                     "Units": [
                         {
@@ -361,11 +437,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3010,
-                    "Name": "G\u00e1s natural",
+                    "Name": "Gás natural",
                     "Desc": "",
                     "Units": [
                         {
@@ -380,11 +460,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3011,
-                    "Name": "G\u00e1s propano",
+                    "Name": "Gás propano",
                     "Desc": "",
                     "Units": [
                         {
@@ -396,11 +480,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3012,
-                    "Name": "Biog\u00e1s",
+                    "Name": "Biogás",
                     "Desc": "",
                     "Units": [
                         {
@@ -415,11 +503,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3013,
-                    "Name": "Gas\u00f3leo (aquecimento e uso nas instala\u00e7\u00f5es)",
+                    "Name": "Gasóleo (aquecimento e uso nas instalações)",
                     "Desc": "",
                     "Units": [
                         {
@@ -431,7 +523,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3014,
@@ -447,11 +543,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 3015,
-                    "Name": "Outro (Renov\u00e1vel)",
+                    "Name": "Outro (Renovável)",
                     "Desc": "",
                     "Units": [
                         {
@@ -463,18 +563,22 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 }
             ]
         },
         {
             "ID": 4000,
-            "Name": "Combust\u00e3o M\u00f3vel (Frota)",
+            "Name": "Combustão Móvel (Frota)",
             "Desc": "",
             "Fields": [
                 {
                     "ID": 4001,
-                    "Name": "Gas\u00f3leo",
+                    "Name": "Gasóleo",
                     "Desc": "",
                     "Units": [
                         {
@@ -486,7 +590,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 4002,
@@ -502,7 +610,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 4003,
@@ -518,7 +630,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 4004,
@@ -534,11 +650,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 4005,
-                    "Name": "Biog\u00e1s",
+                    "Name": "Biogás",
                     "Desc": "",
                     "Units": [
                         {
@@ -553,11 +673,15 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 4006,
-                    "Name": "Outro (Renov\u00e1vel)",
+                    "Name": "Outro (Renovável)",
                     "Desc": "",
                     "Units": [
                         {
@@ -569,7 +693,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 }
             ]
         },
@@ -581,7 +709,7 @@
                 {
                     "ID": 5001,
                     "Name": "Solventes",
-                    "Desc": "Dever\u00e1 ser indicado o consumo de solventes calculado de acordo com a metodologia disposta na legisla\u00e7\u00e3o e regulamenta\u00e7\u00e3o aplic\u00e1veis. Caso n\u00e3o existam consumos de solventes para o ano em an\u00e1lise, dever\u00e1 ser inserido o valor 0.",
+                    "Desc": "Deverá ser indicado o consumo de solventes calculado de acordo com a metodologia disposta na legislação e regulamentação aplicáveis. Caso não existam consumos de solventes para o ano em análise, deverá ser inserido o valor 0.",
                     "Units": [
                         {
                             "Unit": "kg"
@@ -592,7 +720,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 }
             ]
         },
@@ -615,7 +747,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6002,
@@ -631,7 +767,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6003,
@@ -647,7 +787,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6004,
@@ -663,7 +807,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6005,
@@ -679,7 +827,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6006,
@@ -695,7 +847,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6007,
@@ -711,7 +867,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6008,
@@ -727,7 +887,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6009,
@@ -743,7 +907,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6010,
@@ -759,7 +927,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6011,
@@ -775,11 +947,15 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6012,
-                    "Name": "R134a \/ HFC-134a",
+                    "Name": "R134a / HFC-134a",
                     "Desc": "Designado como HFC-134a",
                     "Units": [
                         {
@@ -791,11 +967,15 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6029,
-                    "Name": "R22 \/ HCFC-22 ",
+                    "Name": "R22 / HCFC-22 ",
                     "Desc": "",
                     "Units": [
                         {
@@ -807,7 +987,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6013,
@@ -823,7 +1007,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6014,
@@ -839,7 +1027,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6026,
@@ -855,7 +1047,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6015,
@@ -871,7 +1067,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6016,
@@ -887,7 +1087,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6027,
@@ -903,7 +1107,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6017,
@@ -919,12 +1127,16 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6028,
                     "Name": "R600",
-                    "Desc": "same as C4H10 \/ HC-60",
+                    "Desc": "same as C4H10 / HC-60",
                     "Units": [
                         {
                             "Unit": "kg"
@@ -935,7 +1147,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6030,
@@ -951,7 +1167,11 @@
                     "MultiFieldGroup": "HFC (Hydrofluorocarbons)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6018,
@@ -967,7 +1187,11 @@
                     "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6019,
@@ -983,7 +1207,11 @@
                     "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6020,
@@ -999,7 +1227,11 @@
                     "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6021,
@@ -1015,7 +1247,11 @@
                     "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6022,
@@ -1031,7 +1267,11 @@
                     "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6023,
@@ -1047,7 +1287,11 @@
                     "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6024,
@@ -1063,7 +1307,11 @@
                     "MultiFieldGroup": "PFC (Fully Fluorinated Species)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 },
                 {
                     "ID": 6025,
@@ -1079,7 +1327,11 @@
                     "MultiFieldGroup": "SF6 (Sulphur Hexafluoride)",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|^0$"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 }
             ]
         },
@@ -1102,7 +1354,11 @@
                     "MultiFieldGroup": "",
                     "Values": [],
                     "CustomValue": true,
-                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)"
+                    "Regex": "(^[1-9][0-9]{0,11}(,[0-9]{1,9})?$)|(^0,[0-9]{0,8}[1-9]$)|(^0$)",
+                    "Checkbox": false,
+                    "CheckboxLabel": "",
+                    "CheckboxValue": "",
+                    "CheckboxDesc": ""
                 }
             ]
         }

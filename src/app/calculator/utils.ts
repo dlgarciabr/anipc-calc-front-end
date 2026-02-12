@@ -1,7 +1,8 @@
 import { FileInputGroup, InputGroup, InputValue } from "@/types"
 import { ChangeEvent } from "react";
 
-export const mapToObject = (value: unknown): unknown => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const mapToObject = (value: unknown): any => {
   if (value instanceof Map) {
     const obj: Record<string, unknown> = {};
     for (const [k, v] of value) {
@@ -29,9 +30,12 @@ export const mapToObject = (value: unknown): unknown => {
   return value;
 }
 
-export const exportToJSONFile = (inputGroups: Map<number, InputGroup>) => {  
+export const exportToJSONFile = (versão: string, inputGroups: Map<number, InputGroup>) => {  
 
-  const jsonStr = mapToObject(inputGroups);
+  const jsonStr = { 
+    Version: versão, 
+    ...mapToObject(inputGroups) 
+  };
 
   const element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(jsonStr)));

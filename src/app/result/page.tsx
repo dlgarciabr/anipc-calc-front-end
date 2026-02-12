@@ -249,9 +249,9 @@ const Result = () => {
           </Grid>
           {
             report.Desc ? 
-              report.Desc.map((desc, i) => (
+              report.Desc.map((line, i) => (
                 <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left', marginBottom: '20px'}}>
-                  <Typography variant='caption' color="secondary">{desc}</Typography>
+                  <Typography variant='caption' color="secondary">{line}</Typography>
                 </Grid>
               ))
             : null
@@ -263,6 +263,17 @@ const Result = () => {
         {
           graphicGroups ? renderGraphicGroups(graphicGroups) : null
         }
+        <Grid size={{ xs: 12, md: 12 }}>
+          {
+            report.Footer ? 
+              report.Footer.map((line, i) => (
+                <Grid key={i} size={{ xs: 12, md: 12 }} style={{textAlign: 'left', marginBottom: '20px'}}>
+                  <Typography variant='caption' color="secondary">{line}</Typography>
+                </Grid>
+              ))
+            : null
+          }
+        </Grid>
       </Grid>
     );
   }

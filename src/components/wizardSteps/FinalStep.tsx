@@ -13,7 +13,7 @@ export interface FinalStepProps {
 }
 
 const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
-  const { getData, inputGroups, setResult, form: { Disclaimer } } = useSimulationStore((state) => state);
+  const { getData, inputGroups, setResult, form: { Disclaimer, Version } } = useSimulationStore((state) => state);
 
   const handleSendData = async () => {
     onBeforeSend();
@@ -44,7 +44,7 @@ const FinalStep = ({ onBeforeSend, onError} : FinalStepProps) => {
       </Grid>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='flex-start'>
         <Tooltip title='Exportar dados preenchidos para continuar mais tarde' arrow>
-          <Button variant="outlined" onClick={()=>exportToJSONFile(inputGroups)} endIcon={<FileDownload />} >Exportar</Button>
+          <Button variant="outlined" onClick={()=>exportToJSONFile(Version, inputGroups)} endIcon={<FileDownload />} >Exportar</Button>
         </Tooltip>
         <Tooltip title='Efectuar os calculos e visualizar os resultados' arrow>
           <Button variant="contained" endIcon={<EnergySavingsLeafIcon />} onClick={handleSendData} size="large">

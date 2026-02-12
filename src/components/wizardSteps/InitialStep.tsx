@@ -58,6 +58,9 @@ const InitialStep = ({onBegin}: InitialStepProps) => {
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {form.Desc}
         </Typography>
+        <Typography variant="subtitle2" sx={{ color: 'black' }}>
+          {form.Version}
+        </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 12 }} container justifyContent='center' alignContent='flex-start'>
         <Tooltip title='Importar dados de uma calculadora previamente preenchida' arrow>

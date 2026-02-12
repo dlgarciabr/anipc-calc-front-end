@@ -1,10 +1,13 @@
 import axios from "axios";
 import { SimulationResult, RequestForm, SimulationData, FileDownloadble } from "../../types";
-import mockForm from '../../mock/form.json';
+//import mockForm from '../../mock/form.json';
+import mockForm from '../../mock/form.anipc.json';
+import mockResult from '../../mock/calc.anipc.json';
 
 const url = 'https://calc.ghg-impact.eu';
 
-const newMockdData = mockForm as RequestForm;
+const mockFormData = mockForm as RequestForm;
+const mockResultData = mockResult as SimulationResult;
 
 export const getForm = async (id : string, token?: string): Promise<RequestForm> => {
   const endpoint = `${url}/form.php?id=${id}`;
@@ -16,7 +19,7 @@ export const getForm = async (id : string, token?: string): Promise<RequestForm>
   }
 
   if(process.env.NEXT_PUBLIC_MOCK_ENABLED === 'true'){
-    return Promise.resolve(newMockdData);
+    return Promise.resolve(mockFormData);
   }
 
   const response = await axios<RequestForm>({
@@ -29,6 +32,10 @@ export const getForm = async (id : string, token?: string): Promise<RequestForm>
 
 export const sendData = async (data: SimulationData): Promise<SimulationResult> => {
   const endpoint = `${url}/calc.php`;
+
+  if(process.env.NEXT_PUBLIC_MOCK_ENABLED === 'true'){
+    return Promise.resolve(mockResultData);
+  }
 
   const response = await axios<SimulationResult>({
     method: 'post',

@@ -1,0 +1,226 @@
+{
+    "ID": "anipc",
+    "Colors": [
+        "C3CF21",
+        "53534A",
+        "53534A"
+    ],
+    "Title": "Resumo da pegada carbónica",
+    "Desc": "",
+    "Reports": [
+        {
+            "Title": "Empresa",
+            "Desc": [
+                ""
+            ],
+            "Footer": [
+                ""
+            ],
+            "Groups": [
+                [
+                    {
+                        "Title": "",
+                        "Type": "table",
+                        "Values": [
+                            {
+                                "Title": "Entidade",
+                                "Label": "",
+                                "Unit": "",
+                                "Value": "Pipo Tech",
+                                "Color": ""
+                            },
+                            {
+                                "Title": "Ano",
+                                "Label": "",
+                                "Unit": "",
+                                "Value": "2023",
+                                "Color": ""
+                            },
+                            {
+                                "Title": "Produção",
+                                "Label": "",
+                                "Unit": "pipos",
+                                "Value": "1234",
+                                "Color": ""
+                            }
+                        ]
+                    },
+                    {
+                        "Title": "",
+                        "Type": "table",
+                        "Values": [
+                            {
+                                "Title": "NIPC",
+                                "Label": "",
+                                "Unit": "",
+                                "Value": "217337082",
+                                "Color": ""
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        {
+            "Title": "Emissão de gases com efeito de estufa - resumo",
+            "Desc": [
+                "A pegada de carbono reflete a quantidade total de gases com efeito de estufa (GEE) que são emitidos direta ou indiretamente como resultado das atividades da sua indústria. O resultado apresentado apenas considera o âmbito 1 (emissões diretas) e âmbito 2 (emissões com a aquisição de energia, pelo método market-based)."
+            ],
+            "Footer": [
+                ""
+            ],
+            "Groups": [
+                [
+                    {
+                        "Title": "",
+                        "Type": "table",
+                        "Values": [
+                            {
+                                "Title": "Emissões totais",
+                                "Label": "",
+                                "Unit": "tCO2e",
+                                "Value": "50.263913471",
+                                "Color": ""
+                            },
+                            {
+                                "Title": "Emissões específicas",
+                                "Label": "",
+                                "Unit": "kg CO2e/pipos",
+                                "Value": "40.732506864668",
+                                "Color": ""
+                            }
+                        ]
+                    },
+                    {
+                        "Title": "",
+                        "Type": "blank",
+                        "Values": []
+                    }
+                ]
+            ]
+        },
+        {
+            "Title": "Emissão de gases com efeito de estufa - por âmbito",
+            "Desc": [
+                ""
+            ],
+            "Footer": [
+                "Para detalhes das emissões de âmbito 2, pelo método location-based, e para desagregação de emissões por tipo de GEE descarregue o ficheiro Excel no botão a baixo."
+            ],
+            "Groups": [
+                [
+                    {
+                        "Title": "",
+                        "Type": "table",
+                        "Values": [
+                            {
+                                "Title": "Emissões diretas (âmbito 1)",
+                                "Label": "",
+                                "Unit": "tCO2e",
+                                "Value": "18.163113471",
+                                "Color": ""
+                            },
+                            {
+                                "Title": "Emissões indiretas (âmbito 2) - market-based",
+                                "Label": "",
+                                "Unit": "tCO2",
+                                "Value": "11",
+                                "Color": ""
+                            },
+                            {
+                                "Title": "Emissões indiretas (âmbito 2) - location-based",
+                                "Label": "",
+                                "Unit": "tCO2e",
+                                "Value": "8.8628218100056",
+                                "Color": ""
+                            },
+                            {
+                                "Title": "Outras emissões (biomassa)",
+                                "Label": "",
+                                "Unit": "tCO2e",
+                                "Value": "21.1008",
+                                "Color": ""
+                            }
+                        ]
+                    },
+                    {
+                        "Title": "",
+                        "Type": "blank",
+                        "Values": []
+                    }
+                ],
+                [
+                    {
+                        "Title": "Emissões de GEE por âmbito",
+                        "Type": "graph:circular",
+                        "Values": [
+                            {
+                                "Title": "Âmbito 1",
+                                "Label": "",
+                                "Unit": "tCO2e",
+                                "Value": "18.163113471",
+                                "Color": "C3CF21"
+                            },
+                            {
+                                "Title": "Âmbito 2 - market-based",
+                                "Label": "",
+                                "Unit": "tCO2e",
+                                "Value": "11",
+                                "Color": "53534A"
+                            }
+                        ]
+                    },
+                    {
+                        "Title": "Emissões de GEE por categoria",
+                        "Type": "graph:bars",
+                        "Values": [
+                            {
+                                "Title": "Combustão estacionária",
+                                "Label": "C. Estacionária",
+                                "Unit": "tCO2e",
+                                "Value": "3.351548595",
+                                "Color": "C3CF21"
+                            },
+                            {
+                                "Title": "Combustão móvel",
+                                "Label": "C. Móvel",
+                                "Unit": "tCO2e",
+                                "Value": "2.691564876",
+                                "Color": "C3CF21"
+                            },
+                            {
+                                "Title": "Emissões de processo e fugitivas",
+                                "Label": "Fugitivas",
+                                "Unit": "tCO2e",
+                                "Value": "12.12",
+                                "Color": "C3CF21"
+                            },
+                            {
+                                "Title": "Energia elétrica",
+                                "Label": "E. Elétrica",
+                                "Unit": "tCO2e",
+                                "Value": "11",
+                                "Color": "53534A"
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        {
+            "Title": "Disclaimer",
+            "Desc": [
+                "Esta ferramenta de cálculo de emissões de Gases com Efeito de Estufa (GEE) enquadra-se no âmbito do projeto Paper4Neutral – Roteiro para a descarbonização do setor do papel e cartão desenvolvido pela ANIPC - Associação Nacional dos Industriais do Papel e Cartão.",
+                "O cálculo das emissões de GEE considera apenas as emissões diretas de âmbito 1 e as emissões indiretas de âmbito 2 das instalações e processos industriais do setor do papel e cartão.",
+                "Os dados e informações utilizadas no preenchimento dos campos da ferramenta são da única e inteira responsabilidade dos utilizadores. Omissões ou inexatidões poderão influenciar a fiabilidade dos resultados apresentados. A ANIPC não se responsabiliza pela precisão dos resultados obtidos.",
+                "Notas metodológicas são apresentadas no relatório (após download).",
+                "",
+                "powered by impact partners www.impactpartners.pt"
+            ],
+            "Footer": [
+                ""
+            ],
+            "Groups": []
+        }
+    ]
+}
