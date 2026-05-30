@@ -21,6 +21,7 @@ const postInitialize = (simulation: Simulation) => {
     },
     false,
   );
+
   
   window.parent.postMessage(
     'react_loaded', 
@@ -34,11 +35,11 @@ const fillFormData = (form: RequestForm, userData: { first_name: string; last_na
 
   form.Groups.find(group => group.Name === 'Dados da Empresa')?.Fields.forEach(field => {
     if(field.ID === 1002){
-      field.Values = [userData.first_name];
+      field.Values = [userData.last_name];
       field.CustomValue = false;
     }
     if(field.ID === 1003){
-      field.Values = [userData.last_name];
+      field.Values = [userData.first_name];
       field.CustomValue = false;
     }
   });

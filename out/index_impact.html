@@ -2,15 +2,14 @@
   <head>
     <!-- Document metadata goes here -->
     <script>
-      const userData = window.userData;
-      //const userData = { first_name: 'Empresa ABC', last_name: '23423423423' };
+      //const userObject = { first_name: 'Empresa ABC', last_name: '23423423423' };
       const calcId = "anipc";
 
       window.addEventListener(
         "message",
         (event) => {
-          if(event.data === 'react_loaded' && userData){
-            const message = `userData:${JSON.stringify(userData)}`;
+          if(event.data === 'react_loaded' && userObject){
+            const message = `userData:${JSON.stringify(userObject)}`;
             document.getElementById("inlineCalcFrame").contentWindow.postMessage(message, "*");
           }
         },
@@ -19,8 +18,8 @@
 
       document.addEventListener('DOMContentLoaded', function() {
         console.log('Page loaded');
-        const url = `http://localhost:3000/calculator?id=${calcId}`;
-        //const url = `https://calculator.ghg-impact.eu/calculator.html?id=${calcId}`;
+        //const url = `http://localhost:3000/calculator?id=${calcId}`;
+        const url = `https://calculator.ghg-impact.eu/calculator.html?id=${calcId}`;
         document.getElementById("inlineCalcFrame").src = url;
       });
     </script>
