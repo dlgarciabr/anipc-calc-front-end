@@ -1,16 +1,39 @@
 <html lang="en-US" style="overflow-y: hidden;">
   <head>
     <!-- Document metadata goes here -->
+    <script>
+      const userData = window.userData;
+      //const userData = { first_name: 'Empresa ABC', last_name: '23423423423' };
+      const calcId = "anipc";
+
+      window.addEventListener(
+        "message",
+        (event) => {
+          if(event.data === 'react_loaded' && userData){
+            const message = `userData:${JSON.stringify(userData)}`;
+            document.getElementById("inlineCalcFrame").contentWindow.postMessage(message, "*");
+          }
+        },
+        false,
+      );
+
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded');
+        const url = `http://localhost:3000/calculator?id=${calcId}`;
+        //const url = `https://calculator.ghg-impact.eu/calculator.html?id=${calcId}`;
+        document.getElementById("inlineCalcFrame").src = url;
+      });
+    </script>
   </head>
   <div style="display: flex; justify-content: center;flex-direction: column;" >
     <div style="display: flex; justify-content: center;">
       <iframe
-        id="inlineFrameExample"
+        id="inlineCalcFrame"
         title="Inline Frame Example"
         width="1000"
         height="900"
         style="border: none;"
-        src="http://localhost:3000/calculator?id=anipc">
+        src="">
       </iframe>
     </div>
   </div>

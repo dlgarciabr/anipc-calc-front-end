@@ -36,7 +36,7 @@ let initialized = false;
 const Calculator = () => {
   useLeavePageConfirm(true);
   const searchParams = useSearchParams();
-  const calcId = searchParams.get('id');
+  const calcId = searchParams.get('id') || undefined;
   const securedSearchParam = searchParams.get('secured');
   const isSecured = !!securedSearchParam ? eval(securedSearchParam) : false;
   
@@ -54,6 +54,8 @@ const Calculator = () => {
   const { setToken, token } = useSessionStore((state) => state);
 
   const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups, totalSteps, clearErrors } = simulation;
+
+  const isCTCP = calcId === 'ctcp';//TODO transferir para o initializator do tenant no futuro
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -145,7 +147,7 @@ const Calculator = () => {
     console.log('initializing...');
 
     //TODO transferir para o initializator do tenant no futuro
-    if(isSecured && !initialized){
+    if(isSecured && !initialized && isCTCP){
       console.log('react loaded...');
       window.parent.postMessage(
         'react_loaded', 
@@ -164,11 +166,15 @@ const Calculator = () => {
     }
   },[]);
 
+  const postInitializeCallback = useCallback(() => {
+    postInitialize(calcId, simulation);
+  }, [calcId, simulation]);
+
   useEffect(() => {
     if(calcId && form.ID.toLowerCase() === calcId){
-      postInitialize(calcId, simulation);
+      postInitializeCallback();
     }
-  }, [form, calcId, simulation]);
+  }, [form, calcId]);
 
   const generateSteps = (): JSX.Element[] => [
     <InitialStep key="initialStep" onBegin={handleNext}/>,
