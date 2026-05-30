@@ -1,11 +1,17 @@
 import { Simulation } from "@/types";
 
+declare global {
+  interface Window {
+    userData?: { first_name: string; last_name: string };
+  }
+}
+
 const postInitialize = (simulation: Simulation) => {
   console.log("Anipc Initializator found.");
 
-  const userData = (window as unknown as { userData: { cnpj?: string } }).userData as Record<string, string>;
+  const userData = window.userData;
 
-  //const userData = { first_name: 'Empresa dummy', last_name: '834244234' } as Record<string, string>;
+  console.log("User data from window object:", userData);
 
   const form = simulation.form;
 
