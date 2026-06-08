@@ -14,7 +14,7 @@ export const getForm = async (id : string, token?: string): Promise<RequestForm>
 
   if(token){
     axios.defaults.headers.common = {
-        "token_login": token,
+        "token-login": token,
     };
   }
 
