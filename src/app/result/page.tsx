@@ -137,7 +137,7 @@ const Result = () => {
           <PieChart
             width={270}
             height={320}
-            colors={[primaryColor, secondayColor]}
+            colors={[group.Values[0].Color, group.Values[1].Color]}
             series={[
               {
                 data: [
