@@ -22,7 +22,6 @@ const postInitialize = (simulation: Simulation) => {
     false,
   );
 
-  
   window.parent.postMessage(
     'react_loaded', 
     '*'
