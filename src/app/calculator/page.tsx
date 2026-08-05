@@ -17,6 +17,7 @@ import { useLeavePageConfirm } from "../utils/useLeavePageConfirm";
 import { useSearchParams } from "next/navigation";
 import Error from "@/components/Error";
 import { useSessionStore } from "../stores/session";
+import { postInitialize } from "../initialization";
 
 export interface ExtendedWizardProps extends StepWizardProps {
   nextStep: () => void;
@@ -35,7 +36,7 @@ let initialized = false;
 const Calculator = () => {
   useLeavePageConfirm(true);
   const searchParams = useSearchParams();
-  const calcId = searchParams.get('id');
+  const calcId = searchParams.get('id') || undefined;
   const securedSearchParam = searchParams.get('secured');
   const isSecured = !!securedSearchParam ? eval(securedSearchParam) : false;
   
@@ -46,11 +47,15 @@ const Calculator = () => {
     goToStep: (step: number) => {console.log('navigate to step ' + step)},
   });
   const [ activeStep, setActiveStep ] = React.useState<number>(0);
-  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups, totalSteps, clearErrors } = useSimulationStore((state) => state);
+  const simulation = useSimulationStore((state) => state);
   const [ theme, setTheme ] = React.useState<Theme>(createTheme());
   const [ loading, setLoading ] = React.useState<boolean>(false);
   const [ error, setError ] = React.useState<ErrorProps | undefined>();
   const { setToken, token } = useSessionStore((state) => state);
+
+  const { setNextStep, setForm, form, hasErrors, routerParam, setRouterParam, setInputGroups, totalSteps, clearErrors } = simulation;
+
+  const isCTCP = calcId === 'ctcp';//TODO transferir para o initializator do tenant no futuro
 
   const handleNext = async () => {
     const nextStep = activeStep + 1;
@@ -139,8 +144,10 @@ const Calculator = () => {
   },[activeStep, goToLastStep, routerParam, setForm, setInputGroups, setRouterParam])
 
   useEffect(()=>{
-    console.log('react initializing...');
-    if(isSecured && !initialized){
+    console.log('initializing...');
+
+    //TODO transferir para o initializator do tenant no futuro
+    if(isSecured && !initialized && isCTCP){
       console.log('react loaded...');
       window.parent.postMessage(
         'react_loaded', 
@@ -158,6 +165,16 @@ const Calculator = () => {
       initialized = true;
     }
   },[]);
+
+  const postInitializeCallback = useCallback(() => {
+    postInitialize(calcId, simulation);
+  }, [calcId, simulation]);
+
+  useEffect(() => {
+    if(calcId && form.ID.toLowerCase() === calcId){
+      postInitializeCallback();
+    }
+  }, [form, calcId]);
 
   const generateSteps = (): JSX.Element[] => [
     <InitialStep key="initialStep" onBegin={handleNext}/>,
