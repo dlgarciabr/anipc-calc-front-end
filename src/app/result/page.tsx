@@ -125,6 +125,15 @@ const Result = () => {
     );
   };
 
+  const generateCircularGraphicData = (group: SimulationResultGroup, index: number) => {
+    return { 
+      id: index, 
+      value: calcPercentual(group.Values, index), 
+      label: group.Values[index].Title, color: 
+      `#${group.Values[index].Color}`
+    }
+  };  
+
   const renderCircularGraphic = (group: SimulationResultGroup) => {
     return (
       <Grid key={group.Title} container size={{ xs: 12, md: 6 }}>
@@ -137,12 +146,11 @@ const Result = () => {
           <PieChart
             width={270}
             height={320}
-            colors={[group.Values[0].Color, group.Values[1].Color]}
             series={[
               {
                 data: [
-                  { id: 0, value: calcPercentual(group.Values, 0), label: group.Values[0].Title },
-                  { id: 1, value: calcPercentual(group.Values, 1), label: group.Values[1].Title },
+                  generateCircularGraphicData(group, 0),
+                  generateCircularGraphicData(group, 1),
                 ],
                 innerRadius: 50,
                 outerRadius: 100,

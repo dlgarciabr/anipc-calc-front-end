@@ -66,23 +66,25 @@ export const readDataFromFile = async (event: ChangeEvent<HTMLInputElement>): Pr
 
   Object.keys(inportedData).forEach(groupId => {
     const importedGroup = inportedData[parseInt(groupId)];
-    const inputGroup = {
-      id: importedGroup.id,
-      name: importedGroup.name,
-      inputs: new Map<number, InputValue>(),
-    }
-    Object.keys(importedGroup.inputs).forEach(inputId => {
-      const importedValue = importedGroup.inputs[parseInt(inputId)];
-      const inputValue = {
-        id: importedValue.id,
-        value: importedValue.value,
-        unit: importedValue.unit,
-        name: importedValue.name || '',
-        customValue: importedValue.customValue
+    if(importedGroup){
+      const inputGroup = {
+        id: importedGroup.id,
+        name: importedGroup.name,
+        inputs: new Map<number, InputValue>(),
       }
-      inputGroup.inputs.set(parseInt(inputId), inputValue);
-    })
-    data.set(inputGroup.id, inputGroup);
+      Object.keys(importedGroup.inputs).forEach(inputId => {
+        const importedValue = importedGroup.inputs[parseInt(inputId)];
+        const inputValue = {
+          id: importedValue.id,
+          value: importedValue.value,
+          unit: importedValue.unit,
+          name: importedValue.name || '',
+          customValue: importedValue.customValue
+        }
+        inputGroup.inputs.set(parseInt(inputId), inputValue);
+      })
+      data.set(inputGroup.id, inputGroup);
+    }
   });
 
   return { data };
