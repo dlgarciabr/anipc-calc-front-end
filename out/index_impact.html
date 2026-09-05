@@ -8,7 +8,7 @@
       window.addEventListener(
         "message",
         (event) => {
-          if(event.data === 'react_loaded' && userObject){
+          if(event.data === 'react_loaded' && typeof userObject !== 'undefined'){
             const message = `userData:${JSON.stringify(userObject)}`;
             document.getElementById("inlineCalcFrame").contentWindow.postMessage(message, "*");
           }
